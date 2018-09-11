@@ -1,0 +1,19 @@
+14. Qual a saída do programa abaixo?
+#include <stdio.h>
+int confusao(int, int);
+   int main() {
+        int x = 2, y = 5;
+        y = confusao(y, x);
+        x = confusao(y, x);
+        printf("%d %d\n", x, y);
+        return 0;
+   }
+   
+   int confusao(int x, int y) {
+        x = 2 * x + y;
+        return x;
+   }
+
+Resposta:
+
+26 12

@@ -1,0 +1,24 @@
+1. Encontre o erro em cada um dos seguintes segmentos de programa e explique como ele pode
+ser corrigido:
+a) int quadrado(int x);
+{
+   return x * x;
+}
+b) int soma(int x, y) {
+  int resultado;
+     resultado = x + y;
+     return resultado;
+   }
+c) void foo(float a) {
+     float a;
+     printf("%f\n", a);
+   }
+
+Respostas:
+
+a) O erro está no ';' que esta localizado na primeira linha, se remover o programa funcionara 
+corretamente.
+
+b) O erro está em não especificar o tipo de variavel 'y'  na linha 1.
+
+c) O erro está em criar uma variavel(linha 2) com o mesmo nome da variavel do parâmetro(linha1).
