@@ -1,0 +1,30 @@
+11. Considere os grupos de uma ou mais diretivas seguidas pelos códigos que as utilizam
+abaixo. Qual é o código resultante em cada caso? É um código válido? Assuma que as
+variáveis foram declaradas.
+
+a) #define KPH 95 /* Km por hora */
+dist = KPH * tempo;
+
+b) #define METROS 4
+#define POD METROS + METROS
+plort = METROS * POD;
+
+c) #define SEIS = 6;
+num = SEIS;
+
+d) #define NEW(x) x + 5
+y = NEW(y);
+berg = NEW(berg) * lob;
+est = NEW(berg) / NEW(y);
+nilp = lob * NEW(-berg);
+
+Resposta:
+
+a) O resultado vai ser que a multiplicação de 95 * tempo vai estar armazenado na variavel dist.
+
+b) A variavel plort vai armazena o inteiro 32.
+
+c) Não e uma define valida, por causa do comando de atribuição '='.
+
+d) O codigo esta válido mas pode não gerar o resultado desejado porque 'x+5' não esta entre 
+parênteses.

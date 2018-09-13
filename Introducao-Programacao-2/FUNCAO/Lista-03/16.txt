@@ -1,0 +1,10 @@
+16. Suponha a seguinte definição:
+#define ABS(a) a < 0 ? -a : a
+Qual seria o valor de z na seguinte expressão: z = ABS(10-20);
+O que você poderia fazer para que a macro funcionasse corretamente?
+
+Resposta:
+
+O valor seria -30, mas para funcionar corretamente deve colocar paranteses em todos 'a' da
+macro para dar o resultado 10 que é o desejado.
+
