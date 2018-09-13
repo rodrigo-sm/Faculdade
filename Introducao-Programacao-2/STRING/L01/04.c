@@ -12,6 +12,7 @@ int main()
     char str[81];
     int y,x,r=1,z;
     scanf("%80[^\n]", str);
+    //TIRAR OS ESPAÇOS
     for(x = 0;str[x] != '\0';x++)
     {
         if(str[x] == ' ')
@@ -21,6 +22,7 @@ int main()
             str[z] = str[y];
         }
     }
+    //VERIFICAR SE LIDA DE TRAS PARA FRENTE E IGUAL A FRASE
     y = strlen(str);
     for(x = 0,y--; x < y; x++,y--)
     {
