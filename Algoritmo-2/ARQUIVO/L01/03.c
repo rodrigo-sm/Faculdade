@@ -65,21 +65,21 @@ int main()
 
 void gravarPessoa(void)
 {
-    int t,i;
-    char n[60],a[5];
+    int t,i,a;
+    char n[60];
     FILE *p;
     printf("\nDigite o nome: ");
     scanf(" %51[^\n]", n);
     printf("\nDigite o ano: ");
-    scanf(" %s", a);
+    scanf(" %d", &a);
     t = strlen(n);
     //VAI PRENCHER O QUE FALTA DOS 50 CARACTERES PARA O NOME COM ESPACO
+    printf("s\n");
     for(; t < 50; t++)
         n[t] = ' ';
     //VAI COLOCAR JUNTA O ANO NA VARIAVEL N QUE CONTEM O NOME PARA FORMAR A STRRING FINAL
-    for(i = 0; i < 4; t++,i++)
-        n[t] = a[i];
     n[t] = '\0';
+    printf("%s%d\n",n,a);
     if((p = fopen(arquivo,"a")) == NULL)
     {
         printf("\n\nO arquivo %s nao pode ser aberto\n",arquivo);
@@ -87,9 +87,9 @@ void gravarPessoa(void)
     else
     {
         //VAI COLOCAR A STRING N NO ARQUIVO
-        for(i = 0; n[i] != '\0'; i++)
-            fputc(n[i],p);
-        fputc('\n',p);
+        printf("s\n");
+        fprintf(p,"%s%d\n",n,a);
+        printf("s\n");
         fclose(p);
     }
 }
@@ -106,41 +106,19 @@ void exibirListagem(void)
     else
     {
         printf("\n\nConteudo:\n\n");
-        while((ch = fgetc(p)) != EOF)
+        char nome[51];
+        int a,tam;
+        while((fscanf(p,"%s%d\n", nome, &a)) != EOF)
         {
-            str[i] = ch;
-            i++;
-            //CADA LINHA CONTEM 55 CARACTERES
-            if(i == 55)
-            {
-                //VAI PASSAR O ANO PARA A VARIAVEL a
-                a[0] = str[50];
-                a[1] = str[51];
-                a[2] = str[52];
-                a[3] = str[53];
-                //VAI TRANSFORMA A VARIAVEL a EM INTEIRO
-                t = atoi(a);
-                //VAI VERIFICAR SE A PESSOA E MAIOR DE IDADE OU NAO
-                if((ANO - t) >= 18)
-                {
-                    str[54] = ' ';
-                    str[55] = 'O';
-                    str[56] = 'K';
-                    str[57] = '\n';
-                    str[58] = '\0';
-                }
-                else
-                {
-                    str[54] = ' ';
-                    str[55] = '<';
-                    str[56] = '1';
-                    str[57] = '8';
-                    str[58] = '\n';
-                    str[59] = '\0';
-                }
-                printf("%s",str);
-                i = 0;
-            }
+            tam = strlen(nome);
+            //VAI PRENCHER O QUE FALTA DOS 50 CARACTERES PARA O NOME COM ESPACO
+            for(; tam < 50; tam++)
+                nome[tam] = ' ';
+            nome[tam] = '\0';
+            if((ANO- a) >= 18)
+                printf("%s%d OK\n",nome,a);
+            else
+                printf("%s%d <18", nome,a);
         }
     }
     fclose(p);
