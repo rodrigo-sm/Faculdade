@@ -16,7 +16,8 @@
 #include <stdbool.h>
 
 /* A função recebe um inteiro index e dois vetores mensagem e crib
- * e verifica se crib pode ser colocada na mensagem */
+ * e verifica se crib pode ser colocada a partir da posiçao index na mensagem
+ * Obs: nenhuma palavra da crib pode repetir na cifra */
 bool eh_possivel(int index, const char * mensagem, const char * crib);
 
 int main()
@@ -49,4 +50,3 @@ bool eh_possivel(int index, const char * mensagem, const char * crib)
     }
     return 1;
 }
-
