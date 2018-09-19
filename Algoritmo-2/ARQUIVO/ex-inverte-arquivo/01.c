@@ -31,6 +31,7 @@ int main()
     }
     rewind(pin);
     char text[c][32];
+    //Vai armazenar o conteudo no vetor de caracteres text
     while((ch = fgetc(pin)) != EOF)
     {
         text[i][j] = ch;
@@ -42,6 +43,7 @@ int main()
             j = 0;
         }
     }
+    //Vai inverter as linhas
     for(i = 0;i < c + 1;i++)
     {
         k = strlen(text[i]);
@@ -57,6 +59,7 @@ int main()
         text[i][f] ='\0';
     }
     printf("%d\n",c);
+    //Vai armazenar a matriz text formatada no arquivo
     for(i = c;i >= 0;i--)
     {
         for(j = 0;text[i][j] != '\0'; j++)

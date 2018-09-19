@@ -1,0 +1,8 @@
+3)Qual o invariante do processo iterativo
+da função soma do exercício 1?
+
+Resposta:
+
+for (i = 0; i < n; i++) {
+      /* x é a soma de v[0..i-1] */
+      x += v[i];

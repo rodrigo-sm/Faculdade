@@ -1,0 +1,9 @@
+2)Critique a seguinte documentação de uma
+função:
+/* função que recebe números inteiros p, q, r, s
+* e devolve a média aritmética de p, q, r */
+
+Resposta:
+
+Desnecessario explicar que p,q,r,s sao numeros inteiros e faltou explicar
+a variavel s
