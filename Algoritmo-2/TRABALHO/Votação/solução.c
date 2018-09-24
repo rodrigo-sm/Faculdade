@@ -1,4 +1,4 @@
-/* Enigma.c
+/* solução.c
  *
  * Programa que gera uma votacao aleatoria e exibe o resultado
  *
@@ -14,13 +14,15 @@
 #include <string.h>
 #include <time.h>
 /* MAX_EL -> Quantidade de eleitores */
-#define MAX_EL 1000
+#define MAX_EL 100000
 /* MAX_CD -> Quantidade de candidato */
 #define MAX_CD 15
 
 void Gera_Urna(void);
 void Apura_Urna(long * qtd, int *cod);
 void Ordena_Urna(long * qtd, int * cod, char nome[MAX_CD][150]);
+void Exibe_Urna(long * qtd, int *cod, char nome[MAX_CD][150]);
+
 int main()
 {
     while(1)
@@ -33,42 +35,40 @@ int main()
         printf("*---------------------*\n");
         int i;
         scanf("%d", &i);
+        system("cls");
         if(i == 1)
         {
             srand(time(NULL));
             Gera_Urna();
+            system("pause");
         }
         if(i == 3)
             return 0;
         if(i == 2)
         {
-            int cod[MAX_CD], c = MAX_EL * 24;
+            int cod[MAX_CD];
             long int qtd[MAX_CD] = {0};
             char nome[MAX_CD][150];
-            cod[0] = 19;  strcpy(nome[0], "Alvaro Dias (Podemos)     ");
-            cod[1] = 51;  strcpy(nome[1], "Cabo Daciolo (Patriota)   ");
-            cod[2] = 12;  strcpy(nome[2], "Ciro Gomes (PDT)          ");
-            cod[3] = 27;  strcpy(nome[3], "Eymael (DC)               ");
-            cod[4] = 13;  strcpy(nome[4], "Fernando Haddad (PT)      ");
-            cod[5] = 45;  strcpy(nome[5], "Geraldo Alckmin (PSDB)    ");
-            cod[6] = 50;  strcpy(nome[6], "Guilherme Boulos (PSol)   ");
-            cod[7] = 15;  strcpy(nome[7], "Henrique Meirelles (MDB)  ");
-            cod[8] = 17;  strcpy(nome[8], "Jair Bolsonaro (PSL)      ");
-            cod[9] = 30;  strcpy(nome[9], "Joao Amoedo (Novo)        ");
-            cod[10] = 54; strcpy(nome[10],"Joao Vicente Goulart (PPL)");
-            cod[11] = 18; strcpy(nome[11],"Marina Silva (Rede)       ");
-            cod[12] = 16; strcpy(nome[12],"Vera Lúcia (PSTU)         ");
-            cod[13] = 1;  strcpy(nome[13],"Brancos                   ");
-            cod[14] = 2 ; strcpy(nome[14],"Nulos                     ");
+            cod[0] = 19;  strcpy(nome[0],  "Alvaro Dias (Podemos)     ");
+            cod[1] = 51;  strcpy(nome[1],  "Cabo Daciolo (Patriota)   ");
+            cod[2] = 12;  strcpy(nome[2],  "Ciro Gomes (PDT)          ");
+            cod[3] = 27;  strcpy(nome[3],  "Eymael (DC)               ");
+            cod[4] = 13;  strcpy(nome[4],  "Fernando Haddad (PT)      ");
+            cod[5] = 45;  strcpy(nome[5],  "Geraldo Alckmin (PSDB)    ");
+            cod[6] = 50;  strcpy(nome[6],  "Guilherme Boulos (PSol)   ");
+            cod[7] = 15;  strcpy(nome[7],  "Henrique Meirelles (MDB)  ");
+            cod[8] = 17;  strcpy(nome[8],  "Jair Bolsonaro (PSL)      ");
+            cod[9] = 30;  strcpy(nome[9],  "Joao Amoedo (Novo)        ");
+            cod[10] = 54; strcpy(nome[10], "Joao Vicente Goulart (PPL)");
+            cod[11] = 18; strcpy(nome[11], "Marina Silva (Rede)       ");
+            cod[12] = 16; strcpy(nome[12], "Vera Lucia (PSTU)         ");
+            cod[13] = 1;  strcpy(nome[13], "Brancos                   ");
+            cod[14] = 2;  strcpy(nome[14], "Nulos                     ");
             Apura_Urna(qtd, cod);
             Ordena_Urna(qtd, cod, nome);
-            printf("Codigo\tCandidato\t\t\tVotos\n");
-            for(i = 0; i < MAX_CD; i++)
-                printf("%d\t%s\t%ld\n", cod[i], nome[i], qtd[i]);
-            printf("\n============================================\n\n");
-            printf("Codigo\tCandidato\t\t\tVotos\n");
-            for(i = 0; i < MAX_CD; i++)
-                printf("%d\t%s\t%ld%%\n", cod[i], nome[i], (qtd[i] * 100) / c);
+            Exibe_Urna(qtd, cod, nome);
+            system("pause");
+            system("cls");
         }
     }
     return 0;
@@ -78,7 +78,22 @@ void Gera_Urna()
 {
     FILE *p;
     char nome[] = "urna", arquivo[15] = "urna", numero[3];
-    int i, k = 0, v;
+    int i, k = 0, v, cod[MAX_CD];
+    cod[0] = 19;
+    cod[1] = 51;
+    cod[2] = 12;
+    cod[3] = 27;
+    cod[4] = 13;
+    cod[5] = 45;
+    cod[6] = 50;
+    cod[7] = 15;
+    cod[8] = 17;
+    cod[9] = 30;
+    cod[10] = 54;
+    cod[11] = 18;
+    cod[12] = 16;
+    cod[13] = 1;
+    cod[14] = 2 ;
     long int urna[MAX_EL];
     for(i = 1; i < 25; i++)
     {
@@ -94,25 +109,25 @@ void Gera_Urna()
         /* Gera os votos e verifica se eles sao validos */
         while(k < MAX_EL)
         {
-            v = rand() % 55;
+            v = rand() % 15;
             switch(v)
             {
+            case 0:
             case 1:
             case 2:
-            case 19:
-            case 51:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+            case 11:
             case 12:
             case 13:
-            case 45:
-            case 50:
-            case 15:
-            case 17:
-            case 30:
-            case 54:
-            case 18:
-            case 16:
-            case 27:
-                urna[k++] = v;
+            case 14:
+                urna[k++] = cod[v];
             }
         }
         fwrite(urna, MAX_EL, sizeof(int), p);
@@ -167,7 +182,7 @@ void Ordena_Urna(long * qtd, int * cod, char nome[MAX_CD][150])
                 qtd[j] = aux_qtd;
 
                 aux_cod = cod[i];
-                cod[j] = cod[i];
+                cod[i] = cod[j];
                 cod[j] = aux_cod;
 
                 strcpy(aux_nome, nome[i]);
@@ -176,4 +191,17 @@ void Ordena_Urna(long * qtd, int * cod, char nome[MAX_CD][150])
             }
         }
     }
+}
+
+void Exibe_Urna(long * qtd, int *cod, char nome[MAX_CD][150])
+{
+    int i;
+    long  c = MAX_EL * 24;
+    printf("Codigo\tCandidato\t\t\tVotos\n");
+    for(i = 0; i < MAX_CD; i++)
+        printf("%d\t%s\t%ld\n", cod[i], nome[i], qtd[i]);
+    printf("\n============================================\n\n");
+    printf("Candidato\t\t\tVotos\n");
+    for(i = 0; i < MAX_CD; i++)
+        printf("%s\t%ld%%\n", nome[i], (qtd[i] * 100) / c);
 }

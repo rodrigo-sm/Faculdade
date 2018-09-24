@@ -1,29 +1,11 @@
-/*
-3.	Faça um programa em C com duas funções: uma para gravar em um arquivo e outra para escrever. O programa principal deve conter um menu com as opções:
-1- Gravar Pessoa; 2- Exibir Listagem; 3- Sair. Ao escolher Gravar Pessoa, a função void gravar(void) deve ser chamada;
-ao escolher Exibir Listagem, o programa deve exibir o conteúdo do arquivo manipulado em Gravar Pessoa; O nome do arquivo deve ser parametrizado em uma variável global.
-
-void gravarPessoa(void):
-
-A função permite o usuário informar o nome de uma pessoa e o ano de nascimento. Deve ser criada uma linha no arquivo com a seguinte característica:
-
-[nome                                                                ][anonascimento]\n
-
-Onde deve ser preenchido com espaços após o nome até que se atinja um total de 50 caracteres para nome, seguido de 4 caracteres para o ano de nascimento. Exemplo:
-
-Fernando..........................................1977
-
-(Na linha acima cada ponto corresponde a um espaço. Neste caso como a string Fernando possui 8 caracteres, são concatenados 42 espaços para que atinja 50)
-
-void exibirListagem(void):
-
-A função deverá ler o arquivo de entrada e imprimir na tela cada linha. O programa deve calcular a idade a partir do ano de nascimento,
-e colocar ao lado do nascimento uma mensagem conforme a regra a seguir:
-
-Se a idade for menor do que 18 anos, escrever:  <18
-Se a idade for maior ou igual que 18 anos, escrever  OK
-
-*/
+/* Programa que grava nome e idade e depois exibe o conteudo e mostra se a pessoa e maior de idade ou nao
+ *
+ * Rodrigo Suarez Moreira (Ciência da Computação)
+ *
+ * Disciplina: Algoritmo-II
+ *
+ * 18/09/2018
+ */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -47,6 +29,7 @@ int main()
         printf("* 3- Sair             *\n");
         printf("*---------------------*\n");
         scanf("%d", &n);
+        system("cls");
         //VAI SELECIONAR  COMANDO ESCOLHIDO
         switch(n)
         {
@@ -55,10 +38,12 @@ int main()
             break;
         case 2:
             exibirListagem();
+            system("pause");
             break;
         case 3:
             return 0;
         }
+        system("cls");
     }
     return 0;
 }
@@ -74,12 +59,10 @@ void gravarPessoa(void)
     scanf(" %d", &a);
     t = strlen(n);
     //VAI PRENCHER O QUE FALTA DOS 50 CARACTERES PARA O NOME COM ESPACO
-    printf("s\n");
     for(; t < 50; t++)
         n[t] = ' ';
     //VAI COLOCAR JUNTA O ANO NA VARIAVEL N QUE CONTEM O NOME PARA FORMAR A STRRING FINAL
     n[t] = '\0';
-    printf("%s%d\n",n,a);
     if((p = fopen(arquivo,"a")) == NULL)
     {
         printf("\n\nO arquivo %s nao pode ser aberto\n",arquivo);
@@ -87,9 +70,7 @@ void gravarPessoa(void)
     else
     {
         //VAI COLOCAR A STRING N NO ARQUIVO
-        printf("s\n");
         fprintf(p,"%s%d\n",n,a);
-        printf("s\n");
         fclose(p);
     }
 }
@@ -108,17 +89,13 @@ void exibirListagem(void)
         printf("\n\nConteudo:\n\n");
         char nome[51];
         int a,tam;
-        while((fscanf(p,"%s%d\n", nome, &a)) != EOF)
+        while((fgets(nome, 50, p)) != NULL)
         {
-            tam = strlen(nome);
-            //VAI PRENCHER O QUE FALTA DOS 50 CARACTERES PARA O NOME COM ESPACO
-            for(; tam < 50; tam++)
-                nome[tam] = ' ';
-            nome[tam] = '\0';
-            if((ANO- a) >= 18)
+            fscanf(p, "%d\n", &a);
+            if((ANO - a) >= 18)
                 printf("%s%d OK\n",nome,a);
             else
-                printf("%s%d <18", nome,a);
+                printf("%s%d <18\n", nome,a);
         }
     }
     fclose(p);

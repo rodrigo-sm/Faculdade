@@ -1,6 +1,4 @@
-/* Enigma.c
- *
- * Programa que determina a quantidade de possibilidades que crib pode ser colocado na mensagem cifrada
+/* Programa que determina a quantidade de possibilidades que crib pode ser colocado na mensagem cifrada
  *
  * Rodrigo Suarez Moreira (Ciência da Computação)
  * Arthur Silveira Chaves (Sistemas de Informação)
