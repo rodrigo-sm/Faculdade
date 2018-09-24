@@ -24,13 +24,13 @@ int main()
 {
     bool r;
     char cifra[10001];
-    scanf("%s", cifra);
+    scanf("%[A-Z]", cifra);
     int tcifra = strlen(cifra), s = 0,i;
     char crib[tcifra];
-    int tcrib = strlen(crib), tf = (tcifra - tcrib) - 1;
-    scanf(" %s", crib);
+    scanf(" %[A-Z]", crib);
     // tf e a ultima posição a ser comparada do vetor cifra
-    for(i = 0; i < tf; i++)
+    int tcrib = strlen(crib), tf = (tcifra - tcrib);
+    for(i = 0; i <= tf; i++)
     {
         r = eh_possivel (i, cifra,crib);
         if(r) s++;
