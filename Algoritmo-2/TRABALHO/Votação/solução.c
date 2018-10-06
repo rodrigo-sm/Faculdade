@@ -14,7 +14,7 @@
 #include <string.h>
 #include <time.h>
 /* MAX_EL -> Quantidade de eleitores */
-#define MAX_EL 100000
+#define MAX_EL 9999
 /* MAX_CD -> Quantidade de candidato */
 #define MAX_CD 15
 
@@ -22,6 +22,7 @@ void Gera_Urna(void);
 void Apura_Urna(long * qtd, int *cod);
 void Ordena_Urna(long * qtd, int * cod, char nome[MAX_CD][150]);
 void Exibe_Urna(long * qtd, int *cod, char nome[MAX_CD][150]);
+int geraUrna();
 
 int main()
 {
