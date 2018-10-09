@@ -12,18 +12,43 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Imprime a logo "CAIXA"
 void logo();
+
+// Imprime o menu inicial
 void menu();
+
+//Imprime um alerta caso a opcao escolhida seja invalida
 void erroMenu();
+
+// Imprime texto do saque
 void textSaque();
+
+// Imprime um alerta caso o saque informado seja menor que 7
 void textErroSaque();
+
+// A função retorna o valor do saque
 int saque();
+// Imprime o texto cedula
 void textCed(int i);
+
+// Imprime  um alerta caso a cedula seja invalida
 void textErroCed();
+
+// Imprime um alerta caso a cedula ja foi escolhida
 void textErroRepCed();
+
+// Recebe o vetor v que contem as cedulas validas e as escolhidas e o inteiro i que representa o numero da cedula escolhida
+// e devolve o valor da cedula
 int ced(int *v, int i);
+
+// Ordena c1 e c2 de forma descrecente
 void orderna(int *c1,int *c2);
+
+// Calcula a quantidade de cedulas
 void qntdCed(int *qtd_c1, int *qtd_c2, int c1, int c2, int *saque);
+
+// Imprime a quantidade de cedulas
 void imprimiQntdCed(int *qtd_c1,int *qtd_c2,int c1,int c2,int *saque);
 
 int main()
@@ -55,40 +80,44 @@ int main()
 
 void logo()
 {
-    printf("/--------------------------------------\\\n");
-    printf("/ $$$$$$  $$$$$$  $$  $$    $$  $$$$$$ \\\n");
-    printf("/ $$      $$  $$  $$   $$  $$   $$  $$ \\\n");
-    printf("/ $$      $$  $$  $$    $$$$    $$  $$ \\\n");
-    printf("/ $$      $$$$$$  $$     $$     $$$$$$ \\\n");
-    printf("/ $$      $$  $$  $$    $$$$    $$  $$ \\\n");
-    printf("/ $$      $$  $$  $$   $$  $$   $$  $$ \\\n");
-    printf("/ $$$$$$  $$  $$  $$  $$    $$  $$  $$ \\\n");
-    printf("/--------------------------------------\\\n");
+    printf("+--------------------------------------+\n");
+    printf("| $$$$$$  $$$$$$  $$  $$    $$  $$$$$$ |\n");
+    printf("| $$      $$  $$  $$   $$  $$   $$  $$ |\n");
+    printf("| $$      $$  $$  $$    $$$$    $$  $$ |\n");
+    printf("| $$      $$$$$$  $$     $$     $$$$$$ |\n");
+    printf("| $$      $$  $$  $$    $$$$    $$  $$ |\n");
+    printf("| $$      $$  $$  $$   $$  $$   $$  $$ |\n");
+    printf("| $$$$$$  $$  $$  $$  $$    $$  $$  $$ |\n");
+    printf("+--------------------------------------+\n");
 }
 void menu()
 {
-    printf("\n Menu\n  1 - Saque\n  0 - Sair\n");
-    printf("----------------------------------------");
+    printf("| Menu                                 |");
+    printf("\n| 1 - Saque                            |");
+    printf("\n| 0 - Sair                             |\n");
+    printf("+--------------------------------------+");
     printf("\n>>>> ");
 }
 
 void erroMenu()
 {
-    printf("\tErro Opcao Invalida");
-    printf("\n----------------------------------------\n");
+    printf("|\tErro: Opcao invalida           |");
+    printf("\n+--------------------------------------+\n");
 }
 
 void textSaque()
 {
-    printf("\n Informe o saque: ");
-    printf("\n----------------------------------------");
+    printf("| Saque minimo = 7 $                   |\n");
+    printf("+--------------------------------------+\n");
+    printf("| Informe o saque:                     |");
+    printf("\n+--------------------------------------+");
     printf("\n>>>> ");
 }
 
 void textErroSaque()
 {
-    printf("\tErro Saque menor que 7");
-    printf("\n----------------------------------------");
+    printf("|\tErro: Saque menor que 7        |");
+    printf("\n+--------------------------------------+\n");
 }
 
 int saque()
@@ -112,23 +141,23 @@ int saque()
 
 void textCed(int i)
 {
-    printf("\n   Cedulas = 2, 5, 10, 25, 50, 100");
-    printf("\n----------------------------------------");
-    printf("\n\n Escolha a %d cedula: ", i);
-    printf("\n----------------------------------------");
+    printf("| Cedulas = 2, 5, 10, 25, 50, 100      |");
+    printf("\n+--------------------------------------+");
+    printf("\n| Escolha a %d cedula:                  |", i);
+    printf("\n+--------------------------------------+");
     printf("\n>>>> ");
 }
 
 void textErroCed()
 {
-    printf("\tErro Cedula Invalida");
-    printf("\n----------------------------------------");
+    printf("|\tErro: Cedula invalida          |");
+    printf("\n+--------------------------------------+\n");
 }
 
 void textErroRepCed()
 {
-    printf("\tErro Cedula Ja Informada");
-    printf("\n----------------------------------------");
+    printf("|\tErro: Cedula ja informada      |");
+    printf("\n+--------------------------------------+\n");
 }
 
 int ced(int *v, int i)
@@ -185,14 +214,14 @@ void imprimiQntdCed(int *qtd_c1, int *qtd_c2, int c1, int c2, int *saque)
     logo();
     if(*saque == 0)
     {
-        printf("\n Quantidade de cedulas de %d = %d\n", c1, *qtd_c1);
-        printf(" Quantidade de cedulas de %d = %d", c2, *qtd_c2);
-        printf("\n----------------------------------------\n");
+        printf("| Quantidade de cedulas de %d = %d       |", c1, *qtd_c1);
+        printf("\n| Quantidade de cedulas de %d = %d       |", c2, *qtd_c2);
+        printf("\n+--------------------------------------+\n");
     }
     else
     {
-        printf("\tErro Saque Invalido");
-        printf("\n----------------------------------------\n");
+        printf("|\tErro: Saque invalido           |");
+        printf("\n+--------------------------------------+\n");
     }
     system("pause");
     system("cls");
