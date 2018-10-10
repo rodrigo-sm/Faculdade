@@ -1,0 +1,6 @@
+8. Declare   uma   enumeração   chamada  resposta  que   defina   as   constantes  NAO,  SIM  
+e TALVEZ com os valores 0, 1 e 2, respectivamente
+
+Resposta:
+
+enm respostas {NAO, SIM, TALVEZ};

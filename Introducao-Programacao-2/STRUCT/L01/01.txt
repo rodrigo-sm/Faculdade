@@ -1,0 +1,12 @@
+1. O que está errado nas definições das estruturas em C abaixo:
+a) structure ponto { double x, y; }
+Resposta: A sintaxe correta para struct é 'struct' não 'structure'.
+
+b) struct { double x, double y; };
+Resposta: Esqueceu do ';' entre as variaveis e esqueceu de criar as variaveis da struct anonima.
+
+c) struct ponto ( double x; double y );
+Resposta: As variaveis da struct devem ficar entre '{}' bão '()'.
+
+d) struct ponto { double x; double y; }
+Resposta: Esqueceu do ';' no final.
