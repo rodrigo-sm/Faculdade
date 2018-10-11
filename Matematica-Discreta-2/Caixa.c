@@ -251,7 +251,7 @@ int ced(int *v, int i, int ced)
             textErroRepCed();
         }
         // Verifica se a cedula e invalida
-        else if( cedDec == -1)
+        else if( cedDec == -1 || v[cedDec] != 1)
         {
             system ("cls");
             logo();
@@ -279,7 +279,7 @@ void orderna(int *c1, int *c2)
 void imprimiQntdCed(int qtd_c1, int qtd_c2, int c1, int c2, int saque)
 {
     int r = 1,i,j, saqOri = saque;
-    // Vai determinar a menor quantidade de cedulas
+    // Vai determinar a menor quantidade de cedulas, tendo em vista que a quantidade de cedulas 2 vai ser 0
     qtd_c1 = saque / c1;
     saque %= c1;
     system("cls");
@@ -306,7 +306,7 @@ void imprimiQntdCed(int qtd_c1, int qtd_c2, int c1, int c2, int saque)
         }
         printf("|");
         r = 0;
-        // Vai determinar a menor quantidade de cedulas, tendo em vista que as duas cedulas vao conter pelo menos uma quantiddade
+        // Vai determinar a menor quantidade de cedulas, tendo em vista que a quantidade minima para cada cedula é 1
         saque += c1;
         qtd_c1--;
         while(saque % c2 != 0 && saqOri > saque )
@@ -315,7 +315,7 @@ void imprimiQntdCed(int qtd_c1, int qtd_c2, int c1, int c2, int saque)
             qtd_c1--;
         }
     }
-    // Vai determinar a menor quantidade de cedulas, tendo em vista que as duas cedulas vao conter pelo menos uma quantiddade
+    // Vai determinar a menor quantidade de cedulas, tendo em vista que a quantidade minima para cada cedula é 1
     qtd_c2 = saque / c2;
     saque %= c2;
     if(qtd_c1 > 0 && saque == 0)
