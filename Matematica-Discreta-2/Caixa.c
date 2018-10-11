@@ -1,6 +1,6 @@
 /* Caixa.c
  *
- * Programa simulador de caixa eletronico
+ * Programa que informa um saque e duas cedulas e ele imprime o troco
  *
  * Rodrigo Suarez Moreira (Ciência da Computação)
  *
@@ -11,69 +11,85 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+// Textos
 
 // Imprime a logo "CAIXA"
 void logo();
-
 // Imprime o menu inicial
 void menu();
-
 //Imprime um alerta caso a opcao escolhida seja invalida
 void erroMenu();
-
 // Imprime texto do saque
 void textSaque();
-
-// Imprime um alerta caso o saque informado seja menor que 7
-void textErroSaque();
-
-// A função retorna o valor do saque
-int saque();
 // Imprime o texto cedula
 void textCed(int i, int c1);
-
 // Imprime  um alerta caso a cedula seja invalida
 void textErroCed();
-
 // Imprime um alerta caso a cedula ja foi escolhida
 void textErroRepCed();
+// Imprime um alerta caso o saque seja invalido
+void textSaqueInvalido();
 
-// Recebe o vetor v que contem as cedulas validas e as escolhidas e o inteiro i que representa o numero da cedula escolhida
-// e devolve o valor da cedula
+/* Funcoes */
+
+/* A função retorna o valor do saque */
+int saque();
+/* Recebe o vetor v que contem as cedulas validas e as escolhidas e o inteiro i que representa o numero da cedula escolhida
+ * e devolve o valor da cedula */
 int ced(int *v, int i, int c1);
-
-// Ordena c1 e c2 de forma descrecente
+/* Ordena c1 e c2 de forma descrecente */
 void orderna(int *c1,int *c2);
-
-// Imprime a quantidade de cedulas
+/* Imprime e determina a quantidade de cedulas */
 void imprimiQntdCed(int qtd_c1,int qtd_c2,int c1,int c2,int saque);
+/* Verifica se o numero informada e valido ou nao */
+void apuraErro(char * numStr, int * numDec);
 
 int main()
 {
-    int v[101] = {0}, c1, c2, saq, qtd_c1, qtd_c2, opcao = 1;
-    do{
-        //Seleciona o saque e verifica se e valido
+    int v[101] = {0}, c1, c2, saq, qtd_c1, qtd_c2, opcDec, tam;
+    char opcStr[100];
+    do
+    {
         system ("cls");
-        v[2] = 1; v[5] = 1; v[10] = 1; v[20] = 1; v[50] = 1; v[100] = 1;
-        if(opcao != 1)
+        // Vai atribuir 1 as cedulas validas
+        v[2] = 1;
+        v[5] = 1;
+        v[10] = 1;
+        v[20] = 1;
+        v[50] = 1;
+        v[100] = 1;
+        logo();
+        menu();
+        scanf(" %99[^\n]", &opcStr);
+        // Verifica se a opcao e valida ou nao
+        tam = strlen(opcStr);
+        if(tam == 1 && opcStr[0] == '1')
+            opcDec = 1;
+        else if(tam == 1 && opcStr[0] == '0')
+            opcDec = 0;
+        else
+            opcDec = -1;
+        switch(opcDec)
         {
+        case 0:
+            break;
+        case 1:
+            saq = saque();
+            c1 = ced(v, 1, c1);
+            c2 = ced(v, 2, c1);
+            orderna( &c1, &c2);
+            imprimiQntdCed( qtd_c1, qtd_c2, c1, c2, saq);
+            break;
+        default:
+            system ("cls");
             logo();
             erroMenu();
         }
-        logo();
-        menu();
-        scanf(" %d", &opcao);
-        switch(opcao) {
-            case 0: break;
-            case 1:
-                saq = saque();
-                c1 = ced(v, 1, c1);
-                c2 = ced(v, 2, c1);
-                orderna( &c1, &c2);
-                imprimiQntdCed( qtd_c1, qtd_c2, c1, c2, saq);
-                break;
-        }
-    } while(opcao);
+    }
+    while(opcDec);
     return 0;
 }
 
@@ -118,9 +134,17 @@ void textSaque()
     printf("\n>>>> ");
 }
 
-void textErroSaque()
+void textSaqueMenor7()
 {
     printf("|\tErro: Saque menor que 7        |");
+    printf("\n+--------------------------------------+\n");
+    system("pause");
+    system("cls");
+}
+
+void textSaqueInvalido()
+{
+    printf("|        Erro: Saque invalido          |");
     printf("\n+--------------------------------------+\n");
     system("pause");
     system("cls");
@@ -129,54 +153,63 @@ void textErroSaque()
 int saque()
 {
     system ("cls");
-    int saque;
-    logo();
-    textSaque();
-    scanf(" %d", &saque);
-    while(saque < 7)
+    char saqStr[50];
+    int saqDec;
+    do
     {
         system ("cls");
         logo();
-        textErroSaque();
-        logo();
         textSaque();
-        scanf(" %d", &saque);
+        scanf(" %49[^\n]", saqStr);
+        apuraErro(saqStr, &saqDec);
+        if(saqDec < 7)
+        {
+            system ("cls");
+            logo();
+            textSaqueInvalido();
+        }
     }
+    while(saqDec < 7);
     system ("cls");
-    return saque;
+    return saqDec;
 }
 
-void textCed(int i, int c1)
+
+void textCed(int i, int ced)
 {
     printf("| Cedulas = ");
+    // Vai Colocar espaços o suficiente para nao extrapolar a borda da caixa
     if(i == 2)
     {
-        if(c1 != 2)
+        if(ced != 2)
             printf("|2");
-        if(c1 != 5)
+        if(ced != 5)
             printf("|5");
-        if(c1 != 10)
+        if(ced != 10)
             printf("|10");
-        if(c1 != 25)
+        if(ced != 25)
             printf("|20");
-        if(c1 != 50)
+        if(ced != 50)
             printf("|50");
-        if(c1 != 100)
+        if(ced != 100)
             printf("|100");
         printf("|          ");
-        switch(c1)
+        switch(ced)
         {
-        case 100: printf(" ");
+        case 100:
+            printf(" ");
         case 50:
         case 20:
-        case 10: printf(" ");
+        case 10:
+            printf(" ");
         case 5:
-        case 2: printf(" ");
+        case 2:
+            printf(" ");
         }
         printf("|");
     }
     else
-        printf("|2|5|10|20|50|100          |");
+        printf("|2|5|10|20|50|100|         |");
     printf("\n+--------------------------------------+");
     printf("\n| Escolha a %d cedula:                  |", i);
     printf("\n+--------------------------------------+");
@@ -199,33 +232,37 @@ void textErroRepCed()
     system("cls");
 }
 
-int ced(int *v, int i, int c1)
+int ced(int *v, int i, int ced)
 {
-    int ced;
-    system ("cls");
-    logo();
-    textCed(i, c1);
-    scanf(" %d", &ced);
-    while(v[ced] == 0 || v[ced] == -1)
+    char cedStr[50];
+    int cedDec;
+    do
     {
         system ("cls");
-        if(v[ced] == -1)
+        logo();
+        textCed(i, ced);
+        scanf(" %49[^\n]", cedStr);
+        apuraErro(cedStr, &cedDec);
+        // Verifica se a cedula ja foi informada
+        if(v[cedDec] == -1)
         {
+            system ("cls");
             logo();
             textErroRepCed();
         }
-        else
+        // Verifica se a cedula e invalida
+        else if( cedDec == -1)
         {
+            system ("cls");
             logo();
             textErroCed();
         }
-        logo();
-        textCed(i, c1);
-        scanf(" %d", &ced);
+        // Verifica se a cedula e valida
     }
-    v[ced] = -1;
+    while(v[cedDec] != 1);
+    v[cedDec] = -1;
     system ("cls");
-    return ced;
+    return cedDec;
 }
 
 void orderna(int *c1, int *c2)
@@ -241,7 +278,8 @@ void orderna(int *c1, int *c2)
 
 void imprimiQntdCed(int qtd_c1, int qtd_c2, int c1, int c2, int saque)
 {
-    int r = 1,i,j;
+    int r = 1,i,j, saqOri = saque;
+    // Vai determinar a menor quantidade de cedulas
     qtd_c1 = saque / c1;
     saque %= c1;
     system("cls");
@@ -268,18 +306,26 @@ void imprimiQntdCed(int qtd_c1, int qtd_c2, int c1, int c2, int saque)
         }
         printf("|");
         r = 0;
-        qtd_c1--;
+        // Vai determinar a menor quantidade de cedulas, tendo em vista que as duas cedulas vao conter pelo menos uma quantiddade
         saque += c1;
+        qtd_c1--;
+        while(saque % c2 != 0 && saqOri > saque )
+        {
+            saque += c1;
+            qtd_c1--;
+        }
     }
+    // Vai determinar a menor quantidade de cedulas, tendo em vista que as duas cedulas vao conter pelo menos uma quantiddade
     qtd_c2 = saque / c2;
     saque %= c2;
-    if(qtd_c1 != 0 && saque == 0)
+    if(qtd_c1 > 0 && saque == 0)
     {
         if(r == 0)
-        printf("\n+---------------- OU ------------------+\n");
+            printf("\n+---------------- OU ------------------+\n");
         printf("| Quantidade de cedulas de %d = %d", c1, qtd_c1);
         //Vai imprimir a quantidade de espaços para nao extrapolar a caixa
         j = 0;
+        // Vai Colocar espaços o suficiente para nao extrapolar a borda da caixa
         for(i = 1; i <= c1; i*=10, j++);
         for(i = 1; i <= qtd_c1; i*=10, j++);
         for(; j < 9; j++)
@@ -290,6 +336,7 @@ void imprimiQntdCed(int qtd_c1, int qtd_c2, int c1, int c2, int saque)
         printf("\n| Quantidade de cedulas de %d = %d", c2, qtd_c2);
         //Vai imprimir a quantidade de espaços para nao extrapolar a caixa
         j = 0;
+        // Vai Colocar espaços o suficiente para nao extrapolar a borda da caixa
         for(i = 1; i <= c2; i*=10, j++);
         for(i = 1; i <= qtd_c2; i*=10, j++);
         for(; j < 9; j++)
@@ -307,3 +354,27 @@ void imprimiQntdCed(int qtd_c1, int qtd_c2, int c1, int c2, int saque)
     system("cls");
 }
 
+void  apuraErro(char * numStr, int * numDec)
+{
+    * numDec = 0;
+    int  i, j, dec, tam = strlen(numStr);
+    j = pow(10, tam) / 10;
+    if(j % 10 != 0 && tam != 1)
+        j++;
+    for(i = 0; numStr[i] != '\0'; i++, j /= 10)
+    {
+        if(numStr[i] >= '0' && numStr[i] <= '9')
+        {
+            /*dec = numStr[i] - '0';
+            if(dec)
+                * numDec += dec * j;
+            else*/
+            * numDec += (numStr[i] - '0') * j;
+        }
+        else
+        {
+            * numDec = -1;
+            break;
+        }
+    }
+}
