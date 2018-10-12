@@ -95,31 +95,31 @@ int main()
 
 void logo()
 {
-    printf("+--------------------------------------+\n");
-    printf("| $$$$$$  $$$$$$  $$  $$    $$  $$$$$$ |\n");
-    printf("| $$      $$  $$  $$   $$  $$   $$  $$ |\n");
-    printf("| $$      $$  $$  $$    $$$$    $$  $$ |\n");
-    printf("| $$      $$$$$$  $$     $$     $$$$$$ |\n");
-    printf("| $$      $$  $$  $$    $$$$    $$  $$ |\n");
-    printf("| $$      $$  $$  $$   $$  $$   $$  $$ |\n");
-    printf("| $$$$$$  $$  $$  $$  $$    $$  $$  $$ |\n");
-    printf("+--------------------------------------+\n");
+    printf("+--------------------------------------------+\n");
+    printf("|    $$$$$$  $$$$$$  $$  $$    $$  $$$$$$    |\n");
+    printf("|    $$      $$  $$  $$   $$  $$   $$  $$    |\n");
+    printf("|    $$      $$  $$  $$    $$$$    $$  $$    |\n");
+    printf("|    $$      $$$$$$  $$     $$     $$$$$$    |\n");
+    printf("|    $$      $$  $$  $$    $$$$    $$  $$    |\n");
+    printf("|    $$      $$  $$  $$   $$  $$   $$  $$    |\n");
+    printf("|    $$$$$$  $$  $$  $$  $$    $$  $$  $$    |\n");
+    printf("+--------------------------------------------+\n");
 }
 void menu()
 {
-    printf("|             Bem Vindo!!!             |\n");
-    printf("+--------------------------------------+\n");
-    printf("| Menu                                 |");
-    printf("\n| 1 - Saque                            |");
-    printf("\n| 0 - Sair                             |\n");
-    printf("+--------------------------------------+");
-    printf("\n>>>> ");
+    printf("|                Bem Vindo!!!                |\n");
+    printf("+--------------------------------------------+\n");
+    printf("| Menu:                                      |\n");
+    printf("|  1 - Saque                                 |\n");
+    printf("|  0 - Sair                                  |\n");
+    printf("+--------------------------------------------+\n");
+    printf(">>>> ");
 }
 
 void erroMenu()
 {
-    printf("|\tErro: Opcao invalida           |");
-    printf("\n+--------------------------------------+\n");
+    printf("|            Erro: Opcao invalida            |\n");
+    printf("+--------------------------------------------+\n");
     system("pause");
     system("cls");
 
@@ -127,25 +127,25 @@ void erroMenu()
 
 void textSaque()
 {
-    printf("| Saque minimo = 7 $                   |\n");
-    printf("+--------------------------------------+\n");
-    printf("| Informe o saque:                     |");
-    printf("\n+--------------------------------------+");
-    printf("\n>>>> ");
+    printf("| Saque minimo = 7 $                         |\n");
+    printf("+--------------------------------------------+\n");
+    printf("| Informe o saque:                           |\n");
+    printf("+--------------------------------------------+\n");
+    printf(">>>> ");
 }
 
 void textSaqueMenor7()
 {
-    printf("|\tErro: Saque menor que 7        |");
-    printf("\n+--------------------------------------+\n");
+    printf("|           Erro: Saque menor que 7          |\n");
+    printf("+--------------------------------------------+\n");
     system("pause");
     system("cls");
 }
 
 void textSaqueInvalido()
 {
-    printf("|        Erro: Saque invalido          |");
-    printf("\n+--------------------------------------+\n");
+    printf("|            Erro: Saque invalido            |\n");
+    printf("+--------------------------------------------+\n");
     system("pause");
     system("cls");
 }
@@ -193,7 +193,7 @@ void textCed(int i, int ced)
             printf("|50");
         if(ced != 100)
             printf("|100");
-        printf("|          ");
+        printf("|                ");
         switch(ced)
         {
         case 100:
@@ -206,28 +206,28 @@ void textCed(int i, int ced)
         case 2:
             printf(" ");
         }
-        printf("|");
+        printf("|\n");
     }
     else
-        printf("|2|5|10|20|50|100|         |");
-    printf("\n+--------------------------------------+");
-    printf("\n| Escolha a %d cedula:                  |", i);
-    printf("\n+--------------------------------------+");
-    printf("\n>>>> ");
+        printf("|2|5|10|20|50|100|               |\n");
+    printf("+--------------------------------------------+\n");
+    printf("| Escolha a %d cedula:                        |\n", i);
+    printf("+--------------------------------------------+\n");
+    printf(">>>> ");
 }
 
 void textErroCed()
 {
-    printf("|\tErro: Cedula invalida          |");
-    printf("\n+--------------------------------------+\n");
+    printf("|             Erro: Cedula invalida          |\t");
+    printf("+--------------------------------------------+\n");
     system("pause");
     system("cls");
 }
 
 void textErroRepCed()
 {
-    printf("|\tErro: Cedula ja informada      |");
-    printf("\n+--------------------------------------+\n");
+    printf("|            Erro: Cedula ja informada       |\t");
+    printf("+--------------------------------------------+\n");
     system("pause");
     system("cls");
 }
@@ -243,19 +243,27 @@ int ced(int *v, int i, int ced)
         textCed(i, ced);
         scanf(" %49[^\n]", cedStr);
         apuraErro(cedStr, &cedDec);
-        // Verifica se a cedula ja foi informada
-        if(v[cedDec] == -1)
-        {
-            system ("cls");
-            logo();
-            textErroRepCed();
-        }
-        // Verifica se a cedula e invalida
-        else if( cedDec == -1 || v[cedDec] != 1)
+        // Verifica se a cedula e valida
+        if(cedDec > 100)
         {
             system ("cls");
             logo();
             textErroCed();
+        }
+        else
+        {
+            if(v[cedDec] == -1)
+            {
+                system ("cls");
+                logo();
+                textErroRepCed();
+            }
+            else if( cedDec == -1 || v[cedDec] != 1 )
+            {
+                system ("cls");
+                logo();
+                textErroCed();
+            }
         }
         // Verifica se a cedula e valida
     }
@@ -291,7 +299,7 @@ void imprimiQntdCed(int qtd_c1, int qtd_c2, int c1, int c2, int saque)
         j = 0;
         for(i = 1; i <= c1; i*=10, j++);
         for(i = 1; i <= qtd_c1; i*=10, j++);
-        for(; j < 9; j++)
+        for(; j < 15; j++)
         {
             printf(" ");
         }
@@ -300,11 +308,11 @@ void imprimiQntdCed(int qtd_c1, int qtd_c2, int c1, int c2, int saque)
         //Vai imprimir a quantidade de espaços para nao extrapolar a caixa
         j = 1;
         for(i = 1; i <= c2; i*=10, j++);
-        for(; j < 9; j++)
+        for(; j < 15; j++)
         {
             printf(" ");
         }
-        printf("|");
+        printf("|\n");
         r = 0;
         // Vai determinar a menor quantidade de cedulas, tendo em vista que a quantidade minima para cada cedula é 1
         saque += c1;
@@ -321,14 +329,14 @@ void imprimiQntdCed(int qtd_c1, int qtd_c2, int c1, int c2, int saque)
     if(qtd_c1 > 0 && saque == 0)
     {
         if(r == 0)
-            printf("\n+---------------- OU ------------------+\n");
+            printf("+------------------- OU ---------------------+\n");
         printf("| Quantidade de cedulas de %d = %d", c1, qtd_c1);
         //Vai imprimir a quantidade de espaços para nao extrapolar a caixa
         j = 0;
         // Vai Colocar espaços o suficiente para nao extrapolar a borda da caixa
         for(i = 1; i <= c1; i*=10, j++);
         for(i = 1; i <= qtd_c1; i*=10, j++);
-        for(; j < 9; j++)
+        for(; j < 15; j++)
         {
             printf(" ");
         }
@@ -339,17 +347,17 @@ void imprimiQntdCed(int qtd_c1, int qtd_c2, int c1, int c2, int saque)
         // Vai Colocar espaços o suficiente para nao extrapolar a borda da caixa
         for(i = 1; i <= c2; i*=10, j++);
         for(i = 1; i <= qtd_c2; i*=10, j++);
-        for(; j < 9; j++)
+        for(; j < 15; j++)
         {
             printf(" ");
         }
-        printf("|");
+        printf("|\n");
     }
     else if(r)
     {
-        printf("|\tErro: Saque invalido           |");
+        printf("|            Erro: Saque invalido            |\n");
     }
-    printf("\n+--------------------------------------+\n");
+    printf("+--------------------------------------------+\n");
     system("pause");
     system("cls");
 }
@@ -358,17 +366,16 @@ void  apuraErro(char * numStr, int * numDec)
 {
     * numDec = 0;
     int  i, j, dec, tam = strlen(numStr);
+    //J vai obter a quantidade de casas decimais da numStr
     j = pow(10, tam) / 10;
+    // Vai corrigir os numeros que funçao pow arrendondar para baixo
     if(j % 10 != 0 && tam != 1)
         j++;
+    // Vai transformar numStr em inteiro e armazenar em numDec
     for(i = 0; numStr[i] != '\0'; i++, j /= 10)
     {
         if(numStr[i] >= '0' && numStr[i] <= '9')
         {
-            /*dec = numStr[i] - '0';
-            if(dec)
-                * numDec += dec * j;
-            else*/
             * numDec += (numStr[i] - '0') * j;
         }
         else
