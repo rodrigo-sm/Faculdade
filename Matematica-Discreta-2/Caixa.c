@@ -27,11 +27,11 @@ void textSaque();
 // Imprime o texto cedula
 void textCed(int i, int c1);
 // Imprime  um alerta caso a cedula seja invalida
-void textErroCed();
+void textCedInvalida();
 // Imprime um alerta caso a cedula ja foi escolhida
-void textErroRepCed();
+void textCedRepetida();
 // Imprime um alerta caso o saque seja invalido
-void textSaqueInvalido();
+void textSaqInvalido();
 
 /* Funcoes */
 
@@ -134,15 +134,7 @@ void textSaque()
     printf(">>>> ");
 }
 
-void textSaqueMenor7()
-{
-    printf("|           Erro: Saque menor que 7          |\n");
-    printf("+--------------------------------------------+\n");
-    system("pause");
-    system("cls");
-}
-
-void textSaqueInvalido()
+void textSaqInvalido()
 {
     printf("|            Erro: Saque invalido            |\n");
     printf("+--------------------------------------------+\n");
@@ -166,7 +158,7 @@ int saque()
         {
             system ("cls");
             logo();
-            textSaqueInvalido();
+            textSaqInvalido();
         }
     }
     while(saqDec < 7);
@@ -216,17 +208,17 @@ void textCed(int i, int ced)
     printf(">>>> ");
 }
 
-void textErroCed()
+void textCedInvalida()
 {
-    printf("|             Erro: Cedula invalida          |\t");
+    printf("|            Erro: Cedula invalida           |\n");
     printf("+--------------------------------------------+\n");
     system("pause");
     system("cls");
 }
 
-void textErroRepCed()
+void textCedRepetida()
 {
-    printf("|            Erro: Cedula ja informada       |\t");
+    printf("|            Erro: Cedula ja informada       |\n");
     printf("+--------------------------------------------+\n");
     system("pause");
     system("cls");
@@ -248,7 +240,7 @@ int ced(int *v, int i, int ced)
         {
             system ("cls");
             logo();
-            textErroCed();
+            textCedInvalida();
         }
         else
         {
@@ -256,13 +248,13 @@ int ced(int *v, int i, int ced)
             {
                 system ("cls");
                 logo();
-                textErroRepCed();
+                textCedRepetida();
             }
             else if( cedDec == -1 || v[cedDec] != 1 )
             {
                 system ("cls");
                 logo();
-                textErroCed();
+                textCedInvalida();
             }
         }
         // Verifica se a cedula e valida
