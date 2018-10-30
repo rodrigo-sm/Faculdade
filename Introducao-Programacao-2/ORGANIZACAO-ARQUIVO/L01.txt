@@ -1,0 +1,152 @@
+1. Qual a diferença entre acesso aleatório e acesso sequencial?
+R: Acesso aleatorio, o argumento de pesquisa define o caminhamento sobre o indice,
+   no acesso sequencial, a busca e feita de uma ponta a outra.
+
+2. Qual a diferença entre registro lógico e registro físico?
+R: Registro logico é uma serie de items, chamados campos ou atributos. Registro fisico
+   e bloco com diveros registros logicos.
+
+3. Qual a diferença entre arquivo serial e arquivo sequencial?
+R: No arquivo serial não existe uma chave de ordenação, sendo assim inexistindo uma
+   sequencia logica. No arquivo sequencial existe uma chave de ordenação.
+
+4. Considere o arquivo sequencial abaixo, cuja chave primária é o campo Matrícula e utiliza o
+campo Removido para indicar que o registro foi removido:
+===========================================================
+|Endereço|Matricula|Nome             |Curso|Idade|Removido|
+|    1   | 201801  | Pedro de Souza  | CC  | 20  | false  |
+|    2   | 201804  | Ana Rita        | CC  | 21  | false  |
+|    3   | 201805  | Cláudio Oliveira| SI  | 18  | true   |
+|    4   | 201808  | Vitória Talita  | CC  | 19  | false  |
+|    5   | 201809  | Emanuel Ribeiro | SI  | 18  | false  |
+|    6   | 201811  | Marcos Medeiros | SI  | 19  | false  |
+===========================================================
+
+a) Quais são os campos dos registros lógicos do arquivo?
+R : |Endereço|Matricula|Nome|Curso|Idade|Removido|
+
+b) Qual é a chave do registro no endereço 3?
+R: 201805
+
+c) Que registro seria devolvido por um argumento de pesquisa igual a 201805 para a chave
+de acesso Matrícula?
+R: |    3   | 201805  | Cláudio Oliveira| SI  | 18  | true   |
+
+d) Quais registros seriam devolvidos por um argumento de pesquisa igual “CC” para a
+chave de acesso “Curso”? 
+R: 
+   |    1   | 201801  | Pedro de Souza  | CC  | 20  | false  |
+   |    2   | 201804  | Ana Rita        | CC  | 21  | false  |
+   |    4   | 201808  | Vitória Talita  | CC  | 19  | false  |
+
+e) Como ficaria o arquivo após a inserção do registro {201807, “José da Silva”, “CC”,
+19}?
+R: 
+===========================================================
+|Endereço|Matricula|Nome             |Curso|Idade|Removido|
+|    1   | 201801  | Pedro de Souza  | CC  | 20  | false  |
+|    2   | 201804  | Ana Rita        | CC  | 21  | false  |
+|    3   | 201805  | Cláudio Oliveira| SI  | 18  | true   |
+|    4   | 201808  | Vitória Talita  | CC  | 19  | false  |
+|    5   | 201809  | Emanuel Ribeiro | SI  | 18  | false  |
+|    6   | 201811  | Marcos Medeiros | SI  | 19  | false  |
+|    7   | 201807  | José da Silva   | CC  | 19  | false  |
+===========================================================
+
+f) Como ficaria o arquivo após a remoção do registro com chave de acesso igual a 201804?
+R: 
+===========================================================
+|Endereço|Matricula|Nome             |Curso|Idade|Removido|
+|    1   | 201801  | Pedro de Souza  | CC  | 20  | false  |
+|    2   | 201804  | Ana Rita        | CC  | 21  | true   |
+|    3   | 201805  | Cláudio Oliveira| SI  | 18  | true   |
+|    4   | 201808  | Vitória Talita  | CC  | 19  | false  |
+|    5   | 201809  | Emanuel Ribeiro | SI  | 18  | false  |
+|    6   | 201811  | Marcos Medeiros | SI  | 19  | false  |
+|    7   | 201807  | José da Silva   | CC  | 19  | false  |
+===========================================================
+   
+g) Qual seria o resultado de uma leitura exaustiva de arquivo?
+R: 
+===========================================================
+|Endereço|Matricula|Nome             |Curso|Idade|Removido|
+|    1   | 201801  | Pedro de Souza  | CC  | 20  | false  |
+|    4   | 201808  | Vitória Talita  | CC  | 19  | false  |
+|    5   | 201809  | Emanuel Ribeiro | SI  | 18  | false  |
+|    6   | 201811  | Marcos Medeiros | SI  | 19  | false  |
+|    7   | 201807  | José da Silva   | CC  | 19  | false  |
+===========================================================
+
+h) Como ficaria o arquivo após sua reorganização?
+R: 
+===========================================================
+|Endereço|Matricula|Nome             |Curso|Idade|Removido|
+|    1   | 201801  | Pedro de Souza  | CC  | 20  | false  |
+|    2   | 201808  | Vitória Talita  | CC  | 19  | false  |
+|    3   | 201809  | Emanuel Ribeiro | SI  | 18  | false  |
+|    4   | 201811  | Marcos Medeiros | SI  | 19  | false  |
+|    5   | 201807  | José da Silva   | CC  | 19  | false  |
+===========================================================
+
+5. Considere que o arquivo sequencial mostrado na figura do exercício anterior e transforme­o
+em um arquivo sequencial indexado pelo campo Nome. Depois realize as operações dos
+itens e), f) g) e h) do exercício anterior.
+
+==============================	===========================================================
+|Nome             | Matricula|	|Endereço|Matricula|Nome             |Curso|Idade|Removido|
+| Pedro de Souza  | 201801   |	|    1   | 201801  | Pedro de Souza  | CC  | 20  | false  |
+| Ana Rita        | 201804   |	|    2   | 201804  | Ana Rita        | CC  | 21  | false  |
+| Cláudio Oliveira| 201805   |	|    3   | 201805  | Cláudio Oliveira| SI  | 18  | true   |
+| Vitória Talita  | 201808   |	|    4   | 201808  | Vitória Talita  | CC  | 19  | false  |
+| Emanuel Ribeiro | 201809   |	|    5   | 201809  | Emanuel Ribeiro | SI  | 18  | false  |
+| Marcos Medeiros | 201811   |	|    6   | 201811  | Marcos Medeiros | SI  | 19  | false  |
+==============================	===========================================================
+
+e) Como ficaria o arquivo após a inserção do registro {201807, “José da Silva”, “CC”,
+19}?
+R: 
+==============================	===========================================================
+|Nome             | Matricula|	|Endereço|Matricula|Nome             |Curso|Idade|Removido|
+| Pedro de Souza  | 201801   |	|    1   | 201801  | Pedro de Souza  | CC  | 20  | false  |
+| Ana Rita        | 201804   |	|    2   | 201804  | Ana Rita        | CC  | 21  | false  |
+| Cláudio Oliveira| 201805   |	|    3   | 201805  | Cláudio Oliveira| SI  | 18  | true   |
+| Vitória Talita  | 201808   |	|    4   | 201808  | Vitória Talita  | CC  | 19  | false  |
+| Emanuel Ribeiro | 201809   |	|    5   | 201809  | Emanuel Ribeiro | SI  | 18  | false  |
+| Marcos Medeiros | 201811   |	|    6   | 201811  | Marcos Medeiros | SI  | 19  | false  |
+| José da Silva   | 201807   |  |    7   | 201807  | José da Silva   | CC  | 19  | false  |
+==============================	===========================================================
+
+f) Como ficaria o arquivo após a remoção do registro com chave de acesso igual a 201804?
+R: 
+==============================	===========================================================
+|Nome             | Matricula|	|Endereço|Matricula|Nome             |Curso|Idade|Removido|
+| Pedro de Souza  | 201801   |	|    1   | 201801  | Pedro de Souza  | CC  | 20  | false  |
+| Ana Rita        | 201804   |	|    2   | 201804  | Ana Rita        | CC  | 21  | true   |
+| Cláudio Oliveira| 201805   |	|    3   | 201805  | Cláudio Oliveira| SI  | 18  | true   |
+| Vitória Talita  | 201808   |	|    4   | 201808  | Vitória Talita  | CC  | 19  | false  |
+| Emanuel Ribeiro | 201809   |	|    5   | 201809  | Emanuel Ribeiro | SI  | 18  | false  |
+| Marcos Medeiros | 201811   |	|    6   | 201811  | Marcos Medeiros | SI  | 19  | false  |
+| José da Silva   | 201807   |  |    7   | 201807  | José da Silva   | CC  | 19  | false  |
+==============================	===========================================================
+
+g) Qual seria o resultado de uma leitura exaustiva de arquivo?
+R: 
+==============================	===========================================================
+|Nome             | Matricula|	|Endereço|Matricula|Nome             |Curso|Idade|Removido|
+| Pedro de Souza  | 201801   |	|    1   | 201801  | Pedro de Souza  | CC  | 20  | false  |
+| Vitória Talita  | 201808   |	|    4   | 201808  | Vitória Talita  | CC  | 19  | false  |
+| Emanuel Ribeiro | 201809   |	|    5   | 201809  | Emanuel Ribeiro | SI  | 18  | false  |
+| Marcos Medeiros | 201811   |	|    6   | 201811  | Marcos Medeiros | SI  | 19  | false  |
+| José da Silva   | 201807   |  |    5   | 201807  | José da Silva   | CC  | 19  | false  |
+==============================	===========================================================
+
+h) Como ficaria o arquivo após sua reorganização?
+R: 
+==============================	===========================================================
+|Nome             | Matricula|	|Endereço|Matricula|Nome             |Curso|Idade|Removido|
+| Pedro de Souza  | 201801   |	|    1   | 201801  | Pedro de Souza  | CC  | 20  | false  |
+| Vitória Talita  | 201808   |	|    2   | 201808  | Vitória Talita  | CC  | 19  | false  |
+| Emanuel Ribeiro | 201809   |	|    3   | 201809  | Emanuel Ribeiro | SI  | 18  | false  |
+| Marcos Medeiros | 201811   |	|    4   | 201811  | Marcos Medeiros | SI  | 19  | false  |
+| José da Silva   | 201807   |  |    5   | 201807  | José da Silva   | CC  | 19  | false  |
+==============================	===========================================================
