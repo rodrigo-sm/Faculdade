@@ -1,4 +1,5 @@
-/*
+/* 01.c
+ *
  * Programa que recebe dois arquivos na função main e copia um arquivo de entrada para outro de saida
  *
  * Rodrigo Suarez Moreira (Ciência da Computação)

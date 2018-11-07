@@ -1,4 +1,5 @@
- /*
+/* 03.c
+ *
  * Programa que recebe uma string e um arquivo, e imprime todas as linhas do arquivo que contem a string
  *
  * Rodrigo Suarez Moreira (Ciência da Computação)

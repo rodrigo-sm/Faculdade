@@ -1,241 +1,160 @@
+/* 04.c
+ *
+ * Programa que cria um arquivo 'chuvas.dat' com os indices pluviometricos diarios do ano de 2010-2020
+ * e cria o arquivo 'dias_chuvosos.txt' com os indices pluviometricos diario de um determinado ano maior que 60 mm
+ *
+ * Rodrigo Suarez Moreira (Ciência da Computação)
+ *
+ * Disciplina: Introdução a Computação-II
+ *
+ * 05/1/2018
+ */
 #include <stdio.h>
+#include <time.h>
 #include <stdlib.h>
-#include <string.h>
 
 typedef struct
 {
-    int id; // identificador do amigo
-    char nome[40];
-    char fone[14];
-    char email[30];
-} amigo;
+    int dia;
+    int mes;
+    int ano;
+} data;
 
-void cadastrar(void);
-void listar(void);
-void alterar(void);
-void consultar(void);
-int main(int argc, char *argv[])
+typedef struct
+{
+    data dt;
+    int ind_pluviometrico;
+} chuva;
+
+void gerarChuva(void);
+void exibirChuva(void);
+void gerarDia(void);
+void exibirDia(void);
+
+int main()
 {
     int n;
     while(1)
     {
-        fprintf(stdout, "Escolha uma opcao:\n 0 - Sair\n 1 - Cadastrar um novo amigo\n 2 - Listar todos os amigos\n 3 - Alterar Telefone ou Email\n 4 - Consultar amigo\n>>>> ");
-        fscanf(stdin, "%d", &n);
+        system("cls");
+        fprintf(stdout, "Escolha uma opcao:\n 1 - Gerar arquivo chuvas.dat\n 2 - Exibir arquivo chuvas.dat\n 3 - Gerar arquivo dias_chuvosos.txt\n 4 - Exibir arquivo dias_chuvosos.txt\n 0 - Sair\n>>>> ");
+        fscanf(stdin, " %d", &n);
         switch(n)
         {
-        case 0:
-            return 0;
         case 1:
-            cadastrar();
+            gerarChuva();
             break;
         case 2:
-            listar();
+            exibirChuva();
             break;
         case 3:
-            alterar();
+            gerarDia();
             break;
         case 4:
-            consultar();
+            exibirDia();
+            break;
+        case 0:
+            return 0;
             break;
         default:
-            fprintf(stderr, "Erro: Opcao invalida\n");
-            system("pause");
+            fprintf(stderr, "Erro: Opcao invalida!\n");
         }
-        system("cls");
+        system("pause");
     }
+    return 0;
 }
 
-void cadastrar()
+void gerarChuva()
 {
     FILE *p;
-    if((p = fopen("database.dat", "ab")) == NULL)
+    if((p = fopen("chuvas.dat", "wb")) == NULL)
+        fprintf(stderr, "Erro: Nao foi possivel criar o arquivo chuvas.dat\n");
+    else
     {
-        fprintf(stderr, "Erro: Nao foi possivel abrir o arquivo database\n");
-        exit(1);
-    }
-    amigo cadastro;
-    fseek(p, 0, SEEK_END);
-    cadastro.id = ftell(p) / sizeof(amigo);
-    system("cls");
-    fprintf(stdout, "Informe o nome:\n>>>> ");
-    fscanf(stdin, " %s", cadastro.nome);
-    fprintf(stdout, "Informe o email:\n>>>> ");
-    fscanf(stdin, " %s", cadastro.fone);
-    fprintf(stdout, "Informe o telefone:\n>>>> ");
-    fscanf(stdin, " %s", cadastro.email);
-    fwrite(&cadastro, sizeof(amigo), 1, p);
-    fprintf(stdout, "Amigo cadastrado com sucesso\n");
-    system("pause");
-    fclose(p);
-}
-
-void listar()
-{
-    FILE *p;
-    if((p = fopen("database.dat", "rb")) == NULL)
-    {
-        fprintf(stderr, "Erro: Nao foi possivel abrir o arquivo database\n");
-        exit(2);
-    }
-    amigo cadastro;
-    system("cls");
-    fprintf(stdout, "\n\t\tAmigos cadastrados\n");
-    fprintf(stdout, "----------------------------------------------------------\n");
-    while(fread(&cadastro, sizeof(amigo), 1, p) > 0)
-        fprintf(stdout, "Id: %d | Nome: %s | Telefone: %s | Email: %s\n", cadastro.id, cadastro.nome, cadastro.fone, cadastro.email);
-    fprintf(stdout, "----------------------------------------------------------\n");
-    system("pause");
-    fclose(p);
-}
-
-void alterar()
-{
-    int n, e = 0, f = 0;
-    char fone[14], email[30];
-    FILE *p;
-    amigo cadastro;
-    system("cls");
-    fprintf(stdout, "Alterar Telefone?\n 1 - Sim\n 2 - Nao\n>>>> ");
-    fscanf(stdin, " %d", &n);
-    if (n == 1)
-    {
-        fprintf(stdout, "Informe o novo telefone:\n>>>> ");
-        fscanf(stdin, " %s", fone);
-        f = 1;
-    }
-    system("cls");
-    fprintf(stdout, "Alterar Email?\n 1 - Sim\n 2 - Nao\n>>>> ");
-    fscanf(stdin, " %d", &n);
-    if (n == 1)
-    {
-        fprintf(stdout, "Informe o novo email:\n>>>> ");
-        fscanf(stdin, " %s", email);
-        e = 1;
-    }
-    if(e || f)
-    {
-        if((p = fopen("database.dat", "r+b")) == NULL)
+        int i, j, k;
+        chuva info;
+        srand(time(NULL));
+        for(i = 2010; i < 2021; i++)
         {
-            fprintf(stderr, "Erro: Nao foi possivel abrir o arquivo database\n");
-            exit(1);
-        }
-        system("cls");
-        fprintf(stdout, "Escolha uma opcao de busca:\n 1 - ID\n 2 - Nome\n>>>> ");
-        fscanf(stdin, " %d", &n);
-        if (n == 1)
-        {
-            int id;
-            fprintf(stdout, "Informe o ID:\n>>>> ");
-            fscanf(stdin, " %d", &id);
-            fseek(p, id*sizeof(amigo), SEEK_SET);
-            fread(&cadastro, sizeof(amigo), 1, p);
-            if(cadastro.id == id)
+            for(j  = 1; j < 12; j++)
             {
-                if(e)
-                    strcpy(cadastro.email, email);
-                if(f)
-                    strcpy(cadastro.fone, fone);
-                fseek(p, -sizeof(amigo), SEEK_CUR);
-                fwrite(&cadastro, sizeof(amigo), 1, p);
-                system("cls");
-                fprintf(stdout, "\n\t\tAmigo Modificado Com Sucesso\n");
-                fprintf(stdout, "----------------------------------------------------------\n");
-                fprintf(stdout, "Id: %d | Nome: %s | Telefone: %s | Email: %s\n", cadastro.id, cadastro.nome, cadastro.fone, cadastro.email);
-                fprintf(stdout, "----------------------------------------------------------\n");
-            }
-            else
-                fprintf(stdout, "Nao foi encontrado um amigo com o ID igual a %d\n", id);
-        }
-        else if (n == 2)
-        {
-            char nome[40];
-            fprintf(stdout, "Informe o nome:\n>>>> ");
-            fscanf(stdin, " %s", nome);
-            while (fread(&cadastro, sizeof(amigo), 1, p) > 0)
-            {
-                if (!strcmp(cadastro.nome, nome))
+                for(k = 1; k < 30; k++)
                 {
-                    if(e)
-                        strcpy(cadastro.email, email);
-                    if(f)
-                        strcpy(cadastro.fone, fone);
-                    fseek(p, -1*sizeof(amigo), SEEK_CUR);
-                    fwrite(&cadastro, sizeof(amigo), 1, p);
-                    system("cls");
-                    fprintf(stdout, "\n\t\tAmigo Modificado Com Sucesso\n");
-                    fprintf(stdout, "----------------------------------------------------------\n");
-                    fprintf(stdout, "Id: %d | Nome: %s | Telefone: %s | Email: %s\n", cadastro.id, cadastro.nome, cadastro.fone, cadastro.email);
-                    fprintf(stdout, "----------------------------------------------------------\n");
-                    n = 3;
-                    break;
+                    info.ind_pluviometrico = rand() / 101;
+                    info.dt.dia = k;
+                    info.dt.mes = j;
+                    info.dt.ano = i;
+                    fwrite(&info, sizeof(chuva), 1, p);
                 }
             }
-            if(n == 2)
-                fprintf(stdout, "Nao foi encontrado um amigo com o Nome igual a %s\n", nome);
         }
-        else
-            fprintf(stderr, "Erro: Opcao invalida\n");
+        fprintf(stdout, "O arquivo chuvas.dat foi criado com sucesso!\n");
+        fclose(p);
     }
-    system("pause");
-    fclose(p);
 }
 
-void consultar()
+void exibirChuva()
 {
-    int n;
     FILE *p;
-    amigo cadastro;
-    system("cls");
-    fprintf(stdout, "Escolha uma opcao de busca:\n 1 - ID\n 2 - Nome\n>>>> ");
-    fscanf(stdin, " %d", &n);
-    if ((p = fopen("database.dat", "rb")) == NULL)
+    if((p = fopen("chuvas.dat", "rb")) == NULL)
+        fprintf(stderr, "Erro: Nao foi possivel abrir o arquivo chuvas.dat\n");
+    else
     {
-        fprintf(stderr, "Erro: Nao foi possivel abrir o arquivo database\n");
-        exit(3);
-    }
-    if (n == 1)
-    {
-        int id;
-        system("cls");
-        fprintf(stdout, "Informe o ID:\n>>>> ");
-        fscanf(stdin, " %d", &id);
-        fseek(p, id*sizeof(amigo), SEEK_SET);
-        fread(&cadastro, sizeof(amigo), 1, p);
-        if(cadastro.id == id)
+        chuva info;
+        fprintf(stdout, "\t\tArquivo chuvas.dat\n");
+        fprintf(stdout, "-----------------------------------------------------------------\n");
+        while(fread(&info, sizeof(info), 1, p) > 0)
         {
-            system("cls");
-            fprintf(stdout, "\n\t\tAmigo Encontrado\n");
-            fprintf(stdout, "----------------------------------------------------------\n");
-            fprintf(stdout, "Id: %d | Nome: %s | Telefone: %s | Email: %s\n", cadastro.id, cadastro.nome, cadastro.fone, cadastro.email);
-            fprintf(stdout, "----------------------------------------------------------\n");
+            fprintf(stdout, "Data: %02d/%d/%d Indice: %d\n", info.dt.dia, info.dt.mes, info.dt.ano, info.ind_pluviometrico);
+        }
+        fprintf(stdout, "-----------------------------------------------------------------\n");
+        fclose(p);
+    }
+}
+
+void gerarDia()
+{
+    FILE *in, *out;
+    if((in = fopen("chuvas.dat", "rb")) == NULL)
+        fprintf(stderr, "Erro: Nao foi possivel abrir o arquivo chuvas.dat\n");
+    else
+    {
+        if((out = fopen("dias_chuvosos.txt", "w")) == NULL) {
+            fprintf(stderr, "Erro: Nao foi possivel criar o arquivo dias_chuvosos.txt\n");
+            fclose(in);
         }
         else
-            fprintf(stdout, "Nao foi encontrado um amigo com o ID igual a %d\n", id);
-    }
-    else if (n == 2)
-    {
-        char nome[40];
-        system("cls");
-        fprintf(stdout, "Informe o nome:\n>>>> ");
-        fscanf(stdin, " %s", nome);
-        while (fread(&cadastro, sizeof(amigo), 1, p) > 0)
         {
-            if (!strcmp(cadastro.nome, nome))
+            chuva info;
+            int ano;
+            fprintf(stdout, "Informe o ano:\n>>>> ");
+            fscanf(stdin, " %d", &ano);
+            while(fread(&info, sizeof(info), 1, in) > 0)
             {
-                system("cls");
-                fprintf(stdout, "\n\t\tAmigo Encontrado\n");
-                fprintf(stdout, "----------------------------------------------------------\n");
-                fprintf(stdout, "Id: %d | Nome: %s | Telefone: %s | Email: %s\n", cadastro.id, cadastro.nome, cadastro.fone, cadastro.email);
-                fprintf(stdout, "----------------------------------------------------------\n");
-                n = 3;
-                break;
+                if(info.ind_pluviometrico > 60 && info.dt.ano == ano)
+                    fprintf(out, "%02d/%d/%d %d\n", info.dt.dia, info.dt.mes, info.dt.ano, info.ind_pluviometrico);
             }
+            fprintf(stdout, "Arquivo dias_chuvosos.txt criado com sucesso\n");
+            fclose(in);
+            fclose(out);
         }
-        if(n == 2)
-            fprintf(stdout, "Nao foi encontrado um amigo com o Nome igual a %s\n", nome);
     }
+}
+
+void exibirDia()
+{
+    FILE *p;
+    if((p = fopen("dias_chuvosos.txt", "r")) == NULL)
+        fprintf(stderr, "Erro: Nao foi possivel abrir o arquivo dias_chuvosos.txt\n");
     else
-        fprintf(stderr, "Erro: Opcao invalida\n");
-    system("pause");
-    fclose(p);
+    {
+        chuva info;
+        fprintf(stdout, "\t\tArquivo dias_chuvosos.txt\n");
+        fprintf(stdout, "-----------------------------------------------------------------\n");
+        while(fscanf(p, "%d/%d/%d %d\n", &info.dt.dia, &info.dt.mes, &info.dt.ano, &info.ind_pluviometrico) > 0)
+        {
+            fprintf(stdout, "Data: %02d/%d/%d Indice: %d\n", info.dt.dia, info.dt.mes, info.dt.ano, info.ind_pluviometrico);
+        }
+        fprintf(stdout, "-----------------------------------------------------------------\n");
+    }
 }

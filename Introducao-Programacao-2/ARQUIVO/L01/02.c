@@ -1,4 +1,5 @@
-/*
+/* 02.c
+ *
  * Programa que criptografa e descriptografa arquivo usando a cifra de cesar
  * para utilizar digite via linha de comando "<arquivo> <-c|-d> <chave>"
  *
