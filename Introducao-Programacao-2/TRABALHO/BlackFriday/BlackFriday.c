@@ -1,6 +1,7 @@
-/* Caixa.c
+/*
+ * BlackFriday.c
  *
- * Programa que informa um saque e duas cedulas e ele imprime o troco
+ * Sistema que armazena cadastros de produtos,lojas e preços de determinado produto em uma determinada loja
  *
  * Rodrigo Suarez Moreira (Ciência da Computação)
  * Beatriz Jonas Justino (Sistema da Informação)
