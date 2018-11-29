@@ -9,11 +9,12 @@
  *
  * Disciplina: Introdução a Computação-II
  *
- * 27/11/2018
+ * 29/11/2018
  */
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 // Definição dos Nomes dos Arquivos
 #define ARQ_PROD "produtos.bin"
@@ -54,14 +55,43 @@ void ordena_preco(tpreco *, int, tloja *);
 void cadastrar_preco(void);
 void lista_preco(void);
 void consulta_prod(void);
+void conta_loja(tloja *,int *,int *,int *,int *,int *,int *,int);
+void imprime_espaco(int, int);
+void conta_preco(tloja *,tproduto *,tpreco *,int *,int *,int *,int *,int *,int *, int, int, int);
+void conta_produto(tproduto *,int *,int *,int *,int *,int );
+void imprime_titulo(char *, int);
+void imprime_linha(int);
+int conta_num(float);
+void conta_consulta(int, int *,int *);
+void clean_stdin(void);
 
 int main()
 {
     int n;
     while(1)
     {
-        fprintf(stdout, "Menu:\n 1 - Cadastrar produto\n 2 - Alterar produto\n 3 - Listar todos os produtos\n 4 - Cadastrar loja\n 5 - Lista todas as lojas\n 6 - Cadastrar preco\n 7 - Listar todos os precos\n 8 - Consultar todos os precos de um produto\n 0 - Sair\n>>>> ");
+        system("@cls||clear");
+        fprintf(stdout, "+===================================+\n");
+        fprintf(stdout, "| mmm   mmm  eeee  nnn   nn  uu  uu |\n");
+        fprintf(stdout, "| mm m m mm  ee    nnnn  nn  uu  uu |\n");
+        fprintf(stdout, "| mm  m  mm  eeee  nn nn nn  uu  uu |\n");
+        fprintf(stdout, "| mm     mm  ee    nn  nnnn  uu  uu |\n");
+        fprintf(stdout, "| mm     mm  eeee  nn   nnn  uuuuuu |\n");
+        fprintf(stdout, "+===================================+\n");
+        fprintf(stdout, "|               opcoes              |\n");
+        fprintf(stdout, "+===================================+\n");
+        fprintf(stdout, "| 1 - Cadastrar produtos            |\n");
+        fprintf(stdout, "| 2 - Alterar produto               |\n");
+        fprintf(stdout, "| 3 - Listar todos os produtos      |\n");
+        fprintf(stdout, "| 4 - Cadastrar loja                |\n");
+        fprintf(stdout, "| 5 - Listar todas as lojas         |\n");
+        fprintf(stdout, "| 6 - Cadastrar preco               |\n");
+        fprintf(stdout, "| 7 - Listar todos os precos        |\n");
+        fprintf(stdout, "| 8 - Consultar precos de um produto|\n");
+        fprintf(stdout, "| 0 - Sair                          |\n");
+        fprintf(stdout, "+===================================+\n>>>> ");
         fscanf(stdin, " %d", &n);
+        system("@cls||clear");
         switch(n)
         {
         case 0:
@@ -97,6 +127,15 @@ int main()
         }
         fprintf(stdout, "\n");
     }
+}
+
+/* Função que limpa o buffer da entrada padrao */
+void clean_stdin()
+{
+    int c;
+    do {
+        c = getchar();
+    } while (c != '\n' && c != EOF);
 }
 
 /* Função ordena um vetor da struct tproduto usando o algoritmo de ordenação bubblesort */
@@ -150,7 +189,9 @@ void alterar_prod()
 {
     FILE *p;
     if((p = fopen(ARQ_PROD, "r+b")) == NULL)
-        fprintf(stderr, "\nErro: Nao foi possivel abrir o arquivo %s\n", ARQ_PROD);
+    {
+        fprintf(stderr, "Erro: Nao foi possivel abrir o arquivo %s\n", ARQ_PROD);
+    }
     else
     {
         // Coloca o ponteiro p no final do arquivo
@@ -202,13 +243,67 @@ void lista_prod()
         fclose(p);
         // Ordena o vetor utilizando bubblesort
         ordena_prod(prod, tam);
-        fprintf(stdout, "\n======================================\n");
-        fprintf(stdout, "             Produtos\n");
-        fprintf(stdout, "======================================\n");
+        // Declaracao das variaveis que vao conter o numero maximo de caracteres de cada variavel a ser imprimida
+        int tam_max_cod = 0, tam_max_descricao = 0;
+        // Declaracao do vetor de variaveis que vai conter o numero de caracteres de cada variavel a ser imprimida
+        int tam_cod[tam], tam_descricao[tam];
+        // Vai contar o numero de caracteres das variaveis a ser imprimida
+        conta_produto(prod, &tam_max_cod, &tam_max_descricao, tam_cod, tam_descricao, tam);
+        // Vai verificar se as variaveis tem o tamanho minimo de caracteres a ser imprimido, caso nao tenho vai atribuir a elas o valor minimo
+        if(tam_max_cod < 4)
+            tam_max_cod = 4;
+        if(tam_max_descricao < 5)
+            tam_max_descricao = 5;
+        // Declaracao da variavel que vai conter o numero de caracteres de cada linha a ser impressa
+        int tam_max_linha = tam_max_cod + tam_max_descricao + 7;
+        // Impressao do cabeçalho da funçao
+        imprime_linha(tam_max_linha);
+        imprime_titulo("Produtos", tam_max_linha);
+        imprime_linha(tam_max_linha);
+        fprintf(stdout, "| Cod");
+        // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+        imprime_espaco(3, tam_max_cod);
+        fprintf(stdout, "| Prod");
+        // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+        imprime_espaco(4, tam_max_descricao);
+        fprintf(stdout, "|\n");
         for(i = 0; i < tam; i++)
-            fprintf(stdout, "Cod: %d | Prod: %s\n", prod[i].cod, prod[i].descricao);
-        fprintf(stdout, "======================================\n");
+        {
+            // Impressao das linhas
+            fprintf(stdout, "| %d", prod[i].cod);
+            // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+            imprime_espaco(tam_cod[i], tam_max_cod);
+            fprintf(stdout, "| %s", prod[i].descricao);
+            // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+            imprime_espaco(tam_descricao[i], tam_max_descricao);
+            fprintf(stdout, "|\n");
+        }
+        imprime_linha(tam_max_linha);
     }
+    fprintf(stdout, "Pressione qualquer tecla para continuar...");
+    clean_stdin();
+    getchar();
+}
+
+/* Funçao que vai contar o numero de caracteres de cada variavel a ser impressao na funçao lista_prod */
+void conta_produto(tproduto *prod,int *tam_max_cod,int *tam_max_descricao,int *tam_cod,int *tam_descricao,int tam)
+{
+     int i, num;
+     for(i = 0; i < tam; i++)
+     {
+         tam_descricao[i] = strlen(prod[i].descricao);
+         if(tam_descricao[i] > *tam_max_descricao)
+            *tam_max_descricao = tam_descricao[i];
+         num = prod[i].cod;
+         tam_cod[i] = 0;
+         while(num > 0)
+         {
+             num /= 10;
+             tam_cod[i]++;
+         }
+         if(tam_cod[i] > *tam_max_cod)
+            *tam_max_cod = tam_cod[i];
+     }
 }
 
 /* Função ordena um vetor da struct tproduto usando o algoritmo de ordenação bubblesort */
@@ -280,13 +375,116 @@ void lista_loja()
         fclose(p);
         // Ordena o vetor de struct tloja utilizando BubbleSort
         ordena_loja(loja, tam);
-        fprintf(stdout, "\n\n======================================\n");
-        fprintf(stdout, "             Lojas\n");
-        fprintf(stdout, "======================================\n");
+        // Declaracao das variaveis que vao conter o numero maximo de caracteres de cada variavel a ser imprimida
+        int tam_max_cod = 0, tam_max_nome = 0, tam_max_site = 0;
+        // Declaracao do vetor de variaveis que vai conter o numero de caracteres de cada variavel a ser imprimida
+        int tam_cod[tam], tam_nome[tam], tam_site[tam];
+        // Vai contar o numero de caracteres das variaveis a ser imprimida
+        conta_loja(loja, tam_cod, tam_nome, tam_site, &tam_max_cod, &tam_max_nome, &tam_max_site, tam);
+        // Vai verificar se as variaveis tem o tamanho minimo de caracteres a ser imprimido, caso nao tenho vai atribuir a elas o valor minimo
+        if(tam_max_cod < 4)
+            tam_max_cod = 4;
+        if(tam_max_nome < 5)
+            tam_max_nome = 5;
+        if(tam_max_site < 5)
+            tam_max_site = 5;
+        // Declaracao da variavel que vai conter o numero de caracteres de cada linha a ser impressa
+        int tam_max_linha = tam_max_cod + tam_max_nome + tam_max_site + 13;
+        fprintf(stdout, "\n");
+        // Impressao do cabeçalho da funçao
+        imprime_linha(tam_max_linha);
+        imprime_titulo("Lojas", tam_max_linha);
+        imprime_linha(tam_max_linha);
+        fprintf(stdout, "| Cod");
+        // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+        imprime_espaco(3, tam_max_cod);
+        fprintf(stdout, "| Loja");
+        // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+        imprime_espaco(4, tam_max_nome);
+        fprintf(stdout, "| Site");
+        // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+        imprime_espaco(4, tam_max_site);
+        fprintf(stdout, "|\n");
         for(i = 0; i < tam; i++)
-            fprintf(stdout, "Cod: %d | Loja: %s | Site: %s\n", loja[i].cod, loja[i].nome, loja[i].site);
-        fprintf(stdout, "======================================\n");
+        {
+            // Impressao das linhas
+            fprintf(stdout, "| %d", loja[i].cod);
+            // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+            imprime_espaco(tam_cod[i], tam_max_cod);
+            fprintf(stdout, "| %s", loja[i].nome);
+            // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+            imprime_espaco(tam_nome[i], tam_max_nome);
+            fprintf(stdout, "| %s", loja[i].site);
+            // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+            imprime_espaco(tam_site[i], tam_max_site);
+            fprintf(stdout, "|\n");
+        }
+        imprime_linha(tam_max_linha);
+        char ch;
     }
+    fprintf(stdout, "Pressione qualquer tecla para continuar...");
+    clean_stdin();
+    getchar();
+}
+
+// Vai imprimir o texto centralizado com base no tamanho maximo de caracteres da linha
+void imprime_titulo(char * str, int tam_max)
+{
+    fprintf(stdout, "|");
+    tam_max -= strlen(str) + 2;
+    int tam_max_antes = tam_max / 2, tam_max_depois = tam_max / 2;
+    // Caso tamanho de caracteres da linha seja impar vai atribuir +1 a variavel que vai conter a quantidade de espacos a ser imprimida depois
+    if(tam_max % 2 == 1)
+        tam_max_depois += 1;
+    while(tam_max_antes--)
+        fprintf(stdout, " ");
+    fprintf(stdout, "%s", str);
+    while(tam_max_depois--)
+        fprintf(stdout, " ");
+    fprintf(stdout, "|\n");
+}
+
+// Vai imprimir uma linha com "+" nas pontas e no meio "="
+void imprime_linha(int tam)
+{
+    fprintf(stdout, "+");
+    tam-=2;
+    while(tam--)
+        fprintf(stdout, "=");
+    fprintf(stdout, "+\n");
+}
+
+/* Funçao que vai contar o numero de caracteres de cada variavel a ser impressao na funçao lista_loja */
+void conta_loja(tloja *loja,int *tam_cod,int *tam_nome,int *tam_site,int *tam_max_cod,int *tam_max_nome,int *tam_max_site,int tam)
+{
+    int i, num;
+    for(i = 0; i < tam; i++)
+    {
+        tam_cod[i] = 0;
+        num = loja[i].cod;
+        while(num > 0)
+        {
+            num /= 10;
+            tam_cod[i]++;
+        }
+        if(tam_cod[i] > *tam_max_cod)
+        {
+            *tam_max_cod = tam_cod[i];
+        }
+        tam_nome[i] = strlen(loja[i].nome);
+        if(tam_nome[i] > *tam_max_nome)
+            *tam_max_nome = tam_nome[i];
+        tam_site[i] = strlen(loja[i].site);
+        if(tam_site[i] > *tam_max_site)
+            *tam_max_site = tam_site[i];
+    }
+}
+
+// Vai imprimir espaco ate que o espaco ocupado pelo campo seja o mesmo que o tamanho maximo de caracteres
+void imprime_espaco(int tam_cod, int tam_max_cod)
+{
+    for(; tam_cod <= tam_max_cod; tam_cod++)
+        fprintf(stdout, " ");
 }
 
 /* Função que cadastra preço de um produto em uma determinada loja no arquivo "precos.bin", nao aceitando preços repetidos de produtos em uma mesma loja */
@@ -395,7 +593,7 @@ void lista_preco()
             // Coloca o ponteiro p no inicio do arquivo
             fseek(p, 0, SEEK_SET);
             // Lê todos as structs tloja armazenado no arquivo "lojas.bin"
-            fread(loja, sizeof(tloja), tam_prod, p);
+            fread(loja, sizeof(tloja), tam_loja, p);
             fclose(p);
             if((p = fopen(ARQ_PRECO, "rb")) == NULL)
                 fprintf(stderr, "\nErro: Nao foi possivel abrir o arquivo %s\n", ARQ_PRECO);
@@ -414,16 +612,81 @@ void lista_preco()
                 fclose(p);
                 // Ordena o vetor preco de struct tpreco utilizando BubbleSort, ordenando pelo nome da loja de forma ascendente e pelo preço de forma descendente
                 ordena_preco(preco, tam_preco, loja);
-                fprintf(stdout, "\n\n======================================\n");
-                fprintf(stdout, "             Precos\n");
-                fprintf(stdout, "======================================\n");
+                // Declaracao das variaveis que vao conter o numero maximo de caracteres de cada variavel a ser imprimida
+                int tam_descricao[tam_prod], tam_nome[tam_loja], tam_valor[tam_preco];
+                // Declaracao do vetor de variaveis que vai conter o numero de caracteres de cada variavel a ser imprimida
+                int tam_max_descricao = 0, tam_max_nome = 0, tam_max_valor = 0;
+                // Vai contar o numero de caracteres das variaveis a ser imprimida
+                conta_preco(loja, prod, preco, tam_descricao, tam_nome, tam_valor, &tam_max_descricao, &tam_max_nome, &tam_max_valor, tam_loja, tam_preco, tam_prod);
+                // Vai verificar se as variaveis tem o tamanho minimo de caracteres a ser imprimido, caso nao tenho vai atribuir a elas o valor minimo
+                if(tam_max_descricao < 8)
+                    tam_max_descricao = 8;
+                if(tam_max_nome < 5)
+                    tam_max_nome = 5;
+                if(tam_max_valor < 6)
+                    tam_max_valor = 6;
+                // Declaracao da variavel que vai conter o numero de caracteres de cada linha a ser impressa
+                int tam_max_linha = tam_max_descricao + tam_max_nome + tam_max_valor + 10;
+                // Impressao do cabeçalho da funçao
+                imprime_linha(tam_max_linha);
+                imprime_titulo("Precos",tam_max_linha);
+                imprime_linha(tam_max_linha);
+                fprintf(stdout, "| Produto");
+                // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+                imprime_espaco(7, tam_max_descricao);
+                fprintf(stdout, "| Loja");
+                // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+                imprime_espaco(4, tam_max_nome);
+                fprintf(stdout, "| Preco");
+                // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+                imprime_espaco(5, tam_max_valor);
+                fprintf(stdout, "|\n");
                 for(i = 0; i < tam_preco; i++)
-                    fprintf(stdout, "Produto: %s | Loja: %s | Preco: %.2f R$\n", prod[preco[i].cod_produto-1].descricao, loja[preco[i].cod_loja-1].nome, preco[i].preco);
-                fprintf(stdout, "======================================\n");
+                {
+                    // Impressao das linhas
+                    fprintf(stdout, "| %s", prod[preco[i].cod_produto-1].descricao);
+                    // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+                    imprime_espaco(tam_descricao[preco[i].cod_produto-1], tam_max_descricao);
+                    fprintf(stdout, "| %s", loja[preco[i].cod_loja-1].nome);
+                    // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+                    imprime_espaco(tam_nome[preco[i].cod_loja-1], tam_max_nome);
+                    fprintf(stdout, "| %.2f R$", preco[i].preco);
+                    // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+                    imprime_espaco(tam_valor[i], tam_max_valor);
+                    fprintf(stdout, "|\n");
+                }
+                imprime_linha(tam_max_linha);
             }
         }
     }
+    fprintf(stdout, "Pressione qualquer tecla para continuar...");
+    clean_stdin();
+    getchar();
+}
 
+/* Funçao que vai contar o numero de caracteres de cada variavel a ser impressao na funçao lista_preco */
+void conta_preco(tloja *loja,tproduto *prod,tpreco *preco,int *tam_descricao,int *tam_nome,int *tam_valor,int *tam_max_descricao,int *tam_max_nome,int *tam_max_valor, int tam_loja, int tam_preco, int tam_prod)
+{
+    int i;
+    float num;
+    for(i = 0; i < tam_loja; i++)
+    {
+        tam_nome[i] = strlen(loja[i].nome);
+        if(tam_nome[i] > *tam_max_nome)
+            *tam_max_nome = tam_nome[i];
+    }
+    for(i = 0; i < tam_prod; i++)
+    {
+        tam_descricao[i] = strlen(prod[i].descricao);
+        if(tam_descricao[i] > *tam_max_descricao)
+            *tam_max_descricao = tam_descricao[i];
+    }
+    for(i = 0; i < tam_preco; i++)
+    {
+        tam_valor[i] = conta_num(preco[i].preco);
+        if(*tam_max_valor < tam_valor[i])
+            *tam_max_valor = tam_valor[i];
+    }
 }
 
 /* Função que ordena o vetor preco de struct tpreco utilizando BubbleSort,  ordenando pelo nome da loja de forma ascendente e pelo preco de forma descendente */
@@ -489,6 +752,7 @@ void consulta_prod()
                 int id_cod, id_max;
                 fprintf(stdout, "\nInforme o codigo do produto:\n>>>> ");
                 fscanf(stdin, " %d", &id_cod);
+                system("@cls||clear");
                 tproduto prod;
                 // Coloca o ponteiro p no final do arquivo "produtos.bin"
                 fseek(p_prod, 0, SEEK_END);
@@ -510,21 +774,102 @@ void consulta_prod()
                     fclose(p_prod);
                     tpreco preco;
                     tloja loja;
-                    fprintf(stdout, "\n\n======================================\n");
-                    fprintf(stdout, "             Produto %s\n", prod.descricao);
-                    fprintf(stdout, "======================================\n");
+                    // Declaracao das variaveis que vao conter o numero maximo de caracteres de cada variavel a ser imprimida
+                    int tam_max_nome = 0, tam_max_valor = 0, tam;
+                    // Vai contar o numero de caracteres das variaveis a ser imprimida
+                    conta_consulta(id_cod, &tam_max_nome, &tam_max_valor);
+                    // Vai verificar se as variaveis tem o tamanho minimo de caracteres a ser imprimido, caso nao tenho vai atribuir a elas o valor minimo
+                    if(tam_max_nome < 5)
+                        tam_max_nome = 5;
+                    if(tam_max_valor < 6)
+                        tam_max_valor = 6;
+                    // Declaracao da variavel que vai conter o numero de caracteres de cada linha a ser impressa
+                    int tam_max_linha = tam_max_nome + tam_max_valor + 7;
+                    // Impressao do cabeçalho da funçao
+                    imprime_linha(tam_max_linha);
+                    char aux[51] = "Produto ";
+                    strcat(aux, prod.descricao);
+                    imprime_titulo(aux, tam_max_linha);
+                    imprime_linha(tam_max_linha);
+                    fprintf(stdout, "| Loja");
+                    // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+                    imprime_espaco(4, tam_max_nome);
+                    fprintf(stdout, "| Preco");
+                    // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+                    imprime_espaco(5, tam_max_valor);
+                    fprintf(stdout, "|\n");
                     // Lê todos os precos do arquivo "precos.bin" um por um
                     while(fread(&preco, sizeof(tpreco), 1, p_preco) > 0)
                     {
                         // Caso o produto lido seja o mesmo que o informado, ele vai imprimir a loja e o preco do produto na tela
                         if(preco.cod_produto == id_cod)
                         {
+                            // Impressao das linhas
                             fseek(p_loja, (preco.cod_loja - 1) * sizeof(tloja), SEEK_SET);
                             fread(&loja, sizeof(loja), 1, p_loja);
-                            fprintf(stdout, "Loja: %s | Preco: %.2f R$\n", loja.nome, preco.preco);
+                            fprintf(stdout, "| %s", loja.nome);
+                            tam = strlen(loja.nome); // Determina a quantidade de caracteres a ser impressa
+                            // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+                            imprime_espaco(tam, tam_max_nome);
+                            fprintf(stdout, "| %.2f R$", preco.preco);
+                            tam = conta_num(preco.preco); // Determina a quantidade de caracteres a ser impressa
+                            // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+                            imprime_espaco(tam, tam_max_valor);
+                            fprintf(stdout, "|\n");
                         }
                     }
-                    fprintf(stdout, "======================================\n");
+                    imprime_linha(tam_max_linha);
+                }
+            }
+        }
+    }
+    fprintf(stdout, "Pressione qualquer tecla para continuar...");
+    clean_stdin();
+    getchar();
+}
+
+int conta_num(float num)
+{
+    int c = 2;
+    num *= 10000;
+    do
+    {
+        c++;
+        num /= 10;
+    }while(num >= 1);
+    return c;
+}
+
+/* Funçao que vai contar o numero de caracteres de cada variavel a ser impressao na funçao consulta_prod */
+void conta_consulta(int id_cod, int *tam_max_nome,int *tam_max_valor)
+{
+    FILE *p_preco, *p_loja;
+    if((p_loja = fopen(ARQ_LOJA, "rb")) == NULL)
+        fprintf(stderr, "Erro: Nao foi possivel abrir o arquivo %s\n", ARQ_LOJA);
+    else
+    {
+        if((p_preco = fopen(ARQ_PRECO, "rb")) == NULL)
+        {
+            fprintf(stderr, "Erro: Nao foi possivel abrir o arquivo %s\n", ARQ_PRECO);
+            fclose(p_loja);
+        }
+        else
+        {
+            tloja loja;
+            int tam;
+            tpreco preco;
+            while(fread(&preco, sizeof(tpreco), 1, p_preco) > 0)
+            {
+                if(preco.cod_produto == id_cod)
+                {
+                    fseek(p_loja, (preco.cod_loja - 1) * sizeof(tloja), SEEK_SET);
+                    fread(&loja, sizeof(loja), 1, p_loja);
+                    tam = strlen(loja.nome);
+                    if(tam > *tam_max_nome)
+                        *tam_max_nome = tam;
+                    tam = conta_num(preco.preco);
+                    if(tam > *tam_max_valor)
+                        *tam_max_valor = tam;
                 }
             }
         }
