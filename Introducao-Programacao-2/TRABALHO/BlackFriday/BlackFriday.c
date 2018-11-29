@@ -64,6 +64,7 @@ void imprime_linha(int);
 int conta_num(float);
 void conta_consulta(int, int *,int *);
 void clean_stdin(void);
+void pause(void);
 
 int main()
 {
@@ -136,6 +137,14 @@ void clean_stdin()
     do {
         c = getchar();
     } while (c != '\n' && c != EOF);
+}
+
+/* Função que pausa o sistema */
+void pause()
+{
+    fprintf(stdout, "Pressione qualquer tecla para continuar...");
+    clean_stdin();
+    getchar();
 }
 
 /* Função ordena um vetor da struct tproduto usando o algoritmo de ordenação bubblesort */
@@ -280,9 +289,7 @@ void lista_prod()
         }
         imprime_linha(tam_max_linha);
     }
-    fprintf(stdout, "Pressione qualquer tecla para continuar...");
-    clean_stdin();
-    getchar();
+    pause();
 }
 
 /* Funçao que vai contar o numero de caracteres de cada variavel a ser impressao na funçao lista_prod */
@@ -422,9 +429,7 @@ void lista_loja()
         imprime_linha(tam_max_linha);
         char ch;
     }
-    fprintf(stdout, "Pressione qualquer tecla para continuar...");
-    clean_stdin();
-    getchar();
+    pause();
 }
 
 // Vai imprimir o texto centralizado com base no tamanho maximo de caracteres da linha
@@ -659,9 +664,7 @@ void lista_preco()
             }
         }
     }
-    fprintf(stdout, "Pressione qualquer tecla para continuar...");
-    clean_stdin();
-    getchar();
+    pause();
 }
 
 /* Funçao que vai contar o numero de caracteres de cada variavel a ser impressao na funçao lista_preco */
@@ -823,9 +826,7 @@ void consulta_prod()
             }
         }
     }
-    fprintf(stdout, "Pressione qualquer tecla para continuar...");
-    clean_stdin();
-    getchar();
+    pause();
 }
 
 int conta_num(float num)
