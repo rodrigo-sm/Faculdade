@@ -65,13 +65,14 @@ int conta_num(float);
 void conta_consulta(int, int *,int *);
 void clean_stdin(void);
 void pause(void);
+void clearscr(void);
 
 int main()
 {
     int n;
     while(1)
     {
-        system("@cls||clear");
+        clearscr();
         fprintf(stdout, "+===================================+\n");
         fprintf(stdout, "| mmm   mmm  eeee  nnn   nn  uu  uu |\n");
         fprintf(stdout, "| mm m m mm  ee    nnnn  nn  uu  uu |\n");
@@ -92,7 +93,7 @@ int main()
         fprintf(stdout, "| 0 - Sair                          |\n");
         fprintf(stdout, "+===================================+\n>>>> ");
         fscanf(stdin, " %d", &n);
-        system("@cls||clear");
+        clearscr();
         switch(n)
         {
         case 0:
@@ -128,6 +129,18 @@ int main()
         }
         fprintf(stdout, "\n");
     }
+}
+
+/* Função que limpa a tela */
+void clearscr()
+{
+    #ifdef _WIN32
+        system("cls");
+    #elif defined(unix) || defined(__unix__) || defined(__unix) || (defined(__APPLE__) && defined(__MACH__))
+        system("clear");
+    #else
+        #error "OS not supported."
+    #endif
 }
 
 /* Função que limpa o buffer da entrada padrao */
@@ -755,7 +768,7 @@ void consulta_prod()
                 int id_cod, id_max;
                 fprintf(stdout, "\nInforme o codigo do produto:\n>>>> ");
                 fscanf(stdin, " %d", &id_cod);
-                system("@cls||clear");
+                clearscr();
                 tproduto prod;
                 // Coloca o ponteiro p no final do arquivo "produtos.bin"
                 fseek(p_prod, 0, SEEK_END);
