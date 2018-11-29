@@ -67,6 +67,7 @@ void clean_stdin(void);
 void pause(void);
 void clearscr(void);
 void imprime_erro(char *);
+void imprime_saida(void);
 
 int main()
 {
@@ -98,7 +99,7 @@ int main()
         switch(n)
         {
         case 0:
-            fprintf(stdout, "\nBye :)\n");
+            imprime_saida();
             return 0;
         case 1:
             cadastrar_prod();
@@ -129,8 +130,20 @@ int main()
             imprime_erro("Erro: Opcao invalida");
             pause();
         }
-        fprintf(stdout, "\n");
     }
+}
+
+/* Função imprime mensagem de saida */
+void imprime_saida()
+{
+    fprintf(stdout, "+======================================+\n");
+    fprintf(stdout, "| BB      YY     YY  EEEEEE       ))   |\n");
+    fprintf(stdout, "| BB       YY   YY   EE  EE        ))  |\n");
+    fprintf(stdout, "| BB        YY YY    EE  EE   00    )) |\n");
+    fprintf(stdout, "| BBBBBB     yy      EEEEEE   00    )) |\n");
+    fprintf(stdout, "| BB  BB    yy       EE            ))  |\n");
+    fprintf(stdout, "| BBBBBB   yy        EEEEEE       ))   |\n");
+    fprintf(stdout, "+======================================+\n");
 }
 
 // Vai imprimir uma linha com "+" nas pontas e no meio "="
@@ -583,6 +596,8 @@ void cadastrar_preco()
             char erro[100];
             sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_PROD);
             imprime_erro(erro);
+            pause();
+
         }
         else
         {
@@ -596,6 +611,7 @@ void cadastrar_preco()
                 char erro[100];
                 sprintf(erro, "Erro: Nao existe nenhuma produto com o codigo %d", preco.cod_produto);
                 imprime_erro(erro);
+                pause();
             }
             else
             {
@@ -610,6 +626,7 @@ void cadastrar_preco()
                     char erro[100];
                     sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_LOJA);
                     imprime_erro(erro);
+                    pause();
                 }
                 else
                 {
@@ -623,6 +640,7 @@ void cadastrar_preco()
                         char erro[100];
                         sprintf(erro, "Erro: Nao existe nenhuma loja com o codigo %d", preco.cod_loja);
                         imprime_erro(erro);
+                        pause();
                     }
                     else
                     {
@@ -632,6 +650,7 @@ void cadastrar_preco()
                             char erro[100];
                             sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_PRECO);
                             imprime_erro(erro);
+                            pause();
                         }
                         else
                         {
@@ -648,6 +667,7 @@ void cadastrar_preco()
                                 char erro[100] = "Erro: Preco ja foi cadastrado";
                                 imprime_erro(erro);
                                 fclose(p);
+                                pause();
                             }
                             else
                             {
@@ -655,7 +675,6 @@ void cadastrar_preco()
                                 fprintf(stdout, "| Informe o preco do produto: |\n");
                                 fprintf(stdout, "+=============================+\n>>>> ");
                                 fscanf(stdin, " %f", &preco.preco);
-                                clearscr();
                                 fwrite(&preco, sizeof(tpreco), 1, p);
                                 fclose(p);
                             }
@@ -664,6 +683,7 @@ void cadastrar_preco()
                 }
             }
         }
+        clearscr();
         fprintf(stdout, "+=====================================+\n");
         fprintf(stdout, "| Quer cadastrar outro preco? (s | n) |\n");
         fprintf(stdout, "+=====================================+\n>>>> ");
@@ -958,6 +978,7 @@ void consulta_prod()
     pause();
 }
 
+/* Conta a quantidade de caracteres de um numero */
 int conta_num(float num)
 {
     int c = 2;
