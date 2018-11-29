@@ -66,6 +66,7 @@ void conta_consulta(int, int *,int *);
 void clean_stdin(void);
 void pause(void);
 void clearscr(void);
+void imprime_erro(char *);
 
 int main()
 {
@@ -125,11 +126,32 @@ int main()
             break;
 
         default:
-            fprintf(stderr, "Erro: Opcao invalida\n");
+            imprime_erro("Erro: Opcao invalida");
+            pause();
         }
         fprintf(stdout, "\n");
     }
 }
+
+// Vai imprimir uma linha com "+" nas pontas e no meio "="
+void imprime_linha(int tam)
+{
+    fprintf(stdout, "+");
+    tam-=2;
+    while(tam--)
+        fprintf(stdout, "=");
+    fprintf(stdout, "+\n");
+}
+
+/* Funçao imprime uma mensagem de erro*/
+void imprime_erro(char *str)
+{
+    int tam = strlen(str);
+    imprime_linha(tam+4);
+    fprintf(stderr, "| %s |\n", str);
+    imprime_linha(tam+4);
+}
+
 
 /* Função que limpa a tela */
 void clearscr()
@@ -187,7 +209,11 @@ void cadastrar_prod()
     FILE *p;
     tproduto prod;
     if((p = fopen(ARQ_PROD, "ab")) == NULL)
-        fprintf(stderr, "Erro: Nao foi possivel abrir o arquivo %s\n", ARQ_PROD);
+    {
+        char erro[100] = "Erro: Nao foi possivel abrir o arquivo ";
+        strcat(erro, ARQ_PROD);
+        imprime_erro(erro);
+    }
     else
     {
         do
@@ -196,11 +222,17 @@ void cadastrar_prod()
             fseek(p, 0, SEEK_END);
             // Determina  o codigo do produto de forma sequencial, dividindo o valor atual do ponteiro pelo tamanho da struct tproduto + 1
             prod.cod = ftell(p) / sizeof(tproduto) + 1;
-            fprintf(stdout, "\nInforme o produto:\n>>>> ");
+            fprintf(stdout, "+====================+\n");
+            fprintf(stdout, "| Informe o produto: |\n");
+            fprintf(stdout, "+====================+\n>>>> ");
             fscanf(stdin, " %[^\n]", prod.descricao);
             fwrite(&prod, sizeof(tproduto), 1, p);
-            fprintf(stdout, "\nDeseja cadastrar outro produto? (s | n)\n>>>> ");
+            clearscr();
+            fprintf(stdout, "+=========================================+\n");
+            fprintf(stdout, "| Deseja cadastrar outro produto? (s | n) |\n");
+            fprintf(stdout, "+=========================================+\n>>>> ");
             fscanf(stdin, " %c", &ch);
+            clearscr();
         } while(ch == 's');
         fclose(p);
     }
@@ -212,7 +244,9 @@ void alterar_prod()
     FILE *p;
     if((p = fopen(ARQ_PROD, "r+b")) == NULL)
     {
-        fprintf(stderr, "Erro: Nao foi possivel abrir o arquivo %s\n", ARQ_PROD);
+        char erro[100] = "Erro: Nao foi possivel abrir o arquivo ";
+        strcat(erro, ARQ_PROD);
+        imprime_erro(erro);
     }
     else
     {
@@ -224,21 +258,35 @@ void alterar_prod()
         tproduto prod;
         do
         {
-            fprintf(stdout, "\nInforme o codigo do produto a ser alterado:\n>>>> ");
+            clearscr();
+            fprintf(stdout, "+=============================================+\n");
+            fprintf(stdout, "| Informe o codigo do produto a ser alterado: |\n");
+            fprintf(stdout, "+=============================================+\n>>>> ");
             fscanf(stdin, " %d", &prod.cod);
+            clearscr();
             // Caso o codigo informado seja menor ou igual que o id_max que armazena o ultimo codigo do produto, ele é valido
             if(prod.cod > id_max)
-                fprintf(stderr, "\nErro: Nao existe produto com o codigo %d\n", prod.cod);
+            {
+                char erro [100];
+                sprintf(erro, "Erro: Nao existe produto com o codigo %d", prod.cod);
+                imprime_erro(erro);
+            }
             else
             {
-                fprintf(stdout, "\nInforme o novo produto:\n>>>> ");
+                fprintf(stdout, "+=========================+\n");
+                fprintf(stdout, "| Informe o novo produto: |\n");
+                fprintf(stdout, "+=========================+\n>>>> ");
                 fscanf(stdin, " %[^\n]", prod.descricao);
+                clearscr();
                 /* Coloca o ponteiro p aonde a estrutura do codigo está armazenado */
                 fseek(p, (prod.cod - 1) * sizeof(tproduto), SEEK_SET);
                 fwrite(&prod, sizeof(tproduto), 1, p);
             }
-            fprintf(stdout, "\nDeseja fazer outra alteracao? (s | n)\n>>>> ");
+            fprintf(stdout, "+=======================================+\n");
+            fprintf(stdout, "| Deseja fazer outra alteracao? (s | n) |\n");
+            fprintf(stdout, "+=======================================+\n>>>> ");
             fscanf(stdin," %c", &ch);
+            clearscr();
         } while(ch == 's');
         fclose(p);
     }
@@ -249,7 +297,11 @@ void lista_prod()
 {
     FILE *p;
     if((p = fopen(ARQ_PROD, "rb")) == NULL)
-        fprintf(stderr, "\nErro: Nao foi possivel abrir o arquivo %s\n", ARQ_PROD);
+    {
+        char erro[100];
+        sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_PROD);
+        imprime_erro(erro);
+    }
     else
     {
         // Coloca o ponteiro p no final do arquivo
@@ -351,7 +403,11 @@ void cadastrar_loja()
 {
     FILE *p;
     if((p = fopen(ARQ_LOJA, "ab")) == NULL)
-        fprintf(stderr, "\nErro: Nao possivel abrir o arquivo %s\n", ARQ_LOJA);
+    {
+        char erro[100];
+        sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_LOJA);
+        imprime_erro(erro);
+    }
     else
     {
         tloja loja;
@@ -362,13 +418,22 @@ void cadastrar_loja()
             fseek(p, 0, SEEK_END);
             // Determina o ultimo codigo da loja de forma sequencial, dividindo o valor atual do ponteiro pelo tamanho da struct tloja + 1
             loja.cod = ftell(p) / sizeof(tloja) + 1;
-            fprintf(stdout, "\nInforme o nome da loja:\n>>>> ");
+            fprintf(stdout, "+=========================+\n");
+            fprintf(stdout, "| Informe o nome da loja: |\n");
+            fprintf(stdout, "+=========================+\n>>>> ");
             fscanf(stdin, " %[^\n]", loja.nome);
-            fprintf(stdout, "Informe o nome do site:\n>>>> ");
+            clearscr();
+            fprintf(stdout, "+=========================+\n");
+            fprintf(stdout, "| Informe o nome do site: |\n");
+            fprintf(stdout, "+=========================+\n>>>> ");
             fscanf(stdin, " %[^\n]", loja.site);
+            clearscr();
             fwrite(&loja, sizeof(tloja), 1, p);
-            fprintf(stdout, "\nDeseja cadastrar outra loja? (s | n)\n>>>> ");
+            fprintf(stdout, "+======================================+\n");
+            fprintf(stdout, "| Deseja cadastrar outra loja? (s | n) |\n");
+            fprintf(stdout, "+======================================+\n>>>> ");
             fscanf(stdin, " %c", &ch);
+            clearscr();
         } while(ch == 's');
         fclose(p);
     }
@@ -379,7 +444,11 @@ void lista_loja()
 {
     FILE *p;
     if((p = fopen(ARQ_LOJA, "rb")) == NULL)
-        fprintf(stderr, "\nErro: Nao possivel abrir o arquivo %s\n", ARQ_LOJA);
+    {
+        char erro[100];
+        sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_LOJA);
+        imprime_erro(erro);
+    }
     else
     {
         // Coloca o ponteiro p no final do arquivo
@@ -409,7 +478,7 @@ void lista_loja()
         if(tam_max_site < 5)
             tam_max_site = 5;
         // Declaracao da variavel que vai conter o numero de caracteres de cada linha a ser impressa
-        int tam_max_linha = tam_max_cod + tam_max_nome + tam_max_site + 13;
+        int tam_max_linha = tam_max_cod + tam_max_nome + tam_max_site + 10;
         fprintf(stdout, "\n");
         // Impressao do cabeçalho da funçao
         imprime_linha(tam_max_linha);
@@ -462,15 +531,6 @@ void imprime_titulo(char * str, int tam_max)
     fprintf(stdout, "|\n");
 }
 
-// Vai imprimir uma linha com "+" nas pontas e no meio "="
-void imprime_linha(int tam)
-{
-    fprintf(stdout, "+");
-    tam-=2;
-    while(tam--)
-        fprintf(stdout, "=");
-    fprintf(stdout, "+\n");
-}
 
 /* Funçao que vai contar o numero de caracteres de cada variavel a ser impressao na funçao lista_loja */
 void conta_loja(tloja *loja,int *tam_cod,int *tam_nome,int *tam_site,int *tam_max_cod,int *tam_max_nome,int *tam_max_site,int tam)
@@ -513,10 +573,17 @@ void cadastrar_preco()
     int cod_max;
     FILE *p;
     do {
-        fprintf(stdout, "\nInforme o codigo do produto:\n>>>> ");
+        fprintf(stdout, "+==============================+\n");
+        fprintf(stdout, "| Informe o codigo do produto: |\n");
+        fprintf(stdout, "+==============================+\n>>>> ");
         fscanf(stdin, " %d", &preco.cod_produto);
+        clearscr();
         if((p = fopen(ARQ_PROD, "rb")) == NULL)
-            fprintf(stderr, "\nErro: Nao foi possivel abrir o arquivo %s\n", ARQ_PROD);
+        {
+            char erro[100];
+            sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_PROD);
+            imprime_erro(erro);
+        }
         else
         {
             // Coloca o ponteiro p no final do arquivo "produtos.bin"
@@ -525,14 +592,25 @@ void cadastrar_preco()
             cod_max = ftell(p) / sizeof(tproduto) + 1;
             // Caso  o codigo do produto informado seja menor ou igual ao ultimo codigo do produto, o codigo informado é valido
             if(preco.cod_produto > cod_max)
-                fprintf(stderr, "\nErro: Nao existe nenhuma produto com o codigo %d\n", preco.cod_produto);
+            {
+                char erro[100];
+                sprintf(erro, "Erro: Nao existe nenhuma produto com o codigo %d", preco.cod_produto);
+                imprime_erro(erro);
+            }
             else
             {
                 fclose(p);
-                fprintf(stdout, "\nInforme o codigo da loja:\n>>>> ");
+                fprintf(stdout, "+===========================+\n");
+                fprintf(stdout, "| Informe o codigo da loja: |\n");
+                fprintf(stdout, "+===========================+\n>>>> ");
                 fscanf(stdin, " %d", &preco.cod_loja);
+                clearscr();
                 if((p = fopen(ARQ_LOJA, "rb")) == NULL)
-                    fprintf(stderr, "\nErro: Nao foi possivel abrir o arquivo %s\n", ARQ_LOJA);
+                {
+                    char erro[100];
+                    sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_LOJA);
+                    imprime_erro(erro);
+                }
                 else
                 {
                     // Coloca o ponteiro p no final do arquivo "lojas.bin"
@@ -541,12 +619,20 @@ void cadastrar_preco()
                     cod_max = ftell(p) / sizeof(tloja) + 1;
                     // Caso  o codigo da loja informado seja menor ou igual ao ultimo codigo da loja, o codigo informado é valido
                     if(preco.cod_loja > cod_max)
-                        fprintf(stderr, "\nErro: Nao existe nenhuma loja com o codigo %d\n", preco.cod_loja);
+                    {
+                        char erro[100];
+                        sprintf(erro, "Erro: Nao existe nenhuma loja com o codigo %d", preco.cod_loja);
+                        imprime_erro(erro);
+                    }
                     else
                     {
                         fclose(p);
                         if((p = fopen(ARQ_PRECO, "a+b")) == NULL)
-                            fprintf(stderr, "\nErro: Nao foi possivel abrir o arquivo %s\n", ARQ_PRECO);
+                        {
+                            char erro[100];
+                            sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_PRECO);
+                            imprime_erro(erro);
+                        }
                         else
                         {
                             int r = 0;
@@ -559,13 +645,17 @@ void cadastrar_preco()
                             }
                             if(r)
                             {
-                                fprintf(stderr, "\nErro: Preco ja foi cadastrado\n");
+                                char erro[100] = "Erro: Preco ja foi cadastrado";
+                                imprime_erro(erro);
                                 fclose(p);
                             }
                             else
                             {
-                                fprintf(stdout, "\nInforme o preco do produto:\n>>>> ");
+                                fprintf(stdout, "+=============================+\n");
+                                fprintf(stdout, "| Informe o preco do produto: |\n");
+                                fprintf(stdout, "+=============================+\n>>>> ");
                                 fscanf(stdin, " %f", &preco.preco);
+                                clearscr();
                                 fwrite(&preco, sizeof(tpreco), 1, p);
                                 fclose(p);
                             }
@@ -574,8 +664,11 @@ void cadastrar_preco()
                 }
             }
         }
-        fprintf(stdout, "\nQuer cadastrar outro preco? (s | n)\n>>>> ");
+        fprintf(stdout, "+=====================================+\n");
+        fprintf(stdout, "| Quer cadastrar outro preco? (s | n) |\n");
+        fprintf(stdout, "+=====================================+\n>>>> ");
         fscanf(stdin, " %c", &ch);
+        clearscr();
     } while(ch == 's');
 }
 
@@ -584,7 +677,11 @@ void lista_preco()
 {
     FILE *p;
     if((p = fopen(ARQ_PROD, "rb")) == NULL)
-        fprintf(stderr, "\nErro: Nao foi possivel abrir o arquivo %s\n", ARQ_PROD);
+    {
+        char erro[100];
+        sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_PROD);
+        imprime_erro(erro);
+    }
     else
     {
         // Coloca o ponteiro p no final do arquivo "produtos.bin"
@@ -599,7 +696,11 @@ void lista_preco()
         fread(prod, sizeof(tproduto), tam_prod, p);
         fclose(p);
         if((p = fopen(ARQ_LOJA, "rb")) == NULL)
-            fprintf(stderr, "\nErro: Nao foi possivel abrir o arquivo %s\n", ARQ_LOJA);
+        {
+            char erro[100];
+            sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_LOJA);
+            imprime_erro(erro);
+        }
         else
         {
             // Coloca o ponteiro p no final do arquivo "lojas.bin"
@@ -614,7 +715,11 @@ void lista_preco()
             fread(loja, sizeof(tloja), tam_loja, p);
             fclose(p);
             if((p = fopen(ARQ_PRECO, "rb")) == NULL)
-                fprintf(stderr, "\nErro: Nao foi possivel abrir o arquivo %s\n", ARQ_PRECO);
+            {
+                char erro[100];
+                sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_PRECO);
+                imprime_erro(erro);
+            }
             else
             {
                 // Coloca o ponteiro p no final do arquivo "precos.bin"
@@ -745,28 +850,37 @@ void consulta_prod()
 {
     FILE *p_preco, *p_loja, *p_prod;
     if((p_prod = fopen(ARQ_PROD, "rb")) == NULL)
-        fprintf(stderr, "\nErro: Nao foi possivel abrir o arquivo %s\n", ARQ_PROD);
+    {
+        char erro[100];
+        sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_PROD);
+        imprime_erro(erro);
+    }
     else
     {
 
         if((p_preco = fopen(ARQ_PRECO, "rb")) == NULL)
         {
-
-            fprintf(stderr, "\nErro: Nao foi possivel abrir o arquivo %s\n", ARQ_PRECO);
+            char erro[100];
+            sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_PRECO);
+            imprime_erro(erro);
             fclose(p_prod);
         }
         else
         {
             if((p_loja = fopen(ARQ_LOJA, "rb")) == NULL)
             {
-                fprintf(stderr, "\nErro: Nao foi possivel abrir o arquivo %s\n", ARQ_LOJA);
+                char erro[100];
+                sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_LOJA);
+                imprime_erro(erro);
                 fclose(p_preco);
                 fclose(p_prod);
             }
             else
             {
                 int id_cod, id_max;
-                fprintf(stdout, "\nInforme o codigo do produto:\n>>>> ");
+                fprintf(stdout, "+==============================+\n");
+                fprintf(stdout, "| Informe o codigo do produto: |\n");
+                fprintf(stdout, "+==============================+\n>>>> ");
                 fscanf(stdin, " %d", &id_cod);
                 clearscr();
                 tproduto prod;
@@ -777,7 +891,9 @@ void consulta_prod()
                 // Caso  o codigo do produto informado seja menor ou igual ao ultimo codigo do produto, o codigo informado é valido
                 if(id_cod > id_max)
                 {
-                    fprintf(stderr, "\nErro: Nao existe nenhum produto com o codigo %d\n", id_cod);
+                    char erro[100];
+                    sprintf(erro, "Erro: Nao existe nenhum produto com o codigo %d", id_cod);
+                    imprime_erro(erro);
                     fclose(p_preco);
                     fclose(p_prod);
                     fclose(p_loja);
@@ -859,12 +975,18 @@ void conta_consulta(int id_cod, int *tam_max_nome,int *tam_max_valor)
 {
     FILE *p_preco, *p_loja;
     if((p_loja = fopen(ARQ_LOJA, "rb")) == NULL)
-        fprintf(stderr, "Erro: Nao foi possivel abrir o arquivo %s\n", ARQ_LOJA);
+    {
+        char erro[100];
+        sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_LOJA);
+        imprime_erro(erro);
+    }
     else
     {
         if((p_preco = fopen(ARQ_PRECO, "rb")) == NULL)
         {
-            fprintf(stderr, "Erro: Nao foi possivel abrir o arquivo %s\n", ARQ_PRECO);
+            char erro[100];
+            sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_PRECO);
+            imprime_erro(erro);
             fclose(p_loja);
         }
         else
