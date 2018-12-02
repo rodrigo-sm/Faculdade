@@ -32,6 +32,8 @@ void textCedInvalida();
 void textCedRepetida();
 // Imprime um alerta caso o saque seja invalido
 void textSaqInvalido();
+// Imprime um alerta caso a cedula seja maior que o saque
+void textCedMaiorSaque();
 
 /* Funcoes */
 
@@ -39,7 +41,7 @@ void textSaqInvalido();
 int saque();
 /* Recebe o vetor v que contem as cedulas validas e as escolhidas e o inteiro i que representa o numero da cedula escolhida
  * e devolve o valor da cedula */
-int ced(int *v, int i, int c1);
+int ced(int *v, int i, int c1, int saque);
 /* Ordena c1 e c2 de forma descrecente */
 void orderna(int *c1,int *c2);
 /* Imprime e determina a quantidade de cedulas */
@@ -78,8 +80,8 @@ int main()
             break;
         case 1:
             saq = saque();
-            c1 = ced(v, 1, c1);
-            c2 = ced(v, 2, c1);
+            c1 = ced(v, 1, c1, saq);
+            c2 = ced(v, 2, c1, saq);
             orderna( &c1, &c2);
             imprimiQntdCed( qtd_c1, qtd_c2, c1, c2, saq);
             break;
@@ -159,6 +161,7 @@ int saque()
             system ("cls");
             logo();
             textSaqInvalido();
+
         }
     }
     while(saqDec < 7);
@@ -224,7 +227,15 @@ void textCedRepetida()
     system("cls");
 }
 
-int ced(int *v, int i, int ced)
+void textCedMaiorSaque()
+{
+    printf("|       Erro: Cedula maior que o Saque       |\n");
+    printf("+--------------------------------------------+\n");
+    system("pause");
+    system("cls");
+}
+
+int ced(int *v, int i, int ced, int saque)
 {
     char cedStr[50];
     int cedDec;
@@ -236,7 +247,7 @@ int ced(int *v, int i, int ced)
         scanf(" %49[^\n]", cedStr);
         apuraErro(cedStr, &cedDec);
         // Verifica se a cedula e valida
-        if(cedDec > 100)
+        if(cedDec > 100 || cedDec == -1 || v[cedDec] != 1)
         {
             system ("cls");
             logo();
@@ -250,11 +261,12 @@ int ced(int *v, int i, int ced)
                 logo();
                 textCedRepetida();
             }
-            else if( cedDec == -1 || v[cedDec] != 1 )
+            else if( cedDec > saque )
             {
                 system ("cls");
                 logo();
-                textCedInvalida();
+                textCedMaiorSaque();
+                cedDec = 0;
             }
         }
         // Verifica se a cedula e valida

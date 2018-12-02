@@ -68,6 +68,7 @@ void pause(void);
 void clearscr(void);
 void imprime_erro(char *);
 void imprime_saida(void);
+void converte_minusculo(char *str);
 
 int main()
 {
@@ -131,6 +132,15 @@ int main()
             pause();
         }
     }
+}
+
+/* Função que converte uma string para minusculo */
+void converte_minusculo(char *str)
+{
+    int tam = strlen(str), i;
+    while(tam--)
+        if(str[tam] >= 'A' && str[tam] <= 'Z')
+            str[tam]+=32;
 }
 
 /* Função imprime mensagem de saida */
@@ -202,11 +212,15 @@ void ordena_prod(tproduto * prod, int tam)
     tproduto aux;
     for(i = 0; i < tam; i++)
     {
+        // Converte as strings a ser comparada para minusculo, para ordenar de forma alfabetica
+        converte_minusculo(prod[i].descricao);
         for(j = i + 1; j < tam; j++)
         {
+            converte_minusculo(prod[j].descricao);
             // A função strcmp devolve um numero > 0, caso encontre um caractere na string1 maior que na string2, assim ordenando de forma alfabetica
             if(strcmp(prod[i].descricao, prod[j].descricao) > 0)
             {
+                printf("S\n");
                 aux = prod[i];
                 prod[i] = prod[j];
                 prod[j] = aux;
@@ -396,10 +410,13 @@ void ordena_loja(tloja *loja, int tam)
 {
     int i, j;
     tloja aux;
-    for(i = 1; i < tam; i++)
+    for(i = 0; i < tam; i++)
     {
+        // Converte as strings a ser comparada para minusculo, para ordenar de forma alfabetica
+        converte_minusculo(loja[i].nome);
         for(j = i + 1; j < tam; j++)
         {
+            converte_minusculo(loja[j].nome);
             // A função strcmp devolve um numero > 0, caso encontre um caractere na string1 maior que na string2, assim ordenando de forma alfabetica
             if(strcmp(loja[i].nome, loja[j].nome) > 0)
             {
@@ -836,10 +853,13 @@ void ordena_preco(tpreco *preco, int tam_preco, tloja *loja)
     int i, j;
     tpreco aux;
     // Ordena pelo nome da loja de forma ascedente
-    for(i = 1; i < tam_preco; i++)
+    for(i = 0; i < tam_preco; i++)
     {
+        // Converte as strings a ser comparada para minusculo, para ordenar de forma alfabetica
+        converte_minusculo(loja[preco[i].cod_loja-1].nome);
         for(j = i + 1; j < tam_preco; j++)
         {
+            converte_minusculo(loja[preco[j].cod_loja-1].nome);
             if(strcmp(loja[preco[i].cod_loja-1].nome, loja[preco[j].cod_loja-1].nome) > 0)
             {
                 aux = preco[i];
