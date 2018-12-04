@@ -134,47 +134,17 @@ int main()
     }
 }
 
-/* Função que converte uma string para minusculo */
-void converte_minusculo(char *str)
-{
-    int tam = strlen(str), i;
-    while(tam--)
-        if(str[tam] >= 'A' && str[tam] <= 'Z')
-            str[tam]+=32;
-}
+//|========================|
+//| Funções Complementares |
+//|========================|
 
-/* Função imprime mensagem de saida */
-void imprime_saida()
+/* Função que pausa o sistema */
+void pause()
 {
-    fprintf(stdout, "+======================================+\n");
-    fprintf(stdout, "| BB      YY     YY  EEEEEE       ))   |\n");
-    fprintf(stdout, "| BB       YY   YY   EE  EE        ))  |\n");
-    fprintf(stdout, "| BB        YY YY    EE  EE   00    )) |\n");
-    fprintf(stdout, "| BBBBBB     yy      EEEEEE   00    )) |\n");
-    fprintf(stdout, "| BB  BB    yy       EE            ))  |\n");
-    fprintf(stdout, "| BBBBBB   yy        EEEEEE       ))   |\n");
-    fprintf(stdout, "+======================================+\n");
+    fprintf(stdout, "Pressione qualquer tecla para continuar...");
+    clean_stdin();
+    getchar();
 }
-
-// Vai imprimir uma linha com "+" nas pontas e no meio "="
-void imprime_linha(int tam)
-{
-    fprintf(stdout, "+");
-    tam-=2;
-    while(tam--)
-        fprintf(stdout, "=");
-    fprintf(stdout, "+\n");
-}
-
-/* Funçao imprime uma mensagem de erro*/
-void imprime_erro(char *str)
-{
-    int tam = strlen(str);
-    imprime_linha(tam+4);
-    fprintf(stderr, "| %s |\n", str);
-    imprime_linha(tam+4);
-}
-
 
 /* Função que limpa a tela */
 void clearscr()
@@ -197,37 +167,87 @@ void clean_stdin()
     } while (c != '\n' && c != EOF);
 }
 
-/* Função que pausa o sistema */
-void pause()
+/* Função que converte uma string para minusculo */
+void converte_minusculo(char *str)
 {
-    fprintf(stdout, "Pressione qualquer tecla para continuar...");
-    clean_stdin();
-    getchar();
+    int tam = strlen(str), i;
+    while(tam--)
+        if(str[tam] >= 'A' && str[tam] <= 'Z')
+            str[tam]+=32;
 }
 
-/* Função ordena um vetor da struct tproduto usando o algoritmo de ordenação bubblesort */
-void ordena_prod(tproduto * prod, int tam)
+/* Conta a quantidade de caracteres de um numero */
+int conta_num(float num)
 {
-    int i, j;
-    tproduto aux;
-    for(i = 0; i < tam; i++)
+    int c = 2;
+    num *= 10000;
+    do
     {
-        // Converte as strings a ser comparada para minusculo, para ordenar de forma alfabetica
-        converte_minusculo(prod[i].descricao);
-        for(j = i + 1; j < tam; j++)
-        {
-            converte_minusculo(prod[j].descricao);
-            // A função strcmp devolve um numero > 0, caso encontre um caractere na string1 maior que na string2, assim ordenando de forma alfabetica
-            if(strcmp(prod[i].descricao, prod[j].descricao) > 0)
-            {
-                printf("S\n");
-                aux = prod[i];
-                prod[i] = prod[j];
-                prod[j] = aux;
-            }
-        }
-    }
+        c++;
+        num /= 10;
+    }while(num >= 1);
+    return c;
 }
+
+// Vai imprimir espaco ate que o espaco ocupado pelo campo seja o mesmo que o tamanho maximo de caracteres
+void imprime_espaco(int tam_cod, int tam_max_cod)
+{
+    for(; tam_cod <= tam_max_cod; tam_cod++)
+        fprintf(stdout, " ");
+}
+
+// Vai imprimir uma linha com "+" nas pontas e no meio "="
+void imprime_linha(int tam)
+{
+    fprintf(stdout, "+");
+    tam-=2;
+    while(tam--)
+        fprintf(stdout, "=");
+    fprintf(stdout, "+\n");
+}
+
+// Vai imprimir o texto centralizado com base no tamanho maximo de caracteres da linha
+void imprime_titulo(char * str, int tam_max)
+{
+    fprintf(stdout, "|");
+    tam_max -= strlen(str) + 2;
+    int tam_max_antes = tam_max / 2, tam_max_depois = tam_max / 2;
+    // Caso tamanho de caracteres da linha seja impar vai atribuir +1 a variavel que vai conter a quantidade de espacos a ser imprimida depois
+    if(tam_max % 2 == 1)
+        tam_max_depois += 1;
+    while(tam_max_antes--)
+        fprintf(stdout, " ");
+    fprintf(stdout, "%s", str);
+    while(tam_max_depois--)
+        fprintf(stdout, " ");
+    fprintf(stdout, "|\n");
+}
+
+/* Funçao imprime uma mensagem de erro*/
+void imprime_erro(char *str)
+{
+    int tam = strlen(str);
+    imprime_linha(tam+4);
+    fprintf(stderr, "| %s |\n", str);
+    imprime_linha(tam+4);
+}
+
+/* Função imprime mensagem de saida */
+void imprime_saida()
+{
+    fprintf(stdout, "+======================================+\n");
+    fprintf(stdout, "| BB      YY     YY  EEEEEE       ))   |\n");
+    fprintf(stdout, "| BB       YY   YY   EE  EE        ))  |\n");
+    fprintf(stdout, "| BB        YY YY    EE  EE   00    )) |\n");
+    fprintf(stdout, "| BBBBBB     yy      EEEEEE   00    )) |\n");
+    fprintf(stdout, "| BB  BB    yy       EE            ))  |\n");
+    fprintf(stdout, "| BBBBBB   yy        EEEEEE       ))   |\n");
+    fprintf(stdout, "+======================================+\n");
+}
+
+//|==========|
+//| Tarefa A |
+//|==========|
 
 /* Função que cadastra um ou mais produto no arquivo "produtos.bin" */
 void cadastrar_prod()
@@ -265,15 +285,19 @@ void cadastrar_prod()
     }
 }
 
+//|===========|
+//| Tarefa  B |
+//|===========|
+
 /* Função altera um ou mais produto(s) cadastrado(s) no arquivo "produtos.bin" */
 void alterar_prod()
 {
     FILE *p;
     if((p = fopen(ARQ_PROD, "r+b")) == NULL)
     {
-        char erro[100] = "Erro: Nao foi possivel abrir o arquivo ";
-        strcat(erro, ARQ_PROD);
+        char erro[100] = "Erro: Nao existe nenhum produto cadastrado";
         imprime_erro(erro);
+        pause();
     }
     else
     {
@@ -292,11 +316,13 @@ void alterar_prod()
             fscanf(stdin, " %d", &prod.cod);
             clearscr();
             // Caso o codigo informado seja menor ou igual que o id_max que armazena o ultimo codigo do produto, ele é valido
-            if(prod.cod > id_max)
+            if(prod.cod >= id_max || prod.cod <= 0)
             {
                 char erro [100];
                 sprintf(erro, "Erro: Nao existe produto com o codigo %d", prod.cod);
                 imprime_erro(erro);
+                pause();
+                clearscr();
             }
             else
             {
@@ -319,14 +345,17 @@ void alterar_prod()
     }
 }
 
+//|==========|
+//| Tarefa C |
+//|==========|
+
 /* Função que lista todos os produtos cadastrados do arquivo "produtos.bin" */
 void lista_prod()
 {
     FILE *p;
     if((p = fopen(ARQ_PROD, "rb")) == NULL)
     {
-        char erro[100];
-        sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_PROD);
+        char erro[100] = "Erro: Nao existe nenhum produuto cadastrado";
         imprime_erro(erro);
     }
     else
@@ -384,6 +413,29 @@ void lista_prod()
     pause();
 }
 
+/* Função ordena um vetor da struct tproduto usando o algoritmo de ordenação bubblesort */
+void ordena_prod(tproduto * prod, int tam)
+{
+    int i, j;
+    tproduto aux;
+    for(i = 0; i < tam; i++)
+    {
+        // Converte as strings a ser comparada para minusculo, para ordenar de forma alfabetica
+        converte_minusculo(prod[i].descricao);
+        for(j = i + 1; j < tam; j++)
+        {
+            converte_minusculo(prod[j].descricao);
+            // A função strcmp devolve um numero > 0, caso encontre um caractere na string1 maior que na string2, assim ordenando de forma alfabetica
+            if(strcmp(prod[i].descricao, prod[j].descricao) > 0)
+            {
+                aux = prod[i];
+                prod[i] = prod[j];
+                prod[j] = aux;
+            }
+        }
+    }
+}
+
 /* Funçao que vai contar o numero de caracteres de cada variavel a ser impressao na funçao lista_prod */
 void conta_produto(tproduto *prod,int *tam_max_cod,int *tam_max_descricao,int *tam_cod,int *tam_descricao,int tam)
 {
@@ -405,28 +457,9 @@ void conta_produto(tproduto *prod,int *tam_max_cod,int *tam_max_descricao,int *t
      }
 }
 
-/* Função ordena um vetor da struct tproduto usando o algoritmo de ordenação bubblesort */
-void ordena_loja(tloja *loja, int tam)
-{
-    int i, j;
-    tloja aux;
-    for(i = 0; i < tam; i++)
-    {
-        // Converte as strings a ser comparada para minusculo, para ordenar de forma alfabetica
-        converte_minusculo(loja[i].nome);
-        for(j = i + 1; j < tam; j++)
-        {
-            converte_minusculo(loja[j].nome);
-            // A função strcmp devolve um numero > 0, caso encontre um caractere na string1 maior que na string2, assim ordenando de forma alfabetica
-            if(strcmp(loja[i].nome, loja[j].nome) > 0)
-            {
-                aux = loja[i];
-                loja[i] = loja[j];
-                loja[j] = aux;
-            }
-        }
-    }
-}
+//|==========|
+//| Tarefa D |
+//|==========|
 
 /* Função que cadastra uma ou mais lojas no arquivo "lojas.bin" */
 void cadastrar_loja()
@@ -469,14 +502,17 @@ void cadastrar_loja()
     }
 }
 
+//|==========|
+//| Tarefa E |
+//|==========|
+
 /* Função que lista todas as lojas cadastradas no arquivo "lojas.bin" */
 void lista_loja()
 {
     FILE *p;
     if((p = fopen(ARQ_LOJA, "rb")) == NULL)
     {
-        char erro[100];
-        sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_LOJA);
+        char erro[100] = "Erro: Nao existe nenhuma loja cadastrado";
         imprime_erro(erro);
     }
     else
@@ -509,7 +545,6 @@ void lista_loja()
             tam_max_site = 5;
         // Declaracao da variavel que vai conter o numero de caracteres de cada linha a ser impressa
         int tam_max_linha = tam_max_cod + tam_max_nome + tam_max_site + 10;
-        fprintf(stdout, "\n");
         // Impressao do cabeçalho da funçao
         imprime_linha(tam_max_linha);
         imprime_titulo("Lojas", tam_max_linha);
@@ -544,23 +579,28 @@ void lista_loja()
     pause();
 }
 
-// Vai imprimir o texto centralizado com base no tamanho maximo de caracteres da linha
-void imprime_titulo(char * str, int tam_max)
+/* Função ordena um vetor da struct tproduto usando o algoritmo de ordenação bubblesort */
+void ordena_loja(tloja *loja, int tam)
 {
-    fprintf(stdout, "|");
-    tam_max -= strlen(str) + 2;
-    int tam_max_antes = tam_max / 2, tam_max_depois = tam_max / 2;
-    // Caso tamanho de caracteres da linha seja impar vai atribuir +1 a variavel que vai conter a quantidade de espacos a ser imprimida depois
-    if(tam_max % 2 == 1)
-        tam_max_depois += 1;
-    while(tam_max_antes--)
-        fprintf(stdout, " ");
-    fprintf(stdout, "%s", str);
-    while(tam_max_depois--)
-        fprintf(stdout, " ");
-    fprintf(stdout, "|\n");
+    int i, j;
+    tloja aux;
+    for(i = 0; i < tam; i++)
+    {
+        // Converte as strings a ser comparada para minusculo, para ordenar de forma alfabetica
+        converte_minusculo(loja[i].nome);
+        for(j = i + 1; j < tam; j++)
+        {
+            converte_minusculo(loja[j].nome);
+            // A função strcmp devolve um numero > 0, caso encontre um caractere na string1 maior que na string2, assim ordenando de forma alfabetica
+            if(strcmp(loja[i].nome, loja[j].nome) > 0)
+            {
+                aux = loja[i];
+                loja[i] = loja[j];
+                loja[j] = aux;
+            }
+        }
+    }
 }
-
 
 /* Funçao que vai contar o numero de caracteres de cada variavel a ser impressao na funçao lista_loja */
 void conta_loja(tloja *loja,int *tam_cod,int *tam_nome,int *tam_site,int *tam_max_cod,int *tam_max_nome,int *tam_max_site,int tam)
@@ -588,12 +628,9 @@ void conta_loja(tloja *loja,int *tam_cod,int *tam_nome,int *tam_site,int *tam_ma
     }
 }
 
-// Vai imprimir espaco ate que o espaco ocupado pelo campo seja o mesmo que o tamanho maximo de caracteres
-void imprime_espaco(int tam_cod, int tam_max_cod)
-{
-    for(; tam_cod <= tam_max_cod; tam_cod++)
-        fprintf(stdout, " ");
-}
+//|==========|
+//| Tarefa F |
+//|==========|
 
 /* Função que cadastra preço de um produto em uma determinada loja no arquivo "precos.bin", nao aceitando preços repetidos de produtos em uma mesma loja */
 void cadastrar_preco()
@@ -709,14 +746,17 @@ void cadastrar_preco()
     } while(ch == 's');
 }
 
+//|==========|
+//| Tarefa G |
+//|==========|
+
 /* Função que lista todos os preços do arquivo "preços.bin" */
 void lista_preco()
 {
     FILE *p;
     if((p = fopen(ARQ_PROD, "rb")) == NULL)
     {
-        char erro[100];
-        sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_PROD);
+        char erro[100] = "Erro: Nao existe nenhum produto cadastrado";
         imprime_erro(erro);
     }
     else
@@ -734,8 +774,7 @@ void lista_preco()
         fclose(p);
         if((p = fopen(ARQ_LOJA, "rb")) == NULL)
         {
-            char erro[100];
-            sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_LOJA);
+            char erro[100] = "Erro: Nao existe nenhuma loja cadastrada";
             imprime_erro(erro);
         }
         else
@@ -753,8 +792,7 @@ void lista_preco()
             fclose(p);
             if((p = fopen(ARQ_PRECO, "rb")) == NULL)
             {
-                char erro[100];
-                sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_PRECO);
+                char erro[100] = "Erro: Nao existe nenhum preco cadastrado";
                 imprime_erro(erro);
             }
             else
@@ -822,31 +860,6 @@ void lista_preco()
     pause();
 }
 
-/* Funçao que vai contar o numero de caracteres de cada variavel a ser impressao na funçao lista_preco */
-void conta_preco(tloja *loja,tproduto *prod,tpreco *preco,int *tam_descricao,int *tam_nome,int *tam_valor,int *tam_max_descricao,int *tam_max_nome,int *tam_max_valor, int tam_loja, int tam_preco, int tam_prod)
-{
-    int i;
-    float num;
-    for(i = 0; i < tam_loja; i++)
-    {
-        tam_nome[i] = strlen(loja[i].nome);
-        if(tam_nome[i] > *tam_max_nome)
-            *tam_max_nome = tam_nome[i];
-    }
-    for(i = 0; i < tam_prod; i++)
-    {
-        tam_descricao[i] = strlen(prod[i].descricao);
-        if(tam_descricao[i] > *tam_max_descricao)
-            *tam_max_descricao = tam_descricao[i];
-    }
-    for(i = 0; i < tam_preco; i++)
-    {
-        tam_valor[i] = conta_num(preco[i].preco);
-        if(*tam_max_valor < tam_valor[i])
-            *tam_max_valor = tam_valor[i];
-    }
-}
-
 /* Função que ordena o vetor preco de struct tpreco utilizando BubbleSort,  ordenando pelo nome da loja de forma ascendente e pelo preco de forma descendente */
 void ordena_preco(tpreco *preco, int tam_preco, tloja *loja)
 {
@@ -885,14 +898,42 @@ void ordena_preco(tpreco *preco, int tam_preco, tloja *loja)
 
 }
 
+/* Funçao que vai contar o numero de caracteres de cada variavel a ser impressao na funçao lista_preco */
+void conta_preco(tloja *loja,tproduto *prod,tpreco *preco,int *tam_descricao,int *tam_nome,int *tam_valor,int *tam_max_descricao,int *tam_max_nome,int *tam_max_valor, int tam_loja, int tam_preco, int tam_prod)
+{
+    int i;
+    float num;
+    for(i = 0; i < tam_loja; i++)
+    {
+        tam_nome[i] = strlen(loja[i].nome);
+        if(tam_nome[i] > *tam_max_nome)
+            *tam_max_nome = tam_nome[i];
+    }
+    for(i = 0; i < tam_prod; i++)
+    {
+        tam_descricao[i] = strlen(prod[i].descricao);
+        if(tam_descricao[i] > *tam_max_descricao)
+            *tam_max_descricao = tam_descricao[i];
+    }
+    for(i = 0; i < tam_preco; i++)
+    {
+        tam_valor[i] = conta_num(preco[i].preco);
+        if(*tam_max_valor < tam_valor[i])
+            *tam_max_valor = tam_valor[i];
+    }
+}
+
+//|==========|
+//| Tarefa H |
+//|==========|
+
 /* Função que consulta os precos de um determinado produtos em todas as lojas */
 void consulta_prod()
 {
     FILE *p_preco, *p_loja, *p_prod;
     if((p_prod = fopen(ARQ_PROD, "rb")) == NULL)
     {
-        char erro[100];
-        sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_PROD);
+        char erro[100] = "Erro: Nao existe nenhum produto cadastrado";
         imprime_erro(erro);
     }
     else
@@ -900,8 +941,7 @@ void consulta_prod()
 
         if((p_preco = fopen(ARQ_PRECO, "rb")) == NULL)
         {
-            char erro[100];
-            sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_PRECO);
+            char erro[100] = "Erro: Nao existe nenhum preco cadastrado";
             imprime_erro(erro);
             fclose(p_prod);
         }
@@ -909,8 +949,7 @@ void consulta_prod()
         {
             if((p_loja = fopen(ARQ_LOJA, "rb")) == NULL)
             {
-                char erro[100];
-                sprintf(erro, "Erro: Nao foi possivel abrir o arquivo %s", ARQ_LOJA);
+                char erro[100] = "Erro: Nao existe nenhuma loja cadastrado";
                 imprime_erro(erro);
                 fclose(p_preco);
                 fclose(p_prod);
@@ -929,7 +968,7 @@ void consulta_prod()
                 // Determina o ultimo codigo sequencial do arquivo "produtos.bin", dividindo o atual valor do ponteiro p pelo tamanho da struct tproduto + 1
                 id_max = ftell(p_prod) / sizeof(tproduto) + 1;
                 // Caso  o codigo do produto informado seja menor ou igual ao ultimo codigo do produto, o codigo informado é valido
-                if(id_cod > id_max)
+                if(id_cod >= id_max || id_cod <= 0)
                 {
                     char erro[100];
                     sprintf(erro, "Erro: Nao existe nenhum produto com o codigo %d", id_cod);
@@ -996,19 +1035,6 @@ void consulta_prod()
         }
     }
     pause();
-}
-
-/* Conta a quantidade de caracteres de um numero */
-int conta_num(float num)
-{
-    int c = 2;
-    num *= 10000;
-    do
-    {
-        c++;
-        num /= 10;
-    }while(num >= 1);
-    return c;
 }
 
 /* Funçao que vai contar o numero de caracteres de cada variavel a ser impressao na funçao consulta_prod */
