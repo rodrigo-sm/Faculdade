@@ -62,7 +62,7 @@ void conta_produto(tproduto *,int *,int *,int *,int *,int );
 void imprime_titulo(char *, int);
 void imprime_linha(int);
 int conta_num(float);
-void conta_consulta(int, int *,int *);
+int conta_consulta(int, int *,int *);
 void clean_stdin(void);
 void pause(void);
 void clearscr(void);
@@ -986,50 +986,62 @@ void consulta_prod()
                     tpreco preco;
                     tloja loja;
                     // Declaracao das variaveis que vao conter o numero maximo de caracteres de cada variavel a ser imprimida
-                    int tam_max_nome = 0, tam_max_valor = 0, tam;
+                    int tam_max_nome = 0, tam_max_valor = 0, tam, r;
                     // Vai contar o numero de caracteres das variaveis a ser imprimida
-                    conta_consulta(id_cod, &tam_max_nome, &tam_max_valor);
-                    // Vai verificar se as variaveis tem o tamanho minimo de caracteres a ser imprimido, caso nao tenho vai atribuir a elas o valor minimo
-                    if(tam_max_nome < 5)
-                        tam_max_nome = 5;
-                    if(tam_max_valor < 6)
-                        tam_max_valor = 6;
-                    // Declaracao da variavel que vai conter o numero de caracteres de cada linha a ser impressa
-                    int tam_max_linha = tam_max_nome + tam_max_valor + 7;
-                    // Impressao do cabeçalho da funçao
-                    imprime_linha(tam_max_linha);
-                    char aux[51] = "Produto ";
-                    strcat(aux, prod.descricao);
-                    imprime_titulo(aux, tam_max_linha);
-                    imprime_linha(tam_max_linha);
-                    fprintf(stdout, "| Loja");
-                    // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
-                    imprime_espaco(4, tam_max_nome);
-                    fprintf(stdout, "| Preco");
-                    // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
-                    imprime_espaco(5, tam_max_valor);
-                    fprintf(stdout, "|\n");
-                    // Lê todos os precos do arquivo "precos.bin" um por um
-                    while(fread(&preco, sizeof(tpreco), 1, p_preco) > 0)
+                    r = conta_consulta(id_cod, &tam_max_nome, &tam_max_valor);
+                    if(!r)
                     {
-                        // Caso o produto lido seja o mesmo que o informado, ele vai imprimir a loja e o preco do produto na tela
-                        if(preco.cod_produto == id_cod)
-                        {
-                            // Impressao das linhas
-                            fseek(p_loja, (preco.cod_loja - 1) * sizeof(tloja), SEEK_SET);
-                            fread(&loja, sizeof(loja), 1, p_loja);
-                            fprintf(stdout, "| %s", loja.nome);
-                            tam = strlen(loja.nome); // Determina a quantidade de caracteres a ser impressa
-                            // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
-                            imprime_espaco(tam, tam_max_nome);
-                            fprintf(stdout, "| %.2f R$", preco.preco);
-                            tam = conta_num(preco.preco); // Determina a quantidade de caracteres a ser impressa
-                            // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
-                            imprime_espaco(tam, tam_max_valor);
-                            fprintf(stdout, "|\n");
-                        }
+                        char erro[100];
+                        sprintf(erro, "Erro: Nao existe nenhum preco cadastrado do produto %s", prod.descricao);
+                        imprime_erro(erro);
+                        fclose(p_preco);
+                        fclose(p_prod);
+                        fclose(p_loja);
                     }
-                    imprime_linha(tam_max_linha);
+                    else
+                    {
+                        // Vai verificar se as variaveis tem o tamanho minimo de caracteres a ser imprimido, caso nao tenho vai atribuir a elas o valor minimo
+                        if(tam_max_nome < 5)
+                            tam_max_nome = 5;
+                        if(tam_max_valor < 6)
+                            tam_max_valor = 6;
+                        // Declaracao da variavel que vai conter o numero de caracteres de cada linha a ser impressa
+                        int tam_max_linha = tam_max_nome + tam_max_valor + 7;
+                        // Impressao do cabeçalho da funçao
+                        imprime_linha(tam_max_linha);
+                        char aux[51] = "Produto ";
+                        strcat(aux, prod.descricao);
+                        imprime_titulo(aux, tam_max_linha);
+                        imprime_linha(tam_max_linha);
+                        fprintf(stdout, "| Loja");
+                        // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+                        imprime_espaco(4, tam_max_nome);
+                        fprintf(stdout, "| Preco");
+                        // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+                        imprime_espaco(5, tam_max_valor);
+                        fprintf(stdout, "|\n");
+                        // Lê todos os precos do arquivo "precos.bin" um por um
+                        while(fread(&preco, sizeof(tpreco), 1, p_preco) > 0)
+                        {
+                            // Caso o produto lido seja o mesmo que o informado, ele vai imprimir a loja e o preco do produto na tela
+                            if(preco.cod_produto == id_cod)
+                            {
+                                // Impressao das linhas
+                                fseek(p_loja, (preco.cod_loja - 1) * sizeof(tloja), SEEK_SET);
+                                fread(&loja, sizeof(loja), 1, p_loja);
+                                fprintf(stdout, "| %s", loja.nome);
+                                tam = strlen(loja.nome); // Determina a quantidade de caracteres a ser impressa
+                                // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+                                imprime_espaco(tam, tam_max_nome);
+                                fprintf(stdout, "| %.2f R$", preco.preco);
+                                tam = conta_num(preco.preco); // Determina a quantidade de caracteres a ser impressa
+                                // Vai imprimir espaco para que cada campo da coluna tenha o mesmo tamanho
+                                imprime_espaco(tam, tam_max_valor);
+                                fprintf(stdout, "|\n");
+                            }
+                        }
+                        imprime_linha(tam_max_linha);
+                    }
                 }
             }
         }
@@ -1037,10 +1049,11 @@ void consulta_prod()
     pause();
 }
 
-/* Funçao que vai contar o numero de caracteres de cada variavel a ser impressao na funçao consulta_prod */
-void conta_consulta(int id_cod, int *tam_max_nome,int *tam_max_valor)
+/* Funçao que vai contar o numero de caracteres de cada variavel a ser impressao na funçao consulta_prod, retornando 0 caso nao tenha nenhum preço cadastrado do produto */
+int conta_consulta(int id_cod, int *tam_max_nome,int *tam_max_valor)
 {
     FILE *p_preco, *p_loja;
+    int r = 0;
     if((p_loja = fopen(ARQ_LOJA, "rb")) == NULL)
     {
         char erro[100];
@@ -1073,8 +1086,10 @@ void conta_consulta(int id_cod, int *tam_max_nome,int *tam_max_valor)
                     tam = conta_num(preco.preco);
                     if(tam > *tam_max_valor)
                         *tam_max_valor = tam;
+                    r++;
                 }
             }
         }
     }
+    return r;
 }
