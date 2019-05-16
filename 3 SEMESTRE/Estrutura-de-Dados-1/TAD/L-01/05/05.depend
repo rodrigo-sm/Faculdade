@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1551204029 source:c:\users\pichau\github\faculdade\3 semestre\estrutura-de-dados-1\tad\l-01\05\retangulo.c
+	"retangulo.h"
+	<stdbool.h>
+
+1551203867 c:\users\pichau\github\faculdade\3 semestre\estrutura-de-dados-1\tad\l-01\05\retangulo.h
+	<stdbool.h>
+

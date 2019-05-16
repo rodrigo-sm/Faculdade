@@ -1,0 +1,11 @@
+testa_math: testa_math.o my_io.o my_math.o
+	gcc -o testa_math testa_math.o my_io.o my_math.o -lm
+	
+testa_math.o: testa_math.c my_io.h my_math.h
+	gcc -c testa_math.c
+	
+my_io.o: my_io.c my_io.h
+	gcc -c my_io.c
+	
+my_math.o: my_math.c
+	gcc -c my_math.c			

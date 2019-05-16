@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1553760764 source:c:\users\pichau\github\faculdade\3 semestre\estrutura-de-dados-1\fila\exercicios\4\fpa.c
+	<stdlib.h>
+	<stdio.h>
+	"fpa.h"
+	<stdbool.h>
+
+1553760470 c:\users\pichau\github\faculdade\3 semestre\estrutura-de-dados-1\fila\exercicios\4\fpa.h
+	<stdbool.h>
+
+1553760676 source:c:\users\pichau\github\faculdade\3 semestre\estrutura-de-dados-1\fila\exercicios\4\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"fpa.h"
+

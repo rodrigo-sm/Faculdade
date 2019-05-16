@@ -1,0 +1,22 @@
+# depslib dependency file v1.0
+1552949370 source:c:\users\ceitelabinfo\desktop\fila\01.c
+	<stdio.h>
+	"filaNormal.h"
+
+1552949296 c:\users\ceitelabinfo\desktop\fila\filanormal.h
+	<stdbool.h>
+
+1552949383 source:c:\users\ceitelabinfo\desktop\fila\filanormal.c
+	<stdlib.h>
+	<stdio.h>
+	"filaNormal.h"
+	<stdbool.h>
+
+1552949296 source:c:\users\ceitelabinfo\desktop\fila\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1552950020 source:c:\users\ceitelabinfo\desktop\fila\02.c
+	"filaNormal.h"
+	<stdbool.h>
+

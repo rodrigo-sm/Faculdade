@@ -1,0 +1,4 @@
+2) Qual a diferença entre "A" e 'A'?
+
+Resposta: "A" é uma string ou seja um conjunto de caracteres enquanto 'A' é um
+caractere.

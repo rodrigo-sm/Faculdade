@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1514140574 source:c:\users\pichau\github\faculdade\3 semestre\estrutura-de-dados-1\tad\l-01\lista\main.c
+	<stdio.h>
+	<stdlib.h>
+

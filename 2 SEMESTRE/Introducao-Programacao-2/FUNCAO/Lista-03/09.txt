@@ -1,0 +1,11 @@
+9. Explique por quê ocorre um erro ao compilarmos um programa que contenha a função
+abaixo.
+void vai_da_pau(int x) {
+ static int y = x;
+ printf("%d\n", y++);
+}
+
+Resposta:
+
+
+As variaveis static não podem ser inicializadas quando são declaradas por serem criadas em tempo de carga do programa.

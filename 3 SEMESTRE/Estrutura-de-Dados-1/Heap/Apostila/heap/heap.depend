@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1553779513 source:c:\users\pichau\github\faculdade\3 semestre\estrutura-de-dados-1\heap\apostila\heap\heap_max.c
+
+1553778799 source:c:\users\pichau\github\faculdade\3 semestre\estrutura-de-dados-1\heap\apostila\heap\heap_min.c
+
+1553779636 source:c:\users\pichau\github\faculdade\3 semestre\estrutura-de-dados-1\heap\apostila\heap\main.c
+	"heap_min.h"
+	"heap_max.h"
+	<stdio.h>
+
+1553778799 c:\users\pichau\github\faculdade\3 semestre\estrutura-de-dados-1\heap\apostila\heap\heap_min.h
+
+1553779550 c:\users\pichau\github\faculdade\3 semestre\estrutura-de-dados-1\heap\apostila\heap\heap_max.h
+

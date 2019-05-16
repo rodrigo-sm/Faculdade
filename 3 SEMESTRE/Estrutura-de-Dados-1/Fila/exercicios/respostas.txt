@@ -1,0 +1,15 @@
+1) 
+
+void queue_fura_fila(fila * f, queue_info)
+{
+	fila->itens[f->comeco] = queue_info;
+}
+
+2) E A S Y Q U E S T I O N
+
+3) 
+
+7
+5
+2
+3

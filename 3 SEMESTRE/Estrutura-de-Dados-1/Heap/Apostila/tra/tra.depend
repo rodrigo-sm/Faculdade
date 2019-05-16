@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1554202814 source:c:\users\pichau\github\faculdade\3 semestre\estrutura-de-dados-1\heap\apostila\tra\main.c
+	"set.h"
+	<stdio.h>
+
+1554202814 c:\users\pichau\github\faculdade\3 semestre\estrutura-de-dados-1\heap\apostila\tra\set.h
+	<stdbool.h>
+
+1554202858 source:c:\users\pichau\github\faculdade\3 semestre\estrutura-de-dados-1\heap\apostila\tra\set.c
+	"set.h"
+	<stdio.h>
+

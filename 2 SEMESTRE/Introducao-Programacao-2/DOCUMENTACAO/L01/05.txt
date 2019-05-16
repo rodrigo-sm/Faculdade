@@ -1,0 +1,27 @@
+5) Reescreva o trecho de programa abaixo
+com leiaute “civilizado”.
+int func(int n,int v[]){int 
+i,j;i=0;while(i<n){
+if(v[i]!=0) ++i;else{for(j=i+1;j<n;++j)
+v[j­1]=v[j];­­n;}}return n;}
+
+Resposta:
+
+/* A função recebe um inteiro n e um vetor v de n elementos
+ * é elimina os zeros do vetor v e devolve a quantidade de zeros */
+int func(int n,int v[])
+{
+	int  i, j; 
+	i=0;
+	while(i<n) 
+	{
+		if (v[i] != 0) ++i;
+		else 
+		{
+			for (j = i + 1; j < n; ++j)
+				v[j­1] = v[j];
+			­­n;
+		}
+	}
+return n;
+}

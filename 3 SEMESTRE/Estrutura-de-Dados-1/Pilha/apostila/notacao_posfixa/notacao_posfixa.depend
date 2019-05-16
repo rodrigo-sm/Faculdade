@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1514140574 source:c:\users\pichau\github\faculdade\3 semestre\estrutura-de-dados-1\pilha\apostila\notacao_posfixa\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1553241940 source:c:\users\pichau\github\faculdade\3 semestre\estrutura-de-dados-1\pilha\apostila\notacao_posfixa\notacao_posfixa.c
+
+1551137566 source:c:\users\pichau\github\faculdade\3 semestre\estrutura-de-dados-1\pilha\apostila\notacao_posfixa\pilha.c
+	"pilha.h"
+	<stdio.h>
+	<stdlib.h>
+
+1551137572 c:\users\pichau\github\faculdade\3 semestre\estrutura-de-dados-1\pilha\apostila\notacao_posfixa\pilha.h
+	<stdbool.h>
+

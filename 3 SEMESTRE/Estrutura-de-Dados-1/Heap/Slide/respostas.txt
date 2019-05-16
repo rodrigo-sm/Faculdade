@@ -1,0 +1,47 @@
+1)
+
+A) Heap Minimo: [1, 3, 4, 5, 6, 8, 10]
+
+B) Heap Minimo: [1, 2, 4, 7, 8, 9, 10, 11, 14]
+
+2)
+
+A) Heap Maximo: [10, 8, 6, 5, 4, 3, 1]
+
+B) Heap Maximo: [14, 11, 10, 9, 8, 7, 4, 2, 1]
+
+3)
+
+bool is_heap_max(int v[], int n)
+{
+    int e = n/2, i, j, x, d = n-1; // índice do último
+    while(e > 0) {
+       e--;
+       i = e;
+       j = 2 * e + 1; // índice do filho esquerdo
+       x = a[e]; // novo elemento
+       if (j < d && a[j + 1] > a[j]) j++;
+       while (j <= d && a[j] > x) {
+           return false;
+       }
+   }
+   return true;
+}
+
+4)
+
+bool is_heap_min(int v[], int n)
+{
+    int e = n/2, i, j, x, d = n-1; // índice do último
+    while(e > 0) {
+       e--;
+       i = e;
+       j = 2 * e + 1; // índice do filho esquerdo
+       x = a[e]; // novo elemento
+       if (j < d && a[j + 1] < a[j]) j++;
+       while (j <= d && a[j] < x) {
+           return false;
+       }
+   }
+   return true;
+}
