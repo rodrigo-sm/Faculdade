@@ -1,7 +1,8 @@
-#include "avl.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "avl.h"
 #include "listaord.h"
 
 void print_tree(avl_tree t) {

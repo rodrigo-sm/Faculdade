@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include "ctype.h"
+#include <ctype.h>
+
 #include "redeSocial.h"
 #include "avl.h"
 #include "listaord.h"

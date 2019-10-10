@@ -6,13 +6,14 @@
  */
 
 
-#include "redeSocial.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+
+#include "redeSocial.h"
 #include "avl.h"
 #include "listaord.h"
-#include <ctype.h>
 
 void load_users(avl_tree * t, char * filename) {
     FILE * arq; // Arquivo lógico

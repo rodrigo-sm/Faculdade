@@ -1,0 +1,45 @@
+# depslib dependency file v1.0
+1570750415 source:c:\users\ceitelabinfo\faculdade\4 semestre\estrutura-de-dados-2\1-trabalho\avl.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"avl.h"
+	"listaord.h"
+
+1570750230 c:\users\ceitelabinfo\faculdade\4 semestre\estrutura-de-dados-2\1-trabalho\avl.h
+	<stdbool.h>
+	"listaord.h"
+	<stdio.h>
+
+1570750230 c:\users\ceitelabinfo\faculdade\4 semestre\estrutura-de-dados-2\1-trabalho\listaord.h
+	<stdbool.h>
+	<stdio.h>
+
+1570750439 source:c:\users\ceitelabinfo\faculdade\4 semestre\estrutura-de-dados-2\1-trabalho\listaord.c
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	"listaord.h"
+
+1570750421 source:c:\users\ceitelabinfo\faculdade\4 semestre\estrutura-de-dados-2\1-trabalho\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<string.h>
+	<ctype.h>
+	"redeSocial.h"
+	"avl.h"
+	"listaord.h"
+
+1570750230 c:\users\ceitelabinfo\faculdade\4 semestre\estrutura-de-dados-2\1-trabalho\redesocial.h
+	"avl.h"
+
+1570750432 source:c:\users\ceitelabinfo\faculdade\4 semestre\estrutura-de-dados-2\1-trabalho\redesocial.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"redeSocial.h"
+	"avl.h"
+	"listaord.h"
+

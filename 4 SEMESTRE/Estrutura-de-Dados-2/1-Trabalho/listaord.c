@@ -1,7 +1,8 @@
-#include "listaord.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include "string.h"
+#include <string.h>
+
+#include "listaord.h"
 
 void lst_init(lst_ptr * l)
 {
