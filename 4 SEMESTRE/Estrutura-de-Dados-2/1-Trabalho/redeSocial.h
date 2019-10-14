@@ -1,7 +1,9 @@
-/* redeSocia.h
+/* redeSocial.h
  * Definicao dos metodos da Rede Social
  *
  * Rodrigo Suarez Moreira
+ * Vitor Oliveira Kuribara
+ * Victor Gabriel Martins e Souza
  * 09/10/2019
  */
 
@@ -22,7 +24,7 @@ void load_users(avl_tree * t, char * filename);
 
 
 /*
- * Adiciona um usuario แ rede social
+ * Adiciona um usuario รก rede social
  * Parametros:
  * -  Arvore AVL onde esta salva os dados da rede social
  * -  Dados do usuario a ser inserido
