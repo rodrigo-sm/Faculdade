@@ -1,7 +1,9 @@
-/* redeSocia.c
- * Implementa��o dos metodos da Rede Social
+/* redeSocial.c
+ * Implementação das funções da Rede Social
  *
  * Rodrigo Suarez Moreira
+ * Vitor Oliveira Kuribara
+ * Victor Gabriel Martins e Souza
  * 09/10/2019
  */
 
@@ -15,8 +17,9 @@
 #include "avl.h"
 #include "listaord.h"
 
+// As funções abaixo seguem suas definições solicitadas no trabalho   
 void load_users(avl_tree * t, char * filename) {
-    FILE * arq; // Arquivo l�gico
+    FILE * arq; // Arquivo lógico
     bool h;
     // Abertura do arquivo
     if ((arq = fopen(filename, "r")) == NULL) {
@@ -142,7 +145,7 @@ void removeUsuarioDaListaDeAmigosDosUsuarios(avl_tree t, lst_info usuario) {
 }
 
 void save_users(avl_tree t) {
-    FILE * arq; // Arquivo l�gico
+    FILE * arq; // Arquivo lógico
     // Abertura do arquivo
     if ((arq = fopen("database.txt", "w")) == NULL) {
         fprintf(stderr, "Erro na abertura do arquivo database.txt\n");
