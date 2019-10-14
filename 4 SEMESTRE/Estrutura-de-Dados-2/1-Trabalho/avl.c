@@ -5,6 +5,9 @@
 #include "avl.h"
 #include "listaord.h"
 
+/*Função que imprimirá na tela uma lista ordenada, recebendo como parametro uma arvore avl
+* Esta parte da função é responsável pela recursão (fazendo o percurso ERD - Em ordem).
+*/
 void print_tree(avl_tree t) {
     if (t != NULL) {
         print_tree(t->esq);
@@ -12,16 +15,23 @@ void print_tree(avl_tree t) {
         print_tree(t->dir);
     }
 }
-
+/* Função que imprimirá na tela uma lista ordenada, recebendo como parametro uma arvore avl
+*  Esta parte será responsável pela impressão de fato.
+*/
 void print_info(avl_tree t) {
     printf("\nUsuario: %s\n", t->dado.usuario);
     printf("Nome completo: %s\n", t->dado.nome_completo);
     printf("Sexo: %c\n", t->dado.sexo);
-    // Caso queira imprimir os amigos descomentar as linhas abaixo
-    // printf("Amigos: ");
-    // lst_print(t->dado.amigos);
+    /* OBS.: Caso neccessário imprimir os amigos descomentar as linhas abaixo
+    * printf("Amigos: ");
+    * lst_print(t->dado.amigos);
+    */
 }
 
+/* A função abaixo é responsável pelo armazenamento dos dados em arquivo, recebendo como
+*  parametros uma arvore avl e um ponteiro de arquivo
+*  
+*/
 void save_tree(avl_tree t, FILE * arq) {
     if (t != NULL) {
         save_tree(t->esq, arq);
@@ -34,6 +44,13 @@ void save_tree(avl_tree t, FILE * arq) {
     }
 }
 
+/* Recebendo como parâmetros uma árvore avl e uma string (vetor de char), ela
+*  verificará se a chave(usuário) pertence a estrutura, retornando um ponteiro 
+*  com o nó correspondente caso encontre a chave. Se isto não ocorrer, ela
+*  será chamada recursivamente para verificação em subarvores e caso encontre 
+*  um nó folha e a função seja chamada (fazendo t == NULL), ela também retornará
+*  NULL
+*/
 avl_tree avl_find(avl_tree t, char * chave) {
     // Nao encontrou no correspondente a chave
     if (t == NULL) return NULL;
@@ -44,7 +61,14 @@ avl_tree avl_find(avl_tree t, char * chave) {
     // Encontrou no correspondente a chave
     else return t;
 }
-
+/* A função a seguir tem como parametros a árvore avl (sofrerá modificações), uma
+*  estrutura com a informação do nó e um variável booleana que indica o crescimento 
+*  de um ramo da árvore. O valor de retorno, será booleano e indicará se o nó foi encontrado
+*  (true) ou não (false), e para ajustar a recursividade da função foi criada a
+*  variável 'retorno'. Ela realizará na árvore uma busca do usuário solicitado, 
+*  caso não encontre, este usuário será inserido na estrutura e retornará true,
+*  -caso encontre(usuário já existente), ela retornará falso.
+*/
 bool avl_search(avl_tree * t, avl_info x, bool * h) {
     bool retorno;
     // Nao encontrou no correspondente ao avl_info entao insere
@@ -73,11 +97,11 @@ bool avl_search(avl_tree * t, avl_info x, bool * h) {
                         break;
                 case -1:
                     // Rebalanceamento
-                    if ((*t)->esq->bal == -1) { //Rota��o simples p/ direita
+                    if ((*t)->esq->bal == -1) { //Rotação simples p/ direita
                         rotacao_dir(t);
                         (*t)->dir->bal = 0; //Ajusta o fator de balanceamento
                     }
-                    else { // Rota��o dupla para direita
+                    else { // Rotação dupla para direita
                         rotacao_esq(&(*t)->esq);
                         rotacao_dir(t);
                         // Ajusta o fator de balanceamento
@@ -102,12 +126,12 @@ bool avl_search(avl_tree * t, avl_info x, bool * h) {
                 case 0 : (*t)->bal = 1;
                          break;
                 case 1: // Rebalanceamento
-                    if ((*t)->dir->bal == 1) { // Rota��o simples p/ esquerda
+                    if ((*t)->dir->bal == 1) { // Rotação simples p/ esquerda
                         rotacao_esq(t);
                         // Ajusta o fator de balanceamento
                         (*t)->esq->bal = 0;
                     }
-                    else { // Rota��o dupla para esquerda
+                    else { // Rotação dupla para esquerda
                         rotacao_dir(&(*t)->dir);
                         rotacao_esq(t);
                         // Ajusta o fator de balanceamento
@@ -127,7 +151,7 @@ bool avl_search(avl_tree * t, avl_info x, bool * h) {
     return retorno;
 } // fim de avl_search
 
-// Rota�ao para a esquerda
+// Rotaçao para a esquerda
 void rotacao_esq(avl_tree * t) {
     avl_tree p;
     p = (*t)->dir;
@@ -136,7 +160,7 @@ void rotacao_esq(avl_tree * t) {
     *t = p;
 }
 
-// Rota��o para a direita
+// Rotação para a direita
 void rotacao_dir(avl_tree * t) {
     avl_tree p;
     p = (*t)->esq;
@@ -145,22 +169,26 @@ void rotacao_dir(avl_tree * t) {
     *t = p;
 }
 
+/* Recebe a árvore para modificação, a estrutura representando um nó, e uma variável
+*  booleana sinalizando se a árvore fica pendendo para um lado. Esta função é responsável
+*  por deletar um usuário (nó) solicitado e devolve o sucesso(true) ou fracasso(false).
+*/
 bool delete_avl_no(avl_tree * t, avl_info * x, bool * h) {
     avl_tree p;
     bool result;
-    if (*t == NULL) // A chave n�o se encontra na �rvore
+    if (*t == NULL) // A chave não se encontra na árvore
         return false;
-    else if (strcasecmp(x->usuario,(*t)->dado.usuario) == 0) { // a chave est� neste n�
+    else if (strcasecmp(x->usuario,(*t)->dado.usuario) == 0) { // a chave está neste nó
         p = *t;
-        if ((*t)->esq == NULL) { // n� folha ou somente com sub�rvore direita
+        if ((*t)->esq == NULL) { // nó folha ou somente com subárvore direita
             *t = p->dir;
             *h = true;
         }
-        else if ((*t)->dir == NULL) { // n� com uma �nica sub�rvore esquerda
+        else if ((*t)->dir == NULL) { // nó com uma única subárvore esquerda
             *t = p->esq;
             *h = true;
         }
-        else { // n� com duas sub�vores
+        else { // nó com duas subávores
             p = get_min(&(*t)->dir, h);
             (*t)->dado = p->dado;
             if(*h) balance_dir(t, h);
@@ -195,7 +223,7 @@ void balance_dir(avl_tree * t, bool * h) {
         case -1: // rebalanceamento
                 p1 = (*t)->esq;
                 b1 = p1->bal;
-                if (b1 <= 0) { // rota��o simples
+                if (b1 <= 0) { // rotação simples
                     (*t)->esq = p1->dir;
                     p1->dir = *t;
                     if (b1 == 0) {
@@ -209,7 +237,7 @@ void balance_dir(avl_tree * t, bool * h) {
                     }
                     *t = p1;
                 }
-                else { // rota��o dupla
+                else { // rotação dupla
                     p2 = p1->dir;
                     b2 = p2->bal;
                     p1->dir = p2->esq;
@@ -239,7 +267,7 @@ void balance_esq(avl_tree * t, bool * h) {
         case 1: // rebalanceamento
                 p1 = (*t)->dir;
                 b1 = p1->bal;
-                if (b1 >= 0) { // rota��o simples
+                if (b1 >= 0) { // rotação simples
                     (*t)->dir = p1->esq;
                     p1->esq = *t;
                     if (b1 == 0) {
@@ -253,7 +281,7 @@ void balance_esq(avl_tree * t, bool * h) {
                     }
                     *t = p1;
                 }
-                else { // rota��o dupla
+                else { // rotação dupla
                     p2 = p1->esq;
                     b2 = p2->bal;
                     p1->esq = p2->dir;
