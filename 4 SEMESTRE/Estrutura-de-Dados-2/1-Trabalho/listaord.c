@@ -68,6 +68,9 @@ void lst_print(lst_ptr l)
     printf("\b ]\n");
 }
 
+/*  Esta função receberá a lista encadeada (amigos) e um ponteiro de arquivo.
+*   Seu propósito é salvar esta lista no arquivo correspondente.
+*/
 void lst_save(lst_ptr l, FILE * arq) {
     fprintf(arq, "%s", l->dado.usuario);
     l = l->prox;
