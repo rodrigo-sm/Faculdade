@@ -1,3 +1,17 @@
+/*  Universidade Católica de Santos
+*  1º Trabalho Prático - Rede Social
+*  Estrutura de Dados II
+*  Profº Ciro Cirne Trindade
+*
+*  Rodrigo Suarez Moreira
+*  Vitor Oliveira Kuribara
+*  Victor Gabriel Martins e Souza
+*  09/10/2019
+* 
+* Implementação da interface (main)
+*/
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -8,6 +22,12 @@
 #include "avl.h"
 #include "listaord.h"
 
+/* As funções a seguir buscam implementar o que foi feito em redeSocial.h e redeSocial.c
+*  por meio de uma interface para o usuário. Grande parte delas apenas exibem um menu, enquanto
+*  outras leem a entrada do usuário (tentando evitar erros de digitação) para executar comandos ou apenas
+*  como entradas de dados. O restante trata o retorno das funções de redeSocial.c (indicando falha
+*  ou sucesso da operação) 
+*/
 void imprimeMenu();
 void imprimeBorda();
 void imprimeLogo();
