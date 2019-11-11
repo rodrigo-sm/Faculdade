@@ -1,0 +1,118 @@
+# depslib dependency file v1.0
+1573333608 source:c:\users\pichau\onedrive\trabalho_cobertura_vacinal\avl.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"avl.h"
+	"dados_cobertura_vacinal.h"
+
+1573332986 c:\users\pichau\onedrive\trabalho_cobertura_vacinal\avl.h
+	<stdbool.h>
+	"dados_cobertura_vacinal.h"
+
+1573416339 source:c:\users\pichau\onedrive\trabalho_cobertura_vacinal\cobertura_vacinal.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"cobertura_vacinal.h"
+	"hashmap.h"
+	"avl.h"
+
+1573415868 c:\users\pichau\onedrive\trabalho_cobertura_vacinal\cobertura_vacinal.h
+	<stdio.h>
+	"hashmap.h"
+	"avl.h"
+
+1573416505 c:\users\pichau\onedrive\trabalho_cobertura_vacinal\hashmap.h
+	<stdbool.h>
+	"dados_cobertura_vacinal.h"
+
+1573332653 source:c:\users\pichau\onedrive\trabalho_cobertura_vacinal\hashmap.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	"hashmap.h"
+	"listaord.h"
+	"dados_cobertura_vacinal.h"
+
+1573267596 c:\users\pichau\onedrive\trabalho_cobertura_vacinal\listaord.h
+	<stdbool.h>
+	"hashmap.h"
+	"cobertura_vacinal.h"
+
+1573332762 source:c:\users\pichau\onedrive\trabalho_cobertura_vacinal\listaord.c
+	"listaord.h"
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	"cobertura_vacinal.h"
+
+1573272576 source:c:\users\pichau\onedrive\trabalho_cobertura_vacinal\main.c
+	<stdio.h>
+	<stdlib.h>
+	"cobertura_vacinal.h"
+	"hashmap.h"
+	"avl.h"
+
+1573416578 c:\users\pichau\onedrive\trabalho_cobertura_vacinal\dados_cobertura_vacinal.h
+
+1573510405 source:c:\users\ceitelabinfo\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\avl.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"avl.h"
+	"dados_cobertura_vacinal.h"
+
+1573510405 c:\users\ceitelabinfo\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\avl.h
+	<stdbool.h>
+	"dados_cobertura_vacinal.h"
+
+1573512931 c:\users\ceitelabinfo\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\dados_cobertura_vacinal.h
+
+1573513758 source:c:\users\ceitelabinfo\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\cobertura_vacinal.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"cobertura_vacinal.h"
+	"hashmap.h"
+	"avl.h"
+	"dados_cobertura_vacinal.h"
+
+1573513884 c:\users\ceitelabinfo\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\cobertura_vacinal.h
+	<stdio.h>
+	"hashmap.h"
+	"avl.h"
+
+1573510405 c:\users\ceitelabinfo\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\hashmap.h
+	<stdbool.h>
+	"dados_cobertura_vacinal.h"
+
+1573510405 source:c:\users\ceitelabinfo\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\hashmap.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	"hashmap.h"
+	"listaord.h"
+	"dados_cobertura_vacinal.h"
+
+1573510405 c:\users\ceitelabinfo\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\listaord.h
+	<stdbool.h>
+	"hashmap.h"
+	"cobertura_vacinal.h"
+
+1573510405 source:c:\users\ceitelabinfo\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\listaord.c
+	"listaord.h"
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	"cobertura_vacinal.h"
+
+1573513730 source:c:\users\ceitelabinfo\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\main.c
+	<stdio.h>
+	<stdlib.h>
+	"cobertura_vacinal.h"
+	"hashmap.h"
+	"avl.h"
+
