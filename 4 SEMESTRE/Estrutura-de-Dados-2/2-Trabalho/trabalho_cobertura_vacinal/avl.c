@@ -1,11 +1,3 @@
-/* avl.c
- * Implementação das operações realizadas sobre o TAD que r
- * representa uma árvore AVL.
- *
- * Ciro C. Trindade
- * 30/Set/2019
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

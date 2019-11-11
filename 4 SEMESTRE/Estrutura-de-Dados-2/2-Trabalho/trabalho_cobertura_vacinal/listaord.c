@@ -1,17 +1,8 @@
-/* listaord.c
- *
- * Implementação das operações sobre o TAD lista encadeada ordenada adaptada
- * para um hash map.
- *
- * 30/outubro/2019
- *
- * Ciro C. Trindade */
-
-#include "listaord.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
+#include "listaord.h"
 #include "cobertura_vacinal.h"
 
 void lst_init(map_ptr * l)

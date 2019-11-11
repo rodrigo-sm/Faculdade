@@ -1,12 +1,3 @@
-/* hashmap.c
- *
- * Implementação das operações realizadas sobre o TAD hash_map
- *
- * 30/out/2019
- *
- * Ciro C. Trindade
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
