@@ -43,3 +43,47 @@
 	"avl.h"
 	"listaord.h"
 
+1570761195 source:c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\1-trabalho\avl.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"avl.h"
+	"listaord.h"
+
+1570675069 c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\1-trabalho\avl.h
+	<stdbool.h>
+	"listaord.h"
+	<stdio.h>
+
+1570676259 c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\1-trabalho\listaord.h
+	<stdbool.h>
+	<stdio.h>
+
+1570761195 source:c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\1-trabalho\listaord.c
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	"listaord.h"
+
+1570761195 source:c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\1-trabalho\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<string.h>
+	<ctype.h>
+	"redeSocial.h"
+	"avl.h"
+	"listaord.h"
+
+1570674603 c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\1-trabalho\redesocial.h
+	"avl.h"
+
+1570761195 source:c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\1-trabalho\redesocial.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"redeSocial.h"
+	"avl.h"
+	"listaord.h"
+

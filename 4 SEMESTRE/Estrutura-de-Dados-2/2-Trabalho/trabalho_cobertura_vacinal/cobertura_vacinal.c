@@ -73,46 +73,42 @@ void exibe_dados_cobertura_vacinal_pelo_codigo_municipio(hash_map map, int codig
     print_cobertura_vacinal_info(dado->info);
 }
 
-int print_n_dados_ordenado_ascendente(avl_tree tree, int iteracoes) {
+int print_n_dados_ordenado_ascendente(avl_tree tree, int quantidade_print) {
     if (tree != NULL) {
 
-        iteracoes -= diferenca(iteracoes, print_n_dados_ordenado_ascendente(tree->esq,
-                                                                               iteracoes));
+        quantidade_print -= quantidade_print -  print_n_dados_ordenado_ascendente(tree->esq,
+                                                                               quantidade_print);
 
-        if(seAcabou(iteracoes)) return VAZIO;
+        if(seAcabou(quantidade_print)) return VAZIO;
 
         print_cobertura_vacinal_info(tree->dado.info);
-        iteracoes--;
+        quantidade_print--;
 
-        iteracoes -= diferenca(iteracoes, print_n_dados_ordenado_ascendente(tree->dir,
-                                                                               iteracoes));
+        quantidade_print -= quantidade_print - print_n_dados_ordenado_ascendente(tree->dir,
+                                                                               quantidade_print);
 
     }
 
-    return iteracoes;
+    return quantidade_print;
 }
 
-int print_n_dados_ordenado_decrescente(avl_tree tree, int iteracoes) {
+int print_n_dados_ordenado_decrescente(avl_tree tree, int quantidade_print) {
     if (tree != NULL) {
 
-        iteracoes -= diferenca(iteracoes, print_n_dados_ordenado_decrescente(tree->dir,
-                                                                            iteracoes));
+        quantidade_print -= quantidade_print - print_n_dados_ordenado_decrescente(tree->dir,
+                                                                            quantidade_print);
 
-        if(seAcabou(iteracoes)) return VAZIO;
+        if(seAcabou(quantidade_print)) return VAZIO;
 
         print_cobertura_vacinal_info(tree->dado.info);
-        iteracoes--;
+        quantidade_print--;
 
-        iteracoes -= diferenca(iteracoes, print_n_dados_ordenado_decrescente(tree->esq,
-                                                                            iteracoes));
+        quantidade_print -= quantidade_print - print_n_dados_ordenado_decrescente(tree->esq,
+                                                                            quantidade_print);
 
     }
 
-    return iteracoes;
-}
-
-int diferenca(int x, int y) {
-    return x - y;
+    return quantidade_print;
 }
 
 bool seAcabou(int iteracoes) {
