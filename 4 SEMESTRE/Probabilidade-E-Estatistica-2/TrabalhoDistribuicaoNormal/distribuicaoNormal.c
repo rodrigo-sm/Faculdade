@@ -141,6 +141,40 @@ long double cumulativaComplementar(float z) {
     return 1.0 - cdf(z);
 }
 
+long double executaFuncaoTipoTabela(int tipo, float z) {
+    switch(tipo) {
+        case CUMULATIVA_APARTIR_DA_MEDIA:
+            return cumulativaApartirDaMedia(z);
+        case CUMULATIVA:
+            return cumulativa(z);
+        case CUMULATIVA_COMPLEMENTAR:
+            return cumulativaComplementar(z);
+        default:
+            return cdf(z);
+    }
+}
+
+char * getNomeTipoTabela(int tipo) {
+    char * nome = malloc(sizeof (char) * 70);
+    switch(tipo) {
+        case CUMULATIVA_APARTIR_DA_MEDIA:
+            strcpy(nome, "Cumulativa a partir da media");
+            break;
+        case CUMULATIVA:
+            strcpy(nome,"Cumulativa");
+            break;
+        case CUMULATIVA_COMPLEMENTAR:
+            strcpy(nome,"Cumulativa complementar");            break;
+        default:
+            strcpy(nome,"Cumulativa");
+    }
+    return nome;
+}
+
+bool isTipoTabelaValido(int tipo) {
+    return tipo == CUMULATIVA_APARTIR_DA_MEDIA || tipo == CUMULATIVA || tipo == CUMULATIVA_COMPLEMENTAR;
+}
+
 void imprimeBoasVindas() {
     printf("+======================================================+\n");
     printf("| Bem vindo ao Trabalho de Probabilidade e Estatisca 2 |\n");
@@ -199,36 +233,6 @@ void imprimeErroOpcaoInvalida() {
     printf("+======================+\n");
 }
 
-long double executaFuncaoTipoTabela(int tipo, float z) {
-    switch(tipo) {
-        case CUMULATIVA_APARTIR_DA_MEDIA:
-            return cumulativaApartirDaMedia(z);
-        case CUMULATIVA:
-            return cumulativa(z);
-        case CUMULATIVA_COMPLEMENTAR:
-            return cumulativaComplementar(z);
-        default:
-            return cdf(z);
-    }
-}
-
-char * getNomeTipoTabela(int tipo) {
-    char * nome = malloc(sizeof (char) * 70);
-    switch(tipo) {
-        case CUMULATIVA_APARTIR_DA_MEDIA:
-            strcpy(nome, "Cumulativa a partir da media");
-            break;
-        case CUMULATIVA:
-            strcpy(nome,"Cumulativa");
-            break;
-        case CUMULATIVA_COMPLEMENTAR:
-            strcpy(nome,"Cumulativa complementar");            break;
-        default:
-            strcpy(nome,"Cumulativa");
-    }
-    return nome;
-}
-
 int leTipoTabela() {
     int tipo;
     do {
@@ -249,10 +253,6 @@ bool validaTipoTabela(int tipo) {
         return true;
     imprimeErroTipoTabelaInvalido();
     return false;
-}
-
-bool isTipoTabelaValido(int tipo) {
-    return tipo == CUMULATIVA_APARTIR_DA_MEDIA || tipo == CUMULATIVA || tipo == CUMULATIVA_COMPLEMENTAR;
 }
 
 void imprimeErroTipoTabelaInvalido() {
