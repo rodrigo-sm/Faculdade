@@ -2,37 +2,62 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
+#include <string.h>
 
 #define QTD_COLUNA 10
 #define SAIR 0
 #define CONTINUAR 1
+#define TXT 0
+#define CSV 1
+#define AMBOS 2
 
 int executaOpcao(int);
 int leOpcao();
 int lePrecisao();
 int leSigma();
 int leInteiro();
+int leFormato();
+char * leNomeArquivoCsv();
+char * leNomeArquivoTxt();
+char * leNome();
+bool leSeUsuarioQuerSalvarTabela();
 void imprimeBoasVindas();
 void imprimeOpcoes();
-void imprimeLinha(float, int, int);
-void imprimeCabecalhoTabela(int, int);
-void imprimeLinhaTracada(int, int);
-void imprimeTracadoIndiceLinha(int);
-void imprimeTracadoCelula(int);
-void imprimeProbabilidade(int, float);
-void imprimeIndiceLinha(int, float);
-void imprimeIndicesColuna(int);
-void imprimeIndiceColuna(int, int);
-void imprimeZ(int);
+void imprimeLinha(FILE *,float, int, int);
+void imprimeCabecalhoTabela(FILE *,int, int);
+void imprimeLinhaTracada(FILE *,int, int);
+void imprimeTracadoIndiceLinha(FILE *,int);
+void imprimeTracadoCelula(FILE *,int);
+void imprimeProbabilidade(FILE *,int, float);
+void imprimeIndiceLinha(FILE *,int, float);
+void imprimeIndicesColuna(FILE *,int);
+void imprimeIndiceColuna(FILE *,int, int);
+void imprimeZ(FILE *,int);
 void imprimeAvisoProgramaEncerrado();
 void imprimeErroOpcaoInvalida();
+void imprimeTabela(FILE *,int, int);
+void imprimeLinhas(FILE *,int, int, int);
+void imprimeProbabilidades(FILE *,float, int);
+void imprimeTracadoIndicesColuna(FILE *,int);
+void imprimeTabelaCsv(FILE * , int, int);
+void imprimeCabecalhoTabelaCsv(FILE *);
+void imprimeLinhasCsv(FILE *, int, int);
+void imprimeLinhaCsv(FILE *, float, int);
+void imprimeIndiceLinhaCsv(FILE *, float);
+void imprimeProbabilidadesLinhaCsv(FILE *, float, int);
+void imprimeProbabilidadeCsv(FILE *, float, int);
 void geraTabela(int, int);
 void limpaTela();
 void pausaTela();
 int determinaQuantidadeDeCasasDecimais(int);
-int calculaEspacamentoIndiceLinha(int);
-long double cdf(float, int);
+int calculaTamanhoIndiceLinha(int);
+long double cdf(float);
 long double delimitaPrecisao(double, double);
+bool eIgual(float, float);
+void salvaTabela(int, int, int);
+void salvaTabelaTxt(char *, int, int);
+void salvaTabelaCsv(char *, int, int);
+void salvaTabelaAmbosFormato(char *, char *, int, int);
 
 int main() {
     imprimeBoasVindas();
@@ -54,11 +79,12 @@ int leOpcao() {
 }
 
 void imprimeOpcoes() {
-    printf("+======= OPCOES =======+\n");
-    printf("| <0> - SAIR           |\n");
-    printf("| <1> - GERAR TABELA   |\n");
+    printf("+======================+\n");
+    printf("| OPCOES:              |\n");
     printf("+----------------------+\n");
-    printf(">>> ");
+    printf("|   <0> - SAIR         |\n");
+    printf("|   <1> - GERAR TABELA |\n");
+    printf("+======================+\n");
 }
 
 int executaOpcao(int entrada) {
@@ -106,16 +132,21 @@ void limpaTela() {
 }
 
 int lePrecisao() {
-    printf("Informe a precisao:\n>>> ");
+    printf("+====================+\n");
+    printf("| Informe a precisao |\n");
+    printf("+====================+\n");
     return leInteiro();
 }
 
 int leSigma() {
-    printf("Informe o sigma:\n>>> ");
+    printf("+=================+\n");
+    printf("| Informe o sigma |\n");
+    printf("+=================+\n");
     return leInteiro();
 }
 
 int leInteiro() {
+    printf(">>> ");
     int retorno;
     scanf(" %d", &retorno);
     limpaTela();
@@ -124,98 +155,244 @@ int leInteiro() {
 
 
 void geraTabela(int precisao, int sigma) {
-    int indiceMaximo = sigma-1;
-    int tamanhoIndiceLinha = calculaEspacamentoIndiceLinha(indiceMaximo),
-        tamanhoCelula = determinaQuantidadeDeCasasDecimais(indiceMaximo)+4;
-
-    imprimeLinhaTracada(tamanhoCelula, precisao);
-    imprimeCabecalhoTabela(precisao, tamanhoIndiceLinha);
-    imprimeLinhaTracada(tamanhoCelula, precisao);
-
-    float linha;
-    for(linha = 0.0; linha <= sigma-0.1; linha += 0.1)
-        imprimeLinha(linha, precisao, tamanhoIndiceLinha);
-
-    imprimeLinhaTracada(tamanhoCelula, precisao);
+    if(leSeUsuarioQuerSalvarTabela())
+        salvaTabela(leFormato(), precisao, sigma);
+    imprimeTabela(stdout, precisao, sigma);
 }
 
-int calculaEspacamentoIndiceLinha(int indiceMaximo) {
-    return determinaQuantidadeDeCasasDecimais(indiceMaximo)+2;
+bool leSeUsuarioQuerSalvarTabela() {
+    printf("+==========================+\n");
+    printf("| Deseja salvar a tabela ? |\n");
+    printf("+--------------------------+\n");
+    printf("|   <0> NAO                |\n");
+    printf("|   <1> SIM                |\n");
+    printf("+==========================+\n");
+    return leInteiro() == 1 ? true : false;
+}
+
+int leFormato() {
+    printf("+=============+\n");
+    printf("| Formatos:   |\n");
+    printf("+-------------+\n");
+    printf("|   <0> TXT   |\n");
+    printf("|   <1> CSV   |\n");
+    printf("|   <2> AMBOS |\n");
+    printf("+=============|\n");
+    return leInteiro();
+}
+
+void salvaTabela(int formato, int precisao, int sigma) {
+    switch(formato) {
+        case TXT:
+            salvaTabelaTxt(leNomeArquivoTxt(), precisao, sigma);
+            break;
+        case CSV:
+            salvaTabelaCsv(leNomeArquivoCsv(), precisao, sigma);
+            break;
+        case AMBOS:
+            salvaTabelaAmbosFormato(leNomeArquivoTxt(), leNomeArquivoCsv(), precisao, sigma);
+            break;
+        default:
+            printf("Erro formato invalido\n");
+    }
+}
+
+void salvaTabelaAmbosFormato(char * nomeArquivoTxt, char * nomeArquivoCsv, int precisao, int sigma) {
+    salvaTabelaTxt(nomeArquivoTxt, precisao, sigma);
+    salvaTabelaCsv(nomeArquivoCsv, precisao, sigma);
+}
+
+void salvaTabelaTxt(char * nomeArquivo, int precisao, int sigma) {
+    strcat(nomeArquivo, ".txt");
+    FILE * saida;
+    saida = fopen(nomeArquivo, "w");
+    if(saida == NULL) {
+        fprintf(stderr, "Erro na abertura do arquivo database.txt\n");
+        return;
+    }
+    imprimeTabela(saida, precisao, sigma);
+    fclose(saida);
+    printf("Tabela salva com sucesso no arquivo %s !\n", nomeArquivo);
+}
+
+void salvaTabelaCsv(char * nomeArquivo, int precisao, int sigma) {
+    strcat(nomeArquivo, ".csv");
+    FILE * saida;
+    saida = fopen(nomeArquivo, "w");
+    if(saida == NULL) {
+        fprintf(stderr, "Erro na abertura do arquivo database.txt\n");
+        return;
+    }
+    imprimeTabelaCsv(saida, precisao, sigma);
+    fclose(saida);
+    printf("Tabela salva com sucesso no arquivo %s !\n", nomeArquivo);
+}
+
+void imprimeTabelaCsv(FILE * saida, int precisao, int sigma) {
+    imprimeCabecalhoTabelaCsv(saida);
+    imprimeLinhasCsv(saida, precisao, sigma);
+}
+
+void imprimeCabecalhoTabelaCsv(FILE * saida) {
+    fprintf(saida, "z;0;1;2;3;4;5;6;7;8;9\n");
+}
+
+void imprimeLinhasCsv(FILE * saida, int precisao, int sigma) {
+    float linha;
+    for(linha = 0.0; !eIgual(sigma, linha); linha+=0.1)
+        imprimeLinhaCsv(saida, linha, precisao);
+}
+
+void imprimeLinhaCsv(FILE * saida, float linha, int precisao) {
+    imprimeIndiceLinhaCsv(saida, linha);
+    imprimeProbabilidadesLinhaCsv(saida, linha, precisao);
+    fprintf(saida, "\n");
+}
+
+void imprimeIndiceLinhaCsv(FILE * saida, float linha) {
+    fprintf(saida, "%.1f", linha);
+}
+
+void imprimeProbabilidadesLinhaCsv(FILE * saida, float linha, int precisao) {
+    int coluna;
+    for(coluna = 0; coluna < QTD_COLUNA; coluna++)
+        imprimeProbabilidadeCsv(saida, linha+coluna*0.01, precisao);
+}
+
+void imprimeProbabilidadeCsv(FILE * saida, float z, int precisao) {
+    fprintf(saida, ";%.*Lf", precisao, delimitaPrecisao(cdf(z), precisao));
+}
+
+char * leNomeArquivoCsv() {
+    printf("+===============================+\n");
+    printf("| Informe o nome do arquivo CSV |\n");
+    printf("+===============================+\n");
+    return leNome();
+}
+
+char * leNomeArquivoTxt() {
+    printf("+===============================+\n");
+    printf("| Informe o nome do arquivo TXT |\n");
+    printf("+===============================+\n");
+    return leNome();
+}
+
+char * leNome() {
+    printf(">>> ");
+    char * entrada = malloc(sizeof (char) * 50);
+    scanf(" %50[^\n]", entrada);
+    limpaTela();
+    return entrada;
+}
+
+void imprimeTabela(FILE * saida, int precisao, int sigma) {
+    int ultimaLinha = sigma-1;
+    int tamanhoIndiceLinha = determinaQuantidadeDeCasasDecimais(ultimaLinha)+2;
+    int tamanhoCelula = tamanhoIndiceLinha+2;
+
+    imprimeLinhaTracada(saida, tamanhoCelula, precisao);
+
+    imprimeCabecalhoTabela(saida, precisao, tamanhoIndiceLinha);
+
+    imprimeLinhaTracada(saida, tamanhoCelula, precisao);
+
+    imprimeLinhas(saida, tamanhoIndiceLinha, precisao, sigma);
+
+    imprimeLinhaTracada(saida, tamanhoCelula, precisao);
+}
+
+void imprimeLinhas(FILE * saida, int tamanhoIndice, int precisao, int limite) {
+    float linha;
+    for(linha = 0.0; !eIgual(limite, linha); linha += 0.1)
+        imprimeLinha(saida, linha, precisao, tamanhoIndice);
+}
+
+bool eIgual(float n1, float n2) {
+    return fabs(n1 - n2) < 0.01 ? true : false;
 }
 
 int determinaQuantidadeDeCasasDecimais(int numero) {
     int casas = 1;
-
 	while(numero > 9){
 		casas++;
 		numero /= 10;
 	}
-
 	return casas;
 }
 
-void imprimeLinhaTracada(int tamanhoCelula, int precisao) {
-    imprimeTracadoIndiceLinha(tamanhoCelula);
+void imprimeLinhaTracada(FILE * saida, int tamanhoCelula, int precisao) {
+    imprimeTracadoIndiceLinha(saida, tamanhoCelula);
 
+    imprimeTracadoIndicesColuna(saida, precisao);
+
+    fprintf(saida, "\n");
+}
+
+void imprimeTracadoIndicesColuna(FILE * saida, int precisao) {
     int celula;
     for(celula = 0; celula < QTD_COLUNA; celula++)
-        imprimeTracadoCelula(precisao+4);
-    printf("\n");
+        imprimeTracadoCelula(saida, precisao+4);
 }
 
-void imprimeTracadoIndiceLinha(int tamanhoIndice) {
-    printf("+");
+void imprimeTracadoIndiceLinha(FILE * saida, int tamanhoIndice) {
+    fprintf(saida, "+");
     while(tamanhoIndice--)
-        printf("-");
-    printf("+");
+        fprintf(saida, "-");
+    fprintf(saida, "+");
 }
 
-void imprimeTracadoCelula(int tamanhoCelula) {
+void imprimeTracadoCelula(FILE * saida, int tamanhoCelula) {
     while(tamanhoCelula--)
-        printf("-");
-    printf("+");
+        fprintf(saida, "-");
+    fprintf(saida, "+");
 }
 
-void imprimeCabecalhoTabela(int precisao, int tamanhoIndice) {
-    imprimeZ(tamanhoIndice);
-    imprimeIndicesColuna(precisao);
-    int coluna;
+void imprimeCabecalhoTabela(FILE * saida, int precisao, int tamanhoIndice) {
+    imprimeZ(saida, tamanhoIndice);
+
+    imprimeIndicesColuna(saida, precisao);
+
+    fprintf(saida, "\n");
 }
 
-void imprimeZ(int tamanhoIndice) {
-    printf("| %*s |", tamanhoIndice, "Z ");
+void imprimeZ(FILE * saida, int tamanhoIndice) {
+    fprintf(saida, "| %*s |", tamanhoIndice, "Z ");
 }
 
-void imprimeIndicesColuna(int precisao) {
-    int coluna;
-    for(coluna = 0; coluna < QTD_COLUNA; coluna++)
-        imprimeIndiceColuna(precisao, coluna);
-    printf("\n");
-}
-
-void imprimeIndiceColuna(int precisao, int coluna) {
-    printf(" %*d |", precisao+2, coluna);
-}
-
-void imprimeLinha(float linha, int precisao, int tamanhoIndice) {
-    imprimeIndiceLinha(tamanhoIndice, linha);
+void imprimeIndicesColuna(FILE * saida,int precisao) {
     int coluna;
     for(coluna = 0; coluna < QTD_COLUNA; coluna++)
-        imprimeProbabilidade(precisao, linha+coluna*0.01);
-    printf("\n");
+        imprimeIndiceColuna(saida, precisao, coluna);
 }
 
-void imprimeIndiceLinha(int tamanhoIndice, float indice) {
-    printf("| %*.1f |", tamanhoIndice, indice);
+void imprimeIndiceColuna(FILE * saida, int precisao, int coluna) {
+    fprintf(saida, " %*d |", precisao+2, coluna);
 }
 
-void imprimeProbabilidade(int precisao, float z) {
-    printf(" %.*Lf |", precisao, cdf(z, precisao));
+void imprimeLinha(FILE * saida, float linha, int precisao, int tamanhoIndice) {
+    imprimeIndiceLinha(saida, tamanhoIndice, linha);
+
+    imprimeProbabilidades(saida, linha, precisao);
+
+    fprintf(saida, "\n");
 }
 
-long double cdf(float z, int precisao) {
-    long double probabilidade = 0.5*erfc(-z* (1.0/sqrt(2.0))) - 0.5;
-    return delimitaPrecisao(probabilidade, precisao);
+void imprimeProbabilidades(FILE * saida, float linha, int precisao) {
+    int coluna;
+    for(coluna = 0; coluna < QTD_COLUNA; coluna++)
+        imprimeProbabilidade(saida, precisao, linha+coluna*0.01);
+}
+
+void imprimeIndiceLinha(FILE * saida, int tamanhoIndice, float indice) {
+    fprintf(saida, "| %*.1f |", tamanhoIndice, indice);
+}
+
+void imprimeProbabilidade(FILE * saida, int precisao, float z) {
+    fprintf(saida, " %.*Lf |", precisao, delimitaPrecisao(cdf(z), precisao));
+}
+
+long double cdf(float z) {
+    return 0.5*erfc(-z* (1.0/sqrt(2.0))) - 0.5;
 }
 
 long double delimitaPrecisao(double probabilidade, double precisao) {
