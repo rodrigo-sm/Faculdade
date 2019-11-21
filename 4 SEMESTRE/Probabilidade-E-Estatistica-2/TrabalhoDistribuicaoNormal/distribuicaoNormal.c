@@ -5,18 +5,18 @@
 #include <string.h>
 
 #define QTD_COLUNA 10
-#define SAIR 0
-#define CONTINUAR 1
+#define SAIR false
+#define CONTINUAR true
 #define TXT 0
 #define CSV 1
 #define AMBOS 2
 
 long double cdf(float);
-long double delimitaPrecisao(double, double);
+long double arredonda(double, double);
 
 void imprimeBoasVindas();
 
-int executaOpcao(int);
+bool executaOpcao(int);
 int leOpcao();
 void imprimeOpcoes();
 
@@ -95,8 +95,9 @@ long double cdf(float z) {
     return 0.5*erfc(-z* (1.0/sqrt(2.0))) - 0.5;
 }
 
-long double delimitaPrecisao(double probabilidade, double precisao) {
-    return round( pow(10, precisao)*probabilidade ) / pow(10, precisao);
+long double arredonda(double numero, double precisao) {
+    int dezElevadoAPrecisao = pow(10, precisao);
+    return round(dezElevadoAPrecisao*numero) / dezElevadoAPrecisao;
 }
 
 void imprimeBoasVindas() {
@@ -121,7 +122,7 @@ void imprimeOpcoes() {
     printf("+======================+\n");
 }
 
-int executaOpcao(int entrada) {
+bool executaOpcao(int entrada) {
     switch(entrada) {
         case 0:
             imprimeAvisoProgramaEncerrado();
@@ -330,7 +331,7 @@ void imprimeProbabilidadesLinhaCsv(FILE * saida, float linha, int precisao) {
 }
 
 void imprimeProbabilidadeCsv(FILE * saida, float z, int precisao) {
-    fprintf(saida, ";%.*Lf", precisao, delimitaPrecisao(cdf(z), precisao));
+    fprintf(saida, ";%.*Lf", precisao, arredonda(cdf(z), precisao));
 }
 
 char * leNomeArquivoCsv() {
@@ -458,5 +459,5 @@ void imprimeIndiceLinha(FILE * saida, int tamanhoIndice, float indice) {
 }
 
 void imprimeProbabilidade(FILE * saida, int precisao, float z) {
-    fprintf(saida, " %.*Lf |", precisao, delimitaPrecisao(cdf(z), precisao));
+    fprintf(saida, " %.*Lf |", precisao, arredonda(cdf(z), precisao));
 }
