@@ -11,58 +11,92 @@
 #define CSV 1
 #define AMBOS 2
 
+long double cdf(float);
+long double delimitaPrecisao(double, double);
+
+void imprimeBoasVindas();
+
 int executaOpcao(int);
 int leOpcao();
+void imprimeOpcoes();
+
+void imprimeErroOpcaoInvalida();
+
+void imprimeAvisoProgramaEncerrado();
+
 int lePrecisao();
 int leSigma();
-int leInteiro();
-int leFormato();
-char * leNomeArquivoCsv();
-char * leNomeArquivoTxt();
-char * leNome();
-bool leSeUsuarioQuerSalvarTabela();
-void imprimeBoasVindas();
-void imprimeOpcoes();
-void imprimeLinha(FILE *,float, int, int);
-void imprimeCabecalhoTabela(FILE *,int, int);
+
+void geraTabela(int, int);
+
+void imprimeTabela(FILE *,int, int);
+
 void imprimeLinhaTracada(FILE *,int, int);
+void imprimeTracadoIndicesColuna(FILE *,int);
 void imprimeTracadoIndiceLinha(FILE *,int);
 void imprimeTracadoCelula(FILE *,int);
-void imprimeProbabilidade(FILE *,int, float);
-void imprimeIndiceLinha(FILE *,int, float);
+
+void imprimeCabecalhoTabela(FILE *,int, int);
+void imprimeZ(FILE *,int);
 void imprimeIndicesColuna(FILE *,int);
 void imprimeIndiceColuna(FILE *,int, int);
-void imprimeZ(FILE *,int);
-void imprimeAvisoProgramaEncerrado();
-void imprimeErroOpcaoInvalida();
-void imprimeTabela(FILE *,int, int);
+
 void imprimeLinhas(FILE *,int, int, int);
+void imprimeLinha(FILE *,float, int, int);
+void imprimeIndiceLinha(FILE *,int, float);
 void imprimeProbabilidades(FILE *,float, int);
-void imprimeTracadoIndicesColuna(FILE *,int);
+void imprimeProbabilidade(FILE *,int, float);
+
+int determinaQuantidadeDeCasasDecimais(int);
+int calculaTamanhoIndiceLinha(int);
+
 void imprimeTabelaCsv(FILE * , int, int);
+
 void imprimeCabecalhoTabelaCsv(FILE *);
+
 void imprimeLinhasCsv(FILE *, int, int);
 void imprimeLinhaCsv(FILE *, float, int);
 void imprimeIndiceLinhaCsv(FILE *, float);
 void imprimeProbabilidadesLinhaCsv(FILE *, float, int);
 void imprimeProbabilidadeCsv(FILE *, float, int);
-void geraTabela(int, int);
+
+bool leSeUsuarioQuerSalvarTabela();
+
+int leFormato();
+void imprimeErroFormatoInvalido();
+
+void salvaTabela(int, int, int);
+
+void salvaTabelaTxt(char *, int, int);
+char * leNomeArquivoTxt();
+void imprimeSalvouTabelaFormatoTxt();
+void imprimeErroAberturaArquivoTxt();
+
+void salvaTabelaCsv(char *, int, int);
+char * leNomeArquivoCsv();
+void imprimeSalvouTabelaFormatoCsv();
+void imprimeErroAberturaArquivoCsv();
+
 void limpaTela();
 void pausaTela();
-int determinaQuantidadeDeCasasDecimais(int);
-int calculaTamanhoIndiceLinha(int);
-long double cdf(float);
-long double delimitaPrecisao(double, double);
+
 bool eIgual(float, float);
-void salvaTabela(int, int, int);
-void salvaTabelaTxt(char *, int, int);
-void salvaTabelaCsv(char *, int, int);
-void salvaTabelaAmbosFormato(char *, char *, int, int);
+
+int leInteiro();
+char * leNome();
 
 int main() {
     imprimeBoasVindas();
     while(executaOpcao(leOpcao()));
     return 0;
+}
+
+long double cdf(float z) {
+    return 0.5*erfc(-z* (1.0/sqrt(2.0))) - 0.5;
+}
+
+long double delimitaPrecisao(double probabilidade, double precisao) {
+    return round( pow(10, precisao)*probabilidade ) / pow(10, precisao);
 }
 
 void imprimeBoasVindas() {
@@ -190,16 +224,20 @@ void salvaTabela(int formato, int precisao, int sigma) {
             salvaTabelaCsv(leNomeArquivoCsv(), precisao, sigma);
             break;
         case AMBOS:
-            salvaTabelaAmbosFormato(leNomeArquivoTxt(), leNomeArquivoCsv(), precisao, sigma);
+            salvaTabelaTxt(leNomeArquivoTxt(), precisao, sigma);
+            salvaTabelaCsv(leNomeArquivoCsv(), precisao, sigma);
             break;
         default:
-            printf("Erro formato invalido\n");
+            imprimeErroFormatoInvalido();
     }
 }
 
-void salvaTabelaAmbosFormato(char * nomeArquivoTxt, char * nomeArquivoCsv, int precisao, int sigma) {
-    salvaTabelaTxt(nomeArquivoTxt, precisao, sigma);
-    salvaTabelaCsv(nomeArquivoCsv, precisao, sigma);
+void imprimeErroFormatoInvalido() {
+    printf("+========================+\n");
+    printf("| Erro: formato invalido |\n");
+    printf("+========================+\n");
+    pausaTela();
+    limpaTela();
 }
 
 void salvaTabelaTxt(char * nomeArquivo, int precisao, int sigma) {
@@ -207,12 +245,28 @@ void salvaTabelaTxt(char * nomeArquivo, int precisao, int sigma) {
     FILE * saida;
     saida = fopen(nomeArquivo, "w");
     if(saida == NULL) {
-        fprintf(stderr, "Erro na abertura do arquivo database.txt\n");
+        imprimeErroAberturaArquivoTxt();
         return;
     }
     imprimeTabela(saida, precisao, sigma);
     fclose(saida);
-    printf("Tabela salva com sucesso no arquivo %s !\n", nomeArquivo);
+    imprimeSalvouTabelaFormatoTxt();
+}
+
+void imprimeSalvouTabelaFormatoTxt() {
+    printf("+=========================================+\n");
+    printf("| Tabela salva com sucesso no formato TXT |\n");
+    printf("+=========================================+\n");
+    pausaTela();
+    limpaTela();
+}
+
+void imprimeErroAberturaArquivoTxt() {
+    fprintf(stderr, "+==============================================+\n");
+    fprintf(stderr, "| Erro: Na abertura do arquivo com formato TXT |\n");
+    fprintf(stderr, "+==============================================+\n");
+    pausaTela();
+    limpaTela();
 }
 
 void salvaTabelaCsv(char * nomeArquivo, int precisao, int sigma) {
@@ -220,12 +274,28 @@ void salvaTabelaCsv(char * nomeArquivo, int precisao, int sigma) {
     FILE * saida;
     saida = fopen(nomeArquivo, "w");
     if(saida == NULL) {
-        fprintf(stderr, "Erro na abertura do arquivo database.txt\n");
+        imprimeErroAberturaArquivoCsv();
         return;
     }
     imprimeTabelaCsv(saida, precisao, sigma);
     fclose(saida);
-    printf("Tabela salva com sucesso no arquivo %s !\n", nomeArquivo);
+    imprimeSalvouTabelaFormatoCsv();
+}
+
+void imprimeSalvouTabelaFormatoCsv() {
+    printf("+=========================================+\n");
+    printf("| Tabela salva com sucesso no formato CSV |\n");
+    printf("+=========================================+\n");
+    pausaTela();
+    limpaTela();
+}
+
+void imprimeErroAberturaArquivoCsv() {
+    fprintf(stderr, "+==============================================+\n");
+    fprintf(stderr, "| Erro: Na abertura do arquivo com formato CSV |\n");
+    fprintf(stderr, "+==============================================+\n");
+    pausaTela();
+    limpaTela();
 }
 
 void imprimeTabelaCsv(FILE * saida, int precisao, int sigma) {
@@ -389,12 +459,4 @@ void imprimeIndiceLinha(FILE * saida, int tamanhoIndice, float indice) {
 
 void imprimeProbabilidade(FILE * saida, int precisao, float z) {
     fprintf(saida, " %.*Lf |", precisao, delimitaPrecisao(cdf(z), precisao));
-}
-
-long double cdf(float z) {
-    return 0.5*erfc(-z* (1.0/sqrt(2.0))) - 0.5;
-}
-
-long double delimitaPrecisao(double probabilidade, double precisao) {
-    return round( pow(10, precisao)*probabilidade ) / pow(10, precisao);
 }
