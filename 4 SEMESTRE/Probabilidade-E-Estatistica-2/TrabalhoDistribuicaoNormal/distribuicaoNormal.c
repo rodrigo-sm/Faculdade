@@ -17,6 +17,9 @@
 #define CUMULATIVA                  1
 #define CUMULATIVA_COMPLEMENTAR     2
 
+#define GRAVAR 1
+#define NAO_GRAVAR 0
+
 typedef struct {
     int precisao;
     int sigma;
@@ -44,6 +47,9 @@ int lePrecisao();
 int leSigma();
 
 void geraTabela(infoTabela info);
+
+bool leSeUsuarioQuerSalvarTabela();
+bool validaOpcaoGravarTabela(int);
 
 void imprimeTabela(FILE *, infoTabela info);
 
@@ -79,8 +85,6 @@ void imprimeLinhaCsv(FILE *, float, infoTabela);
 void imprimeIndiceLinhaCsv(FILE *, float);
 void imprimeProbabilidadesLinhaCsv(FILE *, float, infoTabela);
 void imprimeProbabilidadeCsv(FILE *, float, infoTabela);
-
-bool leSeUsuarioQuerSalvarTabela();
 
 int leFormato();
 void imprimeErroFormatoInvalido();
@@ -121,7 +125,7 @@ int main() {
 }
 
 long double cdf(float z) {
-    return 0.5 * (1.0 + erfl(z / sqrtl(2.0)));
+    return 0.5L * (1.0L+erfl(z / sqrtl(2.0L)));
 }
 
 long double arredonda(double numero, double precisao) {
@@ -130,7 +134,7 @@ long double arredonda(double numero, double precisao) {
 }
 
 long double cumulativaApartirDaMedia(float z) {
-    return cdf(z) - 0.5;
+    return cdf(z) - 0.5L;
 }
 
 long double cumulativa(float z) {
@@ -138,7 +142,7 @@ long double cumulativa(float z) {
 }
 
 long double cumulativaComplementar(float z) {
-    return 1.0 - cdf(z);
+    return 1.0L - cdf(z);
 }
 
 long double executaFuncaoTipoTabela(int tipo, float z) {
@@ -158,15 +162,15 @@ char * getNomeTipoTabela(int tipo) {
     char * nome = malloc(sizeof (char) * 70);
     switch(tipo) {
         case CUMULATIVA_APARTIR_DA_MEDIA:
-            strcpy(nome, "Cumulativa a partir da media");
+            strcpy(nome, "Cumulativa a partir da media - P(0 <= Z <= Zo)");
             break;
         case CUMULATIVA:
-            strcpy(nome,"Cumulativa");
+            strcpy(nome,"Cumulativa P(Z <= Zo)");
             break;
         case CUMULATIVA_COMPLEMENTAR:
-            strcpy(nome,"Cumulativa complementar");            break;
+            strcpy(nome,"Cumulativa complementar - P(Z >= Zo)");            break;
         default:
-            strcpy(nome,"Cumulativa");
+            strcpy(nome,"Cumulativa - P(Z <= Zo)");
     }
     return nome;
 }
@@ -309,13 +313,26 @@ void geraTabela(infoTabela info) {
 }
 
 bool leSeUsuarioQuerSalvarTabela() {
-    printf("+==========================+\n");
-    printf("| Deseja salvar a tabela ? |\n");
-    printf("+--------------------------+\n");
-    printf("|   <0> NAO                |\n");
-    printf("|   <1> SIM                |\n");
-    printf("+==========================+\n");
-    return leInteiro() == 1 ? true : false;
+    int opcao;
+    do {
+        printf("+==========================+\n");
+        printf("| Deseja salvar a tabela ? |\n");
+        printf("+--------------------------+\n");
+        printf("|   <0> NAO                |\n");
+        printf("|   <1> SIM                |\n");
+        printf("+==========================+\n");
+        opcao = leInteiro();
+    } while(!validaOpcaoGravarTabela(opcao));
+    return opcao == GRAVAR ? true : false;
+}
+
+bool validaOpcaoGravarTabela(int opcao) {
+    if(opcao == GRAVAR || opcao == NAO_GRAVAR)
+        return true;
+    imprimeErroOpcaoInvalida();
+    pausaTela();
+    limpaTela();
+    return false;
 }
 
 int leFormato() {
@@ -495,12 +512,12 @@ void imprimeTabela(FILE * saida, infoTabela info) {
 }
 
 void imprimeInfoTabela(FILE * saida, infoTabela info) {
-    fprintf(saida, "+========================================================+\n");
-    fprintf(saida, "| Tabela Normal Padronizada %-28s |\n", getNomeTipoTabela(info.tipoTabela));
-    fprintf(saida, "+--------------------------------------------------------+\n");
-    fprintf(saida, "| Sigma    = %-44d|\n", info.sigma);
-    fprintf(saida, "| Precisao = %-44d|\n", info.precisao);
-    fprintf(saida, "+========================================================+\n");
+    fprintf(saida, "+==========================================================================+\n");
+    fprintf(saida, "| Tabela Normal Padronizada %-46s |\n", getNomeTipoTabela(info.tipoTabela));
+    fprintf(saida, "+==========================================================================+\n");
+    fprintf(saida, "| Sigma    = %-62d|\n", info.sigma);
+    fprintf(saida, "| Precisao = %-62d|\n", info.precisao);
+    fprintf(saida, "+==========================================================================+\n");
 }
 
 void imprimeLinhas(FILE * saida, int tamanhoIndice, infoTabela info) {
