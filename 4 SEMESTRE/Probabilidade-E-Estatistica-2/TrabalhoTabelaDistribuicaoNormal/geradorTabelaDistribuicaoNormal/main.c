@@ -1,3 +1,19 @@
+/*
+*  Autores:
+*
+*  Vitor Kuribara
+*  Rodrigo Moreira
+*  Victor Gabriel
+*
+*  Probabilidade e Estatistica Aplicada II - Prof. Jose Fontebasso Neto
+*
+*  Este programa tem como objetivo gerar uma tabela z para utilizacao em calculos relacionados
+*  a distribuicao normal.
+*
+*  Universidade Catolica de Santos - 21/11/2019
+*
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -8,9 +24,6 @@
 #include "tabelaCsv.h"
 #include "tabelaFormatada.h"
 #include "interfaceHelper.h"
-
-#define ERRO false
-#define SUCESSO true
 
 #define TXT 0
 #define CSV 1
@@ -23,7 +36,7 @@ bool executaOpcao(int);
 int leOpcao();
 void imprimeOpcoes();
 
-int lePrecisao();
+int leQuantidadeDeCasasDecimais();
 int leSigma();
 
 void geraTabela(infoTabela info);
@@ -70,7 +83,7 @@ bool executaOpcao(int entrada) {
             imprimeMensagemSimples("Aviso: Programa encerrado");
             return ERRO;
         case 1:
-            geraTabela(criaInfoTabela(leTipoTabela(), fabs(lePrecisao()), fabs(leSigma())));
+            geraTabela(criaInfoTabela(leTipoTabela(), fabs(leQuantidadeDeCasasDecimais()), fabs(leSigma())));
             break;
         default:
             imprimeMensagemSimples("Erro: Opcao invalida");
@@ -102,8 +115,8 @@ bool validaTipoTabela(int tipo) {
     return false;
 }
 
-int lePrecisao() {
-    imprimeMensagemSimples("Informe a precisao");
+int leQuantidadeDeCasasDecimais() {
+    imprimeMensagemSimples("Informe quantidade de casas decimais");
     return leInteiro();
 }
 

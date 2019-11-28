@@ -9,13 +9,16 @@
 #define CUMULATIVA                  1
 #define CUMULATIVA_COMPLEMENTAR     2
 
+#define ERRO false
+#define SUCESSO true
+
 #ifndef M_PI
     #define M_PI 3.14159265358979323846
 #endif
 
 typedef struct {
     double ** tabela;
-    int precisao;
+    int qtdCasasDecimais;
     int sigma;
     int tipoTabela;
     int qtd_linha;
@@ -23,21 +26,34 @@ typedef struct {
 
 double executaFuncaoTipoTabela(float, infoTabela);
 
+/* Utilizacao do metodo de simpson 1/3 segundo o que foi estudado na disciplina
+*  de Calculo Numerico.
+*/
+double distribuicaoNormal(double);
+
+double function(double);
+
+double arredonda(double, double);
+
 bool isTipoTabelaValido(int);
 
 char * getNomeTipoTabela(int);
 
 double f(double x);
 
-double regraDosTrapezio(double, double, int);
+bool criaTabela (infoTabela *);
 
-bool criaTabela (infoTabela * info);
+void apagaTabela (infoTabela);
 
-void apagaTabela (infoTabela info);
+bool alocaTabela(infoTabela *);
 
-double funcaoDistribuicaoNormal(float, infoTabela);
+bool alocaLinhas(infoTabela *);
 
-void inicializaTabela(infoTabela * info);
+bool alocaColunas(infoTabela *);
+
+bool alocaColuna(infoTabela *, int);
+
+void inicializaTabela(infoTabela *);
 
 infoTabela criaInfoTabela(int, int, int);
 

@@ -1,0 +1,49 @@
+# depslib dependency file v1.0
+1574913426 source:c:\users\pichau\github\faculdade\4 semestre\probabilidade-e-estatistica-2\geradortabeladistribuicaonormal\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<math.h>
+	<string.h>
+	"tabelaNormal.h"
+	"tabelaCsv.h"
+	"tabelaFormatada.h"
+	"interfaceHelper.h"
+
+1574913516 c:\users\pichau\github\faculdade\4 semestre\probabilidade-e-estatistica-2\geradortabeladistribuicaonormal\tabelanormal.h
+	<stdbool.h>
+
+1574619787 c:\users\pichau\github\faculdade\4 semestre\probabilidade-e-estatistica-2\geradortabeladistribuicaonormal\tabelacsv.h
+	"tabelaNormal.h"
+
+1574619830 c:\users\pichau\github\faculdade\4 semestre\probabilidade-e-estatistica-2\geradortabeladistribuicaonormal\tabelaformatada.h
+	"tabelaNormal.h"
+
+1574728209 c:\users\pichau\github\faculdade\4 semestre\probabilidade-e-estatistica-2\geradortabeladistribuicaonormal\interfacehelper.h
+
+1574913419 source:c:\users\pichau\github\faculdade\4 semestre\probabilidade-e-estatistica-2\geradortabeladistribuicaonormal\interfacehelper.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"interfaceHelper.h"
+
+1574913452 source:c:\users\pichau\github\faculdade\4 semestre\probabilidade-e-estatistica-2\geradortabeladistribuicaonormal\tabelacsv.c
+	<stdio.h>
+	<stdlib.h>
+	"tabelaNormal.h"
+	"tabelaCsv.h"
+
+1574913472 source:c:\users\pichau\github\faculdade\4 semestre\probabilidade-e-estatistica-2\geradortabeladistribuicaonormal\tabelaformatada.c
+	<stdio.h>
+	<stdlib.h>
+	"tabelaNormal.h"
+	"tabelaFormatada.h"
+
+1574913482 source:c:\users\pichau\github\faculdade\4 semestre\probabilidade-e-estatistica-2\geradortabeladistribuicaonormal\tabelanormal.c
+	<math.h>
+	<stdio.h>
+	<stdbool.h>
+	<string.h>
+	<stdlib.h>
+	"tabelaNormal.h"
+

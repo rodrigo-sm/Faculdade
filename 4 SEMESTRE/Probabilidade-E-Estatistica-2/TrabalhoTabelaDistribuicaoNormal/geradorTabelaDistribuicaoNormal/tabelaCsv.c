@@ -13,7 +13,7 @@ void imprimeTabelaCsv(FILE * saida, infoTabela info) {
 void imprimeInfoTabelaCsv(FILE * saida, infoTabela info) {
     fprintf(saida, "Tabela Normal Padronizada %s\n", getNomeTipoTabela(info.tipoTabela));
     fprintf(saida, "Sigma;%d\n", info.sigma);
-    fprintf(saida, "Precisao;%d\n\n", info.precisao);
+    fprintf(saida, "Casas decimais;%d\n\n", info.qtdCasasDecimais);
 }
 
 void imprimeCabecalhoTabelaCsv(FILE * saida) {
@@ -43,5 +43,5 @@ void imprimeCelulasCsv(FILE * saida, int linha, infoTabela info) {
 }
 
 void imprimeCelulaCsv(FILE * saida, int linha, int coluna, infoTabela info) {
-    fprintf(saida, ";%.*lf", info.precisao, info.tabela[linha][coluna]);
+    fprintf(saida, ";%.*lf", info.qtdCasasDecimais, info.tabela[linha][coluna]);
 }

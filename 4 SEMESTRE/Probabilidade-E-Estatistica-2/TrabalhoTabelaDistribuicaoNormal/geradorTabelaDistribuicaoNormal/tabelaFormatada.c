@@ -26,8 +26,8 @@ void imprimeInfoTabela(FILE * saida, infoTabela info) {
     fprintf(saida, "+==========================================================================+\n");
     fprintf(saida, "| Tabela Normal Padronizada %-46s |\n", getNomeTipoTabela(info.tipoTabela));
     fprintf(saida, "+==========================================================================+\n");
-    fprintf(saida, "| Sigma    = %-62d|\n", info.sigma);
-    fprintf(saida, "| Precisao = %-62d|\n", info.precisao);
+    fprintf(saida, "| Sigma            = %-54d|\n", info.sigma);
+    fprintf(saida, "| Casas decimais   = %-54d|\n", info.qtdCasasDecimais);
     fprintf(saida, "+==========================================================================+\n");
 }
 
@@ -49,7 +49,7 @@ void imprimeTracadoIndiceLinha(FILE * saida, int tamanhoIndice) {
 void imprimeTracadoLinha(FILE * saida, infoTabela info) {
     int celula;
     for(celula = 0; celula < QTD_COLUNA; celula++)
-        imprimeTracadoCelula(saida, info.precisao+4);
+        imprimeTracadoCelula(saida, info.qtdCasasDecimais+4);
 }
 
 void imprimeTracadoCelula(FILE * saida, int tamanhoCelula) {
@@ -77,7 +77,7 @@ void imprimeIndicesColuna(FILE * saida, infoTabela info) {
 }
 
 void imprimeIndiceColuna(FILE * saida, int coluna, infoTabela info) {
-    fprintf(saida, " %*d |", info.precisao+2, coluna);
+    fprintf(saida, " %*d |", info.qtdCasasDecimais+2, coluna);
 }
 
 void imprimeLinhas(FILE * saida, int tamanhoIndice, infoTabela info) {
@@ -105,7 +105,7 @@ void imprimeCelulas(FILE * saida, int linha, infoTabela info) {
 }
 
 void imprimeCelula(FILE * saida, int linha, int coluna, infoTabela info) {
-    fprintf(saida, " %.*lf |", info.precisao, info.tabela[linha][coluna]);
+    fprintf(saida, " %.*lf |", info.qtdCasasDecimais, info.tabela[linha][coluna]);
 }
 
 int determinaQuantidadeDeCasasDecimais(int numero) {
