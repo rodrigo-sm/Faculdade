@@ -1,0 +1,7 @@
+Como executar o projeto:
+	- Abra o CodeBlocks;
+	- Clique em 'Open...' que esta na opção 'File' do menu ou aperte
+	  CTRL+O;
+	- Abra o arquivo TrabalhoPesquisaOperacional.cbp que esta dentro da pasta
+	  geradorTabelaDistribuicaoNormal;
+	- Depois clique em Run (CTRL+F10) ou Build and run (F9)
