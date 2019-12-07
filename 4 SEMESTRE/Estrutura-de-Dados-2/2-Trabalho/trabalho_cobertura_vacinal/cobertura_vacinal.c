@@ -35,21 +35,6 @@ FILE * abre_para_leitura_cobertura_vacinal_file() {
     return retorno;
 }
 
-cobertura_vacinal_info configura_vacinal_info(char * linha) {
-    cobertura_vacinal_info retorno;
-
-    char *token = strtok(linha, SEPARADOR);
-    retorno.codigo_munipicio = atoi(token);
-
-    token = strtok(NULL, SEPARADOR);
-    strcpy(retorno.nome_municipio, token);
-
-    token = strtok(NULL, SEPARADOR);
-    retorno.cobertura_vacinal = atof(token);
-
-    return retorno;
-}
-
 map_value cria_map_value(cobertura_vacinal_info info) {
     map_value retorno;
     retorno.info = info;
@@ -113,12 +98,6 @@ int print_n_dados_ordenado_decrescente(avl_tree tree, int quantidade_print) {
 
 bool seAcabou(int iteracoes) {
     return iteracoes <= 0;
-}
-
-void print_cobertura_vacinal_info(cobertura_vacinal_info info) {
-    printf("A cobertura vacinal do municipio %s com codigo %d e igual a %.2f\n", info.nome_municipio
-                                                                               , info.codigo_munipicio
-                                                                               , info.cobertura_vacinal);
 }
 
 bool valida_quantidade_de_cidades(int quantidade) {

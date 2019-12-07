@@ -5,6 +5,6 @@
 
 infoProblemaTransporte achaCantoNoroeste(infoProblemaTransporte);
 
-int ** calculaSolucaoCantoNoroeste(infoProblemaTransporte, int, int);
+double ** calculaSolucaoCantoNoroeste(infoProblemaTransporte, int, int);
 
 #endif // CANTONOROESTE_H_INCLUDED

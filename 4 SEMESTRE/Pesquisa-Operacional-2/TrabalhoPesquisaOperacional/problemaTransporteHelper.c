@@ -30,9 +30,9 @@ void copiaProblema(infoProblemaTransporte * destino, infoProblemaTransporte orig
 infoNo * copiaOrigens(infoProblemaTransporte origem) {
     infoNo * retorno;
 
-    int origemAtual;
-
     retorno = criaNos(origem.quantidadeOrigem);
+
+    int origemAtual;
 
     for(origemAtual = 0; origemAtual < origem.quantidadeOrigem; origemAtual++)
         retorno[origemAtual] = origem.origens[origemAtual];

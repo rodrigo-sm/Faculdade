@@ -127,7 +127,7 @@
 	<stdbool.h>
 	"dados_cobertura_vacinal.h"
 
-1573596308 c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\dados_cobertura_vacinal.h
+1575187506 c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\dados_cobertura_vacinal.h
 
 1573596308 source:c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\hashmap.c
 	<stdio.h>
@@ -137,18 +137,18 @@
 	"listaord.h"
 	"dados_cobertura_vacinal.h"
 
-1573596308 c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\hashmap.h
+1575245450 c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\hashmap.h
 	<stdbool.h>
 	"dados_cobertura_vacinal.h"
 
-1573596308 c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\listaord.h
+1575245478 c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\listaord.h
 	<stdbool.h>
 	"hashmap.h"
-	"cobertura_vacinal.h"
 
-1573597631 c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\cobertura_vacinal.h
+1575245311 c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\cobertura_vacinal.h
 	<stdio.h>
 	"hashmap.h"
+	"dados_cobertura_vacinal.h"
 	"avl.h"
 
 1573596308 source:c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\listaord.c
@@ -158,14 +158,14 @@
 	"listaord.h"
 	"cobertura_vacinal.h"
 
-1573597647 source:c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\main.c
+1575190945 source:c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\main.c
 	<stdio.h>
 	<stdlib.h>
 	"cobertura_vacinal.h"
 	"hashmap.h"
 	"avl.h"
 
-1573597452 source:c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\cobertura_vacinal.c
+1575245265 source:c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\cobertura_vacinal.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -173,5 +173,12 @@
 	"cobertura_vacinal.h"
 	"hashmap.h"
 	"avl.h"
+	"dados_cobertura_vacinal.h"
+
+1575187530 source:c:\users\pichau\github\faculdade\4 semestre\estrutura-de-dados-2\2-trabalho\trabalho_cobertura_vacinal\dados_cobertura_vacinal.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
 	"dados_cobertura_vacinal.h"
 

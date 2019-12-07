@@ -28,6 +28,12 @@ int leInteiro() {
     return retorno;
 }
 
+double leDouble() {
+    double retorno;
+    scanf(" %lf", &retorno);
+    return retorno;
+}
+
 void imprimeMensagemSimples(char * mensagem) {
     int tamanho = strlen(mensagem)+2;
     imprimeTracadoMensagemSimples(tamanho);

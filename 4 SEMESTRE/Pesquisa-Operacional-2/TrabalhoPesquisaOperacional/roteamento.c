@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <string.h>
+
 #include "infoProblemaTransporte.h"
 #include "problemaTransporteHelper.h"
 #include "roteamento.h"
@@ -16,9 +19,8 @@ rota encontraMaiorSomaK(infoProblemaTransporte * solucao, rota k) {
     for(origem = 0; origem < solucao->quantidadeOrigem; origem++) {
         for(destino = 0; destino < solucao->quantidadeDestino; destino++) {
             rotaAtual = criaRota(solucao->valores[origem][destino], origem, destino);
-            if(isDiferenteRota(k, rotaAtual) && isSomaK(solucao, k, rotaAtual) && rotaAtual.custo > retorno.custo) {
+            if(isDiferenteRota(k, rotaAtual) && isSomaK(solucao, k, rotaAtual) && rotaAtual.custo > retorno.custo)
                 retorno = rotaAtual;
-            }
         }
     }
     return retorno;

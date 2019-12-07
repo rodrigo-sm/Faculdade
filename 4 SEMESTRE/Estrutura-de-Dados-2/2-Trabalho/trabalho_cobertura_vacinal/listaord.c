@@ -3,7 +3,7 @@
 #include <string.h>
 
 #include "listaord.h"
-#include "cobertura_vacinal.h"
+#include "hashmap.h"
 
 void lst_init(map_ptr * l)
 {

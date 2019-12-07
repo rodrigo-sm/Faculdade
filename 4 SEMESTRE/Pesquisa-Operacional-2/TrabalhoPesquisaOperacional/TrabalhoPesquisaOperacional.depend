@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1575173334 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\interfacehelper.c
+1575207581 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\interfacehelper.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -7,7 +7,7 @@
 	<ctype.h>
 	"interfaceHelper.h"
 
-1575173324 c:\users\pichau\github\po\trabalhopesquisaoperacional\interfacehelper.h
+1575207593 c:\users\pichau\github\po\trabalhopesquisaoperacional\interfacehelper.h
 	<stdbool.h>
 
 1575151809 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\problematransporte.c
@@ -24,7 +24,7 @@
 	"leituraProblemaTransporte.h"
 	"otimizacao.h"
 
-1575185937 c:\users\pichau\github\po\trabalhopesquisaoperacional\infoproblematransporte.h
+1575208593 c:\users\pichau\github\po\trabalhopesquisaoperacional\infoproblematransporte.h
 
 1574997843 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\hashmap.c
 	"hashmap.h"
@@ -57,7 +57,7 @@
 1575168912 c:\users\pichau\github\po\trabalhopesquisaoperacional\problematransportehelper.h
 	"infoProblemaTransporte.h"
 
-1575167614 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\divisaocustos.c
+1575207973 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\divisaocustos.c
 	"divisaoCustos.h"
 	"problemaTransporteHelper.h"
 	"infoProblemaTransporte.h"
@@ -65,16 +65,16 @@
 1575168849 c:\users\pichau\github\po\trabalhopesquisaoperacional\divisaocustos.h
 	"infoProblemaTransporte.h"
 
-1575168516 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\cantonoroeste.c
+1575207945 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\cantonoroeste.c
 	"infoProblemaTransporte.h"
 	"cantoNoroeste.h"
 	"problemaTransporteHelper.h"
 	"problemaTransporteInterface.h"
 
-1575168833 c:\users\pichau\github\po\trabalhopesquisaoperacional\cantonoroeste.h
+1575208294 c:\users\pichau\github\po\trabalhopesquisaoperacional\cantonoroeste.h
 	"infoProblemaTransporte.h"
 
-1575182606 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\geraproblematransporte.c
+1575207986 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\geraproblematransporte.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -84,11 +84,11 @@
 	"problemaTransporteHelper.h"
 	"hashmap.h"
 
-1575182623 c:\users\pichau\github\po\trabalhopesquisaoperacional\geraproblematransporte.h
+1575208348 c:\users\pichau\github\po\trabalhopesquisaoperacional\geraproblematransporte.h
 	"infoProblemaTransporte.h"
 	"hashmap.h"
 
-1575185949 c:\users\pichau\github\po\trabalhopesquisaoperacional\leituraproblematransporte.h
+1575208669 c:\users\pichau\github\po\trabalhopesquisaoperacional\leituraproblematransporte.h
 	<stdbool.h>
 	<stdlib.h>
 	<stdio.h>
@@ -98,7 +98,7 @@
 1575168903 c:\users\pichau\github\po\trabalhopesquisaoperacional\otimizacao.h
 	"infoProblemaTransporte.h"
 
-1575168041 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\infoproblematransportehelper.c
+1575208600 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\infoproblematransportehelper.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
@@ -106,35 +106,35 @@
 	<ctype.h>
 	"infoProblemaTransporte.h"
 
-1575168455 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\problematransportehelper.c
+1575208044 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\problematransportehelper.c
 	<stdio.h>
 	<stdlib.h>
 	"problemaTransporteHelper.h"
 	"infoProblemaTransporte.h"
 
-1575185944 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\problematransporteinterface.c
+1575208546 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\problematransporteinterface.c
 	<stdio.h>
 	<string.h>
 	"problemaTransporteInterface.h"
 	"infoProblemaTransporte.h"
 
-1575185946 c:\users\pichau\github\po\trabalhopesquisaoperacional\problematransporteinterface.h
+1575208697 c:\users\pichau\github\po\trabalhopesquisaoperacional\problematransporteinterface.h
 	"infoProblemaTransporte.h"
 
-1575168522 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\menorcusto.c
+1575208655 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\menorcusto.c
 	"infoProblemaTransporte.h"
 	"problemaTransporteHelper.h"
 	"menorCusto.h"
 	"rotasOrdenadas.h"
 	"problemaTransporteInterface.h"
 
-1575162463 c:\users\pichau\github\po\trabalhopesquisaoperacional\menorcusto.h
+1575208415 c:\users\pichau\github\po\trabalhopesquisaoperacional\menorcusto.h
 	"infoProblemaTransporte.h"
 
 1575168490 c:\users\pichau\github\po\trabalhopesquisaoperacional\rotasordenadas.h
 	"infoProblemaTransporte.h"
 
-1575185883 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\leituraproblematransporte.c
+1575207734 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\leituraproblematransporte.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -146,7 +146,7 @@
 	"problemaTransporteHelper.h"
 	"geraProblemaTransporte.h"
 
-1575186332 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\otimizacao.c
+1575208783 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\otimizacao.c
 	<stdio.h>
 	"problemaTransporteHelper.h"
 	"problemaTransporteInterface.h"
@@ -169,7 +169,177 @@
 	"infoProblemaTransporte.h"
 	"rotasOrdenadas.h"
 
-1575168506 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\roteamento.c
+1575209882 source:c:\users\pichau\github\po\trabalhopesquisaoperacional\roteamento.c
+	<stdio.h>
+	<string.h>
+	"infoProblemaTransporte.h"
+	"problemaTransporteHelper.h"
+	"roteamento.h"
+
+1575213695 source:c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\analiseeconomica.c
+	"analiseEconomica.h"
+	"infoProblemaTransporte.h"
+	"problemaTransporteHelper.h"
+
+1575168826 c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\analiseeconomica.h
+	"infoProblemaTransporte.h"
+
+1575213608 c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\infoproblematransporte.h
+
+1575168912 c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\problematransportehelper.h
+	"infoProblemaTransporte.h"
+
+1575207945 source:c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\cantonoroeste.c
+	"infoProblemaTransporte.h"
+	"cantoNoroeste.h"
+	"problemaTransporteHelper.h"
+	"problemaTransporteInterface.h"
+
+1575208294 c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\cantonoroeste.h
+	"infoProblemaTransporte.h"
+
+1575208697 c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\problematransporteinterface.h
+	"infoProblemaTransporte.h"
+
+1575207973 source:c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\divisaocustos.c
+	"divisaoCustos.h"
+	"problemaTransporteHelper.h"
+	"infoProblemaTransporte.h"
+
+1575168849 c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\divisaocustos.h
+	"infoProblemaTransporte.h"
+
+1575207986 source:c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\geraproblematransporte.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"infoProblemaTransporte.h"
+	"geraProblemaTransporte.h"
+	"leituraProblemaTransporte.h"
+	"problemaTransporteHelper.h"
+	"hashmap.h"
+
+1575208348 c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\geraproblematransporte.h
+	"infoProblemaTransporte.h"
+	"hashmap.h"
+
+1574998810 c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\hashmap.h
+	<stdbool.h>
+
+1575208669 c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\leituraproblematransporte.h
+	<stdbool.h>
+	<stdlib.h>
+	<stdio.h>
+	"infoProblemaTransporte.h"
+	"hashmap.h"
+
+1574997843 source:c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\hashmap.c
+	"hashmap.h"
+	"listaord.h"
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+
+1574997843 c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\listaord.h
+	"hashmap.h"
+	<stdbool.h>
+
+1575208600 source:c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\infoproblematransportehelper.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<string.h>
+	<ctype.h>
+	"infoProblemaTransporte.h"
+
+1575207581 source:c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\interfacehelper.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	<ctype.h>
+	"interfaceHelper.h"
+
+1575207593 c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\interfacehelper.h
+	<stdbool.h>
+
+1575207734 source:c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\leituraproblematransporte.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"infoProblemaTransporte.h"
+	"leituraProblemaTransporte.h"
+	"interfaceHelper.h"
+	"problemaTransporteInterface.h"
+	"problemaTransporteHelper.h"
+	"geraProblemaTransporte.h"
+
+1574998786 source:c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\listaord.c
+	"listaord.h"
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+
+1575186081 source:c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\main.c
+	"infoProblemaTransporte.h"
+	"leituraProblemaTransporte.h"
+	"otimizacao.h"
+
+1575168903 c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\otimizacao.h
+	"infoProblemaTransporte.h"
+
+1575208655 source:c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\menorcusto.c
+	"infoProblemaTransporte.h"
+	"problemaTransporteHelper.h"
+	"menorCusto.h"
+	"rotasOrdenadas.h"
+	"problemaTransporteInterface.h"
+
+1575208415 c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\menorcusto.h
+	"infoProblemaTransporte.h"
+
+1575168490 c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\rotasordenadas.h
+	"infoProblemaTransporte.h"
+
+1575213633 source:c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\otimizacao.c
+	<stdio.h>
+	"problemaTransporteHelper.h"
+	"problemaTransporteInterface.h"
+	"infoProblemaTransporte.h"
+	"roteamento.h"
+	"divisaoCustos.h"
+	"analiseEconomica.h"
+	"cantoNoroeste.h"
+	"menorCusto.h"
+	"otimizacao.h"
+
+1575164404 c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\roteamento.h
+	<stdbool.h>
+	"infoProblemaTransporte.h"
+
+1575208044 source:c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\problematransportehelper.c
+	<stdio.h>
+	<stdlib.h>
+	"problemaTransporteHelper.h"
+	"infoProblemaTransporte.h"
+
+1575208546 source:c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\problematransporteinterface.c
+	<stdio.h>
+	<string.h>
+	"problemaTransporteInterface.h"
+	"infoProblemaTransporte.h"
+
+1575168468 source:c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\rotasordenadas.c
+	<stdio.h>
+	<stdlib.h>
+	"problemaTransporteHelper.h"
+	"infoProblemaTransporte.h"
+	"rotasOrdenadas.h"
+
+1575213536 source:c:\users\pichau\github\faculdade\4 semestre\pesquisa-operacional-2\trabalhopesquisaoperacional\roteamento.c
+	<stdio.h>
+	<string.h>
 	"infoProblemaTransporte.h"
 	"problemaTransporteHelper.h"
 	"roteamento.h"

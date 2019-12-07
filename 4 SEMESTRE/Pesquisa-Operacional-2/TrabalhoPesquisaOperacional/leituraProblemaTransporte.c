@@ -23,7 +23,7 @@ infoProblemaTransporte leInfoProblemaTransporte() {
 infoProblemaTransporte leEntradaPrompt() {
     infoProblemaTransporte problema;
 
-    int ofertaTotal, demandaTotal, maiorCusto;
+    double ofertaTotal, demandaTotal, maiorCusto;
 
     hash_map origens, destinos;
     map_init(origens);
@@ -41,13 +41,13 @@ infoProblemaTransporte leEntradaPrompt() {
     return problema;
 }
 
-int leRotasPrompt(infoProblemaTransporte * entrada, hash_map origens, hash_map destinos) {
+double leRotasPrompt(infoProblemaTransporte * entrada, hash_map origens, hash_map destinos) {
     map_value no;
 
     FILE * rotasArq;
     rotasArq = fopen(ROTAFILE, "w");
 
-    int maiorCusto = -1;
+    double maiorCusto = -1;
     rota rotaAtual;
 
     do {
@@ -106,9 +106,9 @@ void transformaEmMaiusculo(char * palavra) {
       palavra[letra] = toupper(palavra[letra]);
 }
 
-int leCusto() {
+double leCusto() {
     printf("custo: ");
-    return leInteiro();
+    return leDouble();
 }
 
 void leQuadroCustoUnitario(infoProblemaTransporte * entrada) {
@@ -167,8 +167,9 @@ bool leUsuarioQuerMaisRotas() {
     return leSimOuNao();
 }
 
-int leOfertasPrompt(infoProblemaTransporte * entrada) {
-    int ofertaTotal = 0, origem;
+double leOfertasPrompt(infoProblemaTransporte * entrada) {
+    double ofertaTotal = 0;
+    int origem;
 
     printf("\nOrigens\n");
 
@@ -178,14 +179,15 @@ int leOfertasPrompt(infoProblemaTransporte * entrada) {
     return ofertaTotal;
 }
 
-int leOferta(infoNo * entrada) {
+double leOferta(infoNo * entrada) {
     printf("Oferta %s: ", entrada->nome);
-    scanf(" %d", &entrada->valor);
+    scanf(" %lf", &entrada->valor);
     return entrada->valor;
 }
 
-int leDemandasPrompt(infoProblemaTransporte * entrada) {
-    int demandaTotal = 0, destino;
+double leDemandasPrompt(infoProblemaTransporte * entrada) {
+    double demandaTotal = 0;
+    int destino;
 
     printf("\nDestinos\n");
 
@@ -195,9 +197,9 @@ int leDemandasPrompt(infoProblemaTransporte * entrada) {
     return demandaTotal;
 }
 
-int leDemanda(infoNo * entrada) {
+double leDemanda(infoNo * entrada) {
     printf("Demanda %s: ", entrada->nome);
-    scanf(" %d", &entrada->valor);
+    scanf(" %lf", &entrada->valor);
     return entrada->valor;
 }
 

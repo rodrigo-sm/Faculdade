@@ -15,4 +15,8 @@ typedef struct {
     float cobertura_vacinal;
 } cobertura_vacinal_info;
 
+void print_cobertura_vacinal_info(cobertura_vacinal_info);
+
+cobertura_vacinal_info configura_vacinal_info(char *);
+
 #endif // DADOS_COBERTURA_VACINAL_H_INCLUDED

@@ -12,22 +12,22 @@
 
 typedef struct {
     char nome[50];
-    int valor;
+    double valor;
     int indice;
 } infoNo;
 
 typedef struct {
-    int custo;
+    double custo;
     infoNo origem;
     infoNo destino;
 } rota;
 
 typedef struct {
-    int ** custos;
-    int ** valores;
-    int ** economia;
-    int * divisaoCustoOrigem;
-    int * divisaoCustoDestino;
+    double ** custos;
+    double ** valores;
+    double ** economia;
+    double * divisaoCustoOrigem;
+    double * divisaoCustoDestino;
     int quantidadeOrigem;
     int quantidadeDestino;
     int ultimaOrigemReal;
@@ -36,19 +36,19 @@ typedef struct {
     int destinoFicticia;
     infoNo * origens;
     infoNo * destinos;
-    int demandaTotal;
-    int ofertaTotal;
-    int custoTotal;
+    double demandaTotal;
+    double ofertaTotal;
+    double custoTotal;
 } infoProblemaTransporte;
 
-rota criaRota(int, int, int);
+rota criaRota(double, int, int);
 
-int ** criaTabela (int, int);
+double ** criaTabela (int, int);
 
-int * criaVetor (int);
+double * criaVetor (int);
 
 infoNo * criaNos (int);
 
-int ** criaValoresVazios(infoProblemaTransporte);
+double ** criaValoresVazios(infoProblemaTransporte);
 
 #endif // INFOPROBLEMATRANSPORTE_H_INCLUDED

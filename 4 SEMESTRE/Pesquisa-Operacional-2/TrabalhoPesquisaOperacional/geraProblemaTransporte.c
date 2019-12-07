@@ -8,7 +8,7 @@
 #include "problemaTransporteHelper.h"
 #include "hashmap.h"
 
-void ajustaProblema(infoProblemaTransporte * problema, int ofertaTotal, int demandaTotal) {
+void ajustaProblema(infoProblemaTransporte * problema, double ofertaTotal, double demandaTotal) {
 
     preencheOfertaDemandaNoTransbordoSeExistir(problema, ofertaTotal > demandaTotal ? ofertaTotal : demandaTotal);
 
@@ -16,7 +16,7 @@ void ajustaProblema(infoProblemaTransporte * problema, int ofertaTotal, int dema
 
 }
 
-void preencheOfertaDemandaNoTransbordoSeExistir(infoProblemaTransporte * entrada, int valor) {
+void preencheOfertaDemandaNoTransbordoSeExistir(infoProblemaTransporte * entrada, double valor) {
     int origem, destino;
 
     for(origem = 0; origem < entrada->quantidadeOrigem; origem++)
@@ -27,7 +27,7 @@ void preencheOfertaDemandaNoTransbordoSeExistir(infoProblemaTransporte * entrada
             }
 }
 
-void criaRotaFicticiaSePrecisar(infoProblemaTransporte * entrada, int demandaTotal, int ofertaTotal) {
+void criaRotaFicticiaSePrecisar(infoProblemaTransporte * entrada, double demandaTotal, double ofertaTotal) {
     if(demandaTotal < ofertaTotal)
         criaDestinoFicticio(entrada, ofertaTotal-demandaTotal);
     else if(demandaTotal > ofertaTotal)
@@ -35,7 +35,7 @@ void criaRotaFicticiaSePrecisar(infoProblemaTransporte * entrada, int demandaTot
 
 }
 
-void criaDestinoFicticio(infoProblemaTransporte * entrada, int demanda) {
+void criaDestinoFicticio(infoProblemaTransporte * entrada, double demanda) {
     int origem;
 
     entrada->destinoFicticia = entrada->quantidadeDestino;
@@ -50,7 +50,7 @@ void criaDestinoFicticio(infoProblemaTransporte * entrada, int demanda) {
     entrada->quantidadeDestino++;
 }
 
-void criaOrigemFicticia(infoProblemaTransporte * entrada, int oferta) {
+void criaOrigemFicticia(infoProblemaTransporte * entrada, double oferta) {
     int destino;
 
     entrada->origemFicticia = entrada->quantidadeOrigem;
@@ -65,12 +65,12 @@ void criaOrigemFicticia(infoProblemaTransporte * entrada, int oferta) {
     entrada->quantidadeOrigem++;
 }
 
-void geraProblema(hash_map origens, hash_map destinos, infoProblemaTransporte * entrada, int custoProibitivo) {
+void geraProblema(hash_map origens, hash_map destinos, infoProblemaTransporte * entrada, double custoProibitivo) {
     entrada->quantidadeOrigem = map_size(origens);
     entrada->quantidadeDestino = map_size(destinos);
 
-    int quantidadeMaximaOrigem = entrada->quantidadeOrigem+ 1;
-    int quantidadeMaximaDestino = entrada->quantidadeDestino+ 1;
+    int quantidadeMaximaOrigem = entrada->quantidadeOrigem + 1;
+    int quantidadeMaximaDestino = entrada->quantidadeDestino + 1;
 
     entrada->destinoFicticia = INVALIDO;
     entrada->origemFicticia = INVALIDO;
@@ -107,7 +107,7 @@ void criaRotasTransbordo(infoProblemaTransporte * entrada) {
                 entrada->custos[origem][destino] = VAZIO;
 }
 
-void criaRotasProibidas(infoProblemaTransporte * entrada, int custoProibitivo) {
+void criaRotasProibidas(infoProblemaTransporte * entrada, double custoProibitivo) {
     int origem, destino;
 
     for(origem = 0; origem < entrada->ultimaOrigemReal; origem++)

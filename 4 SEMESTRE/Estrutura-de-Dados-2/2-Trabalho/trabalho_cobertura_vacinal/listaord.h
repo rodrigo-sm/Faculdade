@@ -13,7 +13,6 @@
 #include <stdbool.h>
 
 #include "hashmap.h"
-#include "cobertura_vacinal.h"
 
 /* função que inicializa a lista encadeada ordenada */
 void lst_init(map_ptr *);

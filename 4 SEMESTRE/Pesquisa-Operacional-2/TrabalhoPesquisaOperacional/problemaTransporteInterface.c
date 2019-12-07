@@ -16,7 +16,7 @@ void imprimeInteracao(int interacao, infoProblemaTransporte solucao) {
 
 void imprimeCustoInteracao(infoProblemaTransporte solucao) {
     imprimeTabela(solucao, solucao.valores);
-    printf("Custo: %d\n", solucao.custoTotal);
+    printf("Custo: %.2lf\n", solucao.custoTotal);
 }
 
 void imprimeMenorCusto(infoProblemaTransporte solucao) {
@@ -31,24 +31,25 @@ void imprimeCantoNoroeste(infoProblemaTransporte solucao) {
 
 void imprimeSolucaoInicial(infoProblemaTransporte solucao) {
     imprimeTabela(solucao, solucao.valores);
-    printf("Custo Inicial: %d\n", solucao.custoTotal);
+    printf("Custo Inicial: %.2lf\n", solucao.custoTotal);
 }
 
-void imprimeTabela(infoProblemaTransporte dados, int ** tabela) {
+void imprimeTabela(infoProblemaTransporte dados, double ** tabela) {
     int quantidadeColuna = dados.quantidadeDestino+2,
-        tamanhoCelula = getTamanhoCelula(dados, tabela);
+        tamanhoMaiorElemento = getTamanhoMaiorElemento(dados, tabela);
+    int tamanhoCelula = tamanhoMaiorElemento+2;
 
-    imprimeTracadoTabela(tamanhoCelula+2, quantidadeColuna);
-    imprimeLinhaDestino(quantidadeColuna, tamanhoCelula);
-    imprimeTracadoTabela(tamanhoCelula+2, quantidadeColuna);
-    imprimeCabecalhoTabela(dados, tamanhoCelula);
-    imprimeTracadoTabela(tamanhoCelula+2, quantidadeColuna);
-    imprimeConteudoTabela(dados, tabela, tamanhoCelula, quantidadeColuna);
-    imprimeDemandaTabela(dados, tamanhoCelula);
-    imprimeTracadoTabela(tamanhoCelula+2, quantidadeColuna);
+    imprimeTracadoTabela(tamanhoCelula, quantidadeColuna);
+    imprimeLinhaDestino(quantidadeColuna, tamanhoMaiorElemento);
+    imprimeTracadoTabela(tamanhoCelula, quantidadeColuna);
+    imprimeCabecalhoTabela(dados, tamanhoMaiorElemento);
+    imprimeTracadoTabela(tamanhoCelula, quantidadeColuna);
+    imprimeConteudoTabela(dados, tabela, tamanhoMaiorElemento, quantidadeColuna);
+    imprimeDemandaTabela(dados, tamanhoMaiorElemento);
+    imprimeTracadoTabela(tamanhoCelula, quantidadeColuna);
 }
 
-int getTamanhoCelula(infoProblemaTransporte dados, int ** tabela) {
+int getTamanhoMaiorElemento(infoProblemaTransporte dados, double ** tabela) {
     int maiorTamanho = strlen("DESTINO");
 
     procuraMaiorTamanhoEmOrigens(&maiorTamanho, dados);
@@ -78,7 +79,7 @@ void procuraMaiorTamanhoEmDestinos(int * maiorTamanho, infoProblemaTransporte da
     }
 }
 
-void procuraMaiorTamanhoNaTabela(int * maiorTamanho, infoProblemaTransporte dados, int ** tabela){
+void procuraMaiorTamanhoNaTabela(int * maiorTamanho, infoProblemaTransporte dados, double ** tabela){
     int origemAtual, destinoAtual, tamanhoAtual;
 
     for(origemAtual = 0; origemAtual < dados.quantidadeOrigem; origemAtual++) {
@@ -90,9 +91,9 @@ void procuraMaiorTamanhoNaTabela(int * maiorTamanho, infoProblemaTransporte dado
     }
 }
 
-int determinaQuantidadeDeCasasDecimais(int numero) {
+int determinaQuantidadeDeCasasDecimais(double numero) {
     int casas = 1;
-	while(numero > 9){
+	while(numero > 0.09){
 		casas++;
 		numero /= 10;
 	}
@@ -134,13 +135,13 @@ void imprimeDestinosTabela (infoProblemaTransporte dados, int tamanhoCelula) {
         printf("| %*s ", tamanhoCelula, dados.destinos[destinoAtual].nome);
 }
 
-void imprimeConteudoTabela(infoProblemaTransporte dados, int ** tabela, int tamanhoCelula, int quantidadeColuna) {
+void imprimeConteudoTabela(infoProblemaTransporte dados, double ** tabela, int tamanhoCelula, int quantidadeColuna) {
     int origemAtual;
     for(origemAtual = 0; origemAtual < dados.quantidadeOrigem; origemAtual++)
         imprimeLinhaConteudoTabela(dados, tabela, tamanhoCelula, origemAtual, quantidadeColuna);
 }
 
-void imprimeLinhaConteudoTabela(infoProblemaTransporte dados, int ** tabela, int tamanhoCelula, int origemAtual, int quantidadeColuna) {
+void imprimeLinhaConteudoTabela(infoProblemaTransporte dados, double ** tabela, int tamanhoCelula, int origemAtual, int quantidadeColuna) {
     imprimeNomeOrigem(tamanhoCelula, dados.origens[origemAtual].nome);
 
     imprimeValoresLinhaTabela(dados, tabela, tamanhoCelula, origemAtual);
@@ -154,14 +155,14 @@ void imprimeNomeOrigem(int tamanhoCelula, char * origem) {
     printf("| %*s ", tamanhoCelula, origem);
 }
 
-void imprimeValoresLinhaTabela(infoProblemaTransporte dados, int ** tabela, int tamanhoCelula, int origemAtual) {
+void imprimeValoresLinhaTabela(infoProblemaTransporte dados, double ** tabela, int tamanhoCelula, int origemAtual) {
     int destinoAtual;
     for(destinoAtual = 0; destinoAtual < dados.quantidadeDestino; destinoAtual++)
-            printf("| %*d ", tamanhoCelula, tabela[origemAtual][destinoAtual]);
+            printf("| %*.2lf ", tamanhoCelula, tabela[origemAtual][destinoAtual]);
 }
 
-void imprimeOfertaOrigem(int tamanhoCelula, int oferta) {
-    printf("| %*d |\n", tamanhoCelula, oferta);
+void imprimeOfertaOrigem(int tamanhoCelula, double oferta) {
+    printf("| %*.2lf |\n", tamanhoCelula, oferta);
 }
 
 void imprimeDemandaTabela(infoProblemaTransporte dados, int tamanhoCelula) {
@@ -169,7 +170,7 @@ void imprimeDemandaTabela(infoProblemaTransporte dados, int tamanhoCelula) {
 
     int destinoAtual;
     for(destinoAtual = 0; destinoAtual < dados.quantidadeDestino; destinoAtual++)
-        printf("| %*d ", tamanhoCelula, dados.destinos[destinoAtual].valor);
+        printf("| %*.2lf ", tamanhoCelula, dados.destinos[destinoAtual].valor);
 
     printf("| %*s |\n", tamanhoCelula, " ");
 }

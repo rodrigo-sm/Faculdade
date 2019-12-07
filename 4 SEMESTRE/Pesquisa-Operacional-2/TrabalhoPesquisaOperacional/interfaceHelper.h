@@ -12,6 +12,8 @@ void pausaTela();
 
 int leInteiro();
 
+double leDouble();
+
 char * leNome();
 
 void imprimeAlertaSimples(char *);

@@ -6,7 +6,7 @@ void divisaoCusto(infoProblemaTransporte * solucao) {
 
     inicializaDivisaoCusto(solucao);
 
-    solucao->divisaoCustoOrigem[0] = 0;
+    solucao->divisaoCustoOrigem[0] = VAZIO;
 
     calculaDivisaoCustoDestino(solucao, 0);
 
@@ -39,7 +39,7 @@ void calculaDivisaoCustoDestino(infoProblemaTransporte * solucao, int origem) {
 
     for(destino = 0; destino < solucao->quantidadeDestino; destino++) {
         // O destino nao foi calculado e o valor da origem e destino e valido
-        if(solucao->divisaoCustoDestino[destino] == INVALIDO && solucao->valores[origem][destino] > 0) {
+        if(solucao->divisaoCustoDestino[destino] == INVALIDO && solucao->valores[origem][destino] > VAZIO) {
             solucao->divisaoCustoDestino[destino] = solucao->custos[origem][destino] - solucao->divisaoCustoOrigem[origem];
             calculaDivisaoCustoOrigem(solucao, destino);
         }
@@ -51,7 +51,7 @@ void calculaDivisaoCustoOrigem(infoProblemaTransporte * solucao, int destino) {
 
     for(origem = 0; origem < solucao->quantidadeOrigem; origem++) {
         // A origem nao foi calculado e o valor da origem e destino e valido
-        if(solucao->divisaoCustoOrigem[origem] == INVALIDO && solucao->valores[origem][destino] > 0) {
+        if(solucao->divisaoCustoOrigem[origem] == INVALIDO && solucao->valores[origem][destino] > VAZIO) {
             solucao->divisaoCustoOrigem[origem] = solucao->custos[origem][destino] - solucao->divisaoCustoDestino[destino];
             calculaDivisaoCustoDestino(solucao, origem);
         }

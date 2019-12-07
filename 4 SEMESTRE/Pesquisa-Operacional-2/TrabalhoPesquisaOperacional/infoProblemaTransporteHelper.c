@@ -6,7 +6,7 @@
 
 #include "infoProblemaTransporte.h"
 
-rota criaRota(int custo, int origem, int destino) {
+rota criaRota(double custo, int origem, int destino) {
     rota retorno;
     retorno.custo = custo;
     retorno.origem.indice = origem;
@@ -14,25 +14,25 @@ rota criaRota(int custo, int origem, int destino) {
     return retorno;
 }
 
-int **criaTabela (int linhas, int colunas) {
-  int **tabela;
+double **criaTabela (int linhas, int colunas) {
+  double **tabela;
   int   linhaAtual;
 
   // Aloca as linhas da tabela
-  tabela = (int **) calloc (linhas, sizeof(int *));
+  tabela = (double **) calloc (linhas, sizeof(double *));
 
   // Aloca as colunas da matriz
   for (linhaAtual = 0; linhaAtual < linhas; linhaAtual++ )
-      tabela[linhaAtual] = (int*) calloc (colunas, sizeof(int));
+      tabela[linhaAtual] = (double*) calloc (colunas, sizeof(double));
 
   return (tabela);
 }
 
-int *criaVetor (int colunas) {
-  int *vetor;
+double *criaVetor (int colunas) {
+  double *vetor;
 
   // Aloca o vetor
-  vetor = (int *) calloc (colunas+1, sizeof(int));
+  vetor = (double *) calloc (colunas+1, sizeof(double));
 
   return (vetor);
 }
@@ -46,8 +46,9 @@ infoNo *criaNos (int colunas) {
   return (vetor);
 }
 
-int ** criaValoresVazios(infoProblemaTransporte origem) {
-    int ** retorno, origemAtual, destinoAtual;
+double ** criaValoresVazios(infoProblemaTransporte origem) {
+    double ** retorno;
+    int origemAtual, destinoAtual;
 
     retorno = criaTabela(origem.quantidadeOrigem, origem.quantidadeDestino);
 

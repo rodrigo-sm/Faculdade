@@ -5,7 +5,7 @@
 
 infoProblemaTransporte achaMenorCusto(infoProblemaTransporte);
 
-int ** calculaSolucaoMenorCusto(infoProblemaTransporte);
+double ** calculaSolucaoMenorCusto(infoProblemaTransporte);
 
 void calculaSolucaComRotasReais(infoProblemaTransporte *);
 

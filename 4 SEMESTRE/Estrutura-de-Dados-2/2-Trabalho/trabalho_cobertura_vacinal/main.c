@@ -1,3 +1,14 @@
+/*
+*  Autores:
+*
+*  Vitor Kuribara
+*  Rodrigo Moreira
+*  Victor Gabriel
+*
+*  Universidade Catolica de Santos
+*
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 

@@ -4,22 +4,20 @@
 #include "infoProblemaTransporte.h"
 #include "hashmap.h"
 
-void ajustaProblema(infoProblemaTransporte *, int, int);
+void ajustaProblema(infoProblemaTransporte *, double, double);
 
-void preencheOfertaDemandaNoTransbordoSeExistir(infoProblemaTransporte *, int);
+void preencheOfertaDemandaNoTransbordoSeExistir(infoProblemaTransporte *, double);
 
-void criaRotaFicticiaSePrecisar(infoProblemaTransporte *, int, int);
+void criaRotaFicticiaSePrecisar(infoProblemaTransporte *, double, double);
 
-void criaDestinoFicticio(infoProblemaTransporte *, int);
+void criaDestinoFicticio(infoProblemaTransporte *, double);
 
-void criaOrigemFicticia(infoProblemaTransporte *, int);
+void criaOrigemFicticia(infoProblemaTransporte *, double);
 
-void geraProblema(hash_map, hash_map, infoProblemaTransporte *, int);
+void geraProblema(hash_map, hash_map, infoProblemaTransporte *, double);
 
 void criaRotasTransbordo(infoProblemaTransporte *);
 
-void criaRotasProibidas(infoProblemaTransporte *, int);
-
-void ajustaNomeTransbordo(infoProblemaTransporte *, int, int);
+void criaRotasProibidas(infoProblemaTransporte *, double);
 
 #endif // GERAPROBLEMATRANSPORTE_H_INCLUDED

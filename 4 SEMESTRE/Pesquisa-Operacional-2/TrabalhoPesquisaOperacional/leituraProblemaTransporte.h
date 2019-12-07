@@ -14,7 +14,7 @@ infoProblemaTransporte leInfoProblemaTransporte();
 
 infoProblemaTransporte leEntradaPrompt();
 
-int leRotasPrompt(infoProblemaTransporte *, hash_map, hash_map);
+double leRotasPrompt(infoProblemaTransporte *, hash_map, hash_map);
 
 void gravaRotaFILE(FILE *, rota *);
 
@@ -28,7 +28,7 @@ void leDestino(char *);
 
 void transformaEmMaiusculo(char *);
 
-int leCusto();
+double leCusto();
 
 void leQuadroCustoUnitario(infoProblemaTransporte *);
 
@@ -38,13 +38,13 @@ int insereSeNaoExisteDestino(infoProblemaTransporte *, char *);
 
 bool leUsuarioQuerMaisRotas();
 
-int leOfertasPrompt(infoProblemaTransporte *);
+double leOfertasPrompt(infoProblemaTransporte *);
 
-int leOferta(infoNo *);
+double leOferta(infoNo *);
 
-int leDemandasPrompt(infoProblemaTransporte *);
+double leDemandasPrompt(infoProblemaTransporte *);
 
-int leDemanda(infoNo *);
+double leDemanda(infoNo *);
 
 bool isOrigemTransbordo(infoProblemaTransporte *, infoNo);
 

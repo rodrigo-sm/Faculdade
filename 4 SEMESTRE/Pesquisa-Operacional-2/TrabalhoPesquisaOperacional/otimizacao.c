@@ -21,12 +21,12 @@ void otimizacao(infoProblemaTransporte solucao) {
     rota maiorEconomia;
     maiorEconomia = getMaiorEconomiaPositivaMaiorQue0(solucao);
 
-    while(maiorEconomia.custo > 0) {
+    while(maiorEconomia.custo > 0.0) {
 
         roteamento(&solucao, maiorEconomia);
 
         imprimeInteracao(interacao++, solucao);
-        pausaTela();
+
         executaEconomiaEDivisaoDeCustos(&solucao);
 
         maiorEconomia = getMaiorEconomiaPositivaMaiorQue0(solucao);

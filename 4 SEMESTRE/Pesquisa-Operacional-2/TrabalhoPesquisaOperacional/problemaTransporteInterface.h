@@ -15,19 +15,19 @@ void imprimeCantoNoroeste(infoProblemaTransporte);
 
 void imprimeSolucaoInicial(infoProblemaTransporte);
 
-void imprimeTabela(infoProblemaTransporte, int **);
+void imprimeTabela(infoProblemaTransporte, double **);
 
 void imprimeTracadoTabela(int, int);
 
-int getTamanhoCelula(infoProblemaTransporte, int **);
+int getTamanhoMaiorElemento(infoProblemaTransporte, double **);
 
 void procuraMaiorTamanhoEmOrigens(int * maiorTamanho, infoProblemaTransporte dados);
 
 void procuraMaiorTamanhoEmDestinos(int * maiorTamanho, infoProblemaTransporte dados);
 
-void procuraMaiorTamanhoNaTabela(int * maiorTamanho, infoProblemaTransporte dados, int ** tabela);
+void procuraMaiorTamanhoNaTabela(int * maiorTamanho, infoProblemaTransporte dados, double ** tabela);
 
-int determinaQuantidadeDeCasasDecimais(int);
+int determinaQuantidadeDeCasasDecimais(double);
 
 void imprimeTracadoTabela(int, int);
 
@@ -37,15 +37,15 @@ void imprimeCabecalhoTabela(infoProblemaTransporte, int);
 
 void imprimeDestinosTabela (infoProblemaTransporte, int);
 
-void imprimeConteudoTabela(infoProblemaTransporte, int **, int, int);
+void imprimeConteudoTabela(infoProblemaTransporte, double **, int, int);
 
-void imprimeLinhaConteudoTabela(infoProblemaTransporte, int **, int, int, int);
+void imprimeLinhaConteudoTabela(infoProblemaTransporte, double **, int, int, int);
 
 void imprimeNomeOrigem(int, char *);
 
-void imprimeValoresLinhaTabela(infoProblemaTransporte, int **, int, int);
+void imprimeValoresLinhaTabela(infoProblemaTransporte, double **, int, int);
 
-void imprimeOfertaOrigem(int, int);
+void imprimeOfertaOrigem(int, double);
 
 void imprimeDemandaTabela(infoProblemaTransporte, int);
 
